@@ -31,9 +31,11 @@ class Schedule:
 
     def get_unassigned_var(self):
         # Return next unassigned course
+        return None
 
     def is_complete(self):
         # Return True if all courses are assigned timeslots
+        return True
         
     def is_consistent(self, course, timeslot):
         # Check if assigning course to timeslot is valid
