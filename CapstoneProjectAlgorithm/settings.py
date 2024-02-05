@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'CapstoneProjectAlgorithm.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'capstone_scheduling_project',
+        'USER': 'capstone',
+        'PASSWORD': 'password1234',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
