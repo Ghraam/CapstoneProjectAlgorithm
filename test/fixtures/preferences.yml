@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  professor: one
+  course: one
+  priority: 1
+
+two:
+  professor: two
+  course: two
+  priority: 1

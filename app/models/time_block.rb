@@ -1,0 +1,2 @@
+class TimeBlock < ApplicationRecord
+end
