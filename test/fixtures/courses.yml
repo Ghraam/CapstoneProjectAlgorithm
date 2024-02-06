@@ -4,8 +4,10 @@ one:
   name: MyString
   identifier: MyString
   needs_lab: 1
+  course_size: 1
 
 two:
   name: MyString
   identifier: MyString
   needs_lab: 1
+  course_size: 1

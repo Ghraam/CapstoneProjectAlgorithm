@@ -25,12 +25,14 @@ ActiveRecord::Schema[7.1].define(version: 0) do
   create_table "classroom", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "room", limit: 45, null: false
     t.integer "is_lab", limit: 1, null: false
+    t.integer "room_capacity", null: false
   end
 
   create_table "course", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 45, null: false
     t.string "identifier", limit: 45, null: false
     t.integer "needs_lab", limit: 1, null: false
+    t.integer "course_size", null: false
   end
 
   create_table "course_preference", primary_key: ["professor_id", "course_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
