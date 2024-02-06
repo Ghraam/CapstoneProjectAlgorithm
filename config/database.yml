@@ -13,13 +13,13 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
+  username: capstone
+  password: password1234
   socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
-  database: capstone_project_algorithm_development
+  database: capstone_scheduling_project
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
