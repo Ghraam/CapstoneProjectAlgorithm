@@ -3,7 +3,9 @@
 one:
   professor: one
   time_block: one
+  priority: 1
 
 two:
   professor: two
   time_block: two
+  priority: 1
