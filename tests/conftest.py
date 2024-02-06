@@ -9,9 +9,9 @@ import pytest
 import transaction
 import webtest
 
-from pyramid_scaffold import main
-from pyramid_scaffold import models
-from pyramid_scaffold.models.meta import Base
+from CapstoneProjectAlgorithm import main
+from CapstoneProjectAlgorithm import models
+from CapstoneProjectAlgorithm.models.meta import Base
 
 
 def pytest_addoption(parser):

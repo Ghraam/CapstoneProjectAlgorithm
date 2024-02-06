@@ -29,9 +29,9 @@ tests_require = [
 ]
 
 setup(
-    name='pyramid_scaffold',
+    name='CapstoneProjectAlgorithm',
     version='0.0',
-    description='Pyramid Scaffold',
+    description='Capstone Scheduling Project',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
         'Programming Language :: Python',
@@ -52,10 +52,10 @@ setup(
     install_requires=requires,
     entry_points={
         'paste.app_factory': [
-            'main = pyramid_scaffold:main',
+            'main = CapstoneProjectAlgorithm:main',
         ],
         'console_scripts': [
-            'initialize_pyramid_scaffold_db=pyramid_scaffold.scripts.initialize_db:main',
+            'initialize_CapstoneProjectAlgorithm_db=CapstoneProjectAlgorithm.scripts.initialize_db:main',
         ],
     },
 )

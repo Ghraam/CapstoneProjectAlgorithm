@@ -88,7 +88,7 @@ def includeme(config):
     """
     Initialize the model for a Pyramid app.
 
-    Activate this setup using ``config.include('pyramid_scaffold.models')``.
+    Activate this setup using ``config.include('CapstoneProjectAlgorithm.models')``.
 
     """
     settings = config.get_settings()

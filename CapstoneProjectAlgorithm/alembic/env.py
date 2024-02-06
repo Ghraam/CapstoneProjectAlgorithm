@@ -3,7 +3,7 @@ from alembic import context
 from pyramid.paster import get_appsettings, setup_logging
 from sqlalchemy import engine_from_config
 
-from pyramid_scaffold.models.meta import Base
+from CapstoneProjectAlgorithm.models.meta import Base
 
 config = context.config
 

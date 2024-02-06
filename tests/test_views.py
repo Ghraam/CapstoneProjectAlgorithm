@@ -1,6 +1,6 @@
-from pyramid_scaffold import models
-from pyramid_scaffold.views.default import my_view
-from pyramid_scaffold.views.notfound import notfound_view
+from CapstoneProjectAlgorithm import models
+from CapstoneProjectAlgorithm.views.default import my_view
+from CapstoneProjectAlgorithm.views.notfound import notfound_view
 
 
 def test_my_view_failure(app_request):
@@ -15,7 +15,7 @@ def test_my_view_success(app_request, dbsession):
     info = my_view(app_request)
     assert app_request.response.status_int == 200
     assert info['one'].name == 'one'
-    assert info['project'] == 'Pyramid Scaffold'
+    assert info['project'] == 'Capstone Scheduling Project'
 
 def test_notfound_view(app_request):
     info = notfound_view(app_request)
