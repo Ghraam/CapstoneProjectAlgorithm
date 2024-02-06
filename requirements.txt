@@ -1,2 +1,4 @@
 pyramid==2.0.2
+waitress
 mysqlclient
+cookiecutter
