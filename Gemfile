@@ -65,3 +65,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "schema_to_scaffold", "~> 0.1.0", group: :development
