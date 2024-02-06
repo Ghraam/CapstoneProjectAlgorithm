@@ -66,4 +66,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "schema_to_scaffold", "~> 0.1.0", group: :development
+gem "schema_to_scaffold", group: :development
