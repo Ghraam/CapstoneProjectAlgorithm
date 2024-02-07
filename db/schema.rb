@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 0) do
-  create_table "assignment", primary_key: ["professor_id", "time_block_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "assignments", primary_key: ["professor_id", "time_block_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "professor_id", null: false
     t.integer "time_block_id", null: false
     t.integer "course_id", null: false
@@ -22,20 +22,13 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["time_block_id"], name: "fk_professor_has_time_block1_time_block1_idx"
   end
 
-  create_table "classroom", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "classrooms", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "room", limit: 45, null: false
     t.integer "is_lab", limit: 1, null: false
     t.integer "room_capacity", null: false
   end
 
-  create_table "course", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", limit: 45, null: false
-    t.string "identifier", limit: 45, null: false
-    t.integer "needs_lab", limit: 1, null: false
-    t.integer "course_size", null: false
-  end
-
-  create_table "course_preference", primary_key: ["professor_id", "course_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "course_preferences", primary_key: ["professor_id", "course_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "professor_id", null: false
     t.integer "course_id", null: false
     t.integer "priority", null: false
@@ -43,16 +36,23 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["professor_id"], name: "fk_professor_has_class_professor1_idx"
   end
 
-  create_table "professor", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "courses", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", limit: 45, null: false
+    t.string "identifier", limit: 45, null: false
+    t.integer "needs_lab", limit: 1, null: false
+    t.integer "course_size", null: false
+  end
+
+  create_table "professors", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 45, null: false
   end
 
-  create_table "time_block", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "time_blocks", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "identifier", limit: 45, null: false
     t.integer "is_double", limit: 1, null: false
   end
 
-  create_table "time_preference", primary_key: ["professor_id", "time_block_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "time_preferences", primary_key: ["professor_id", "time_block_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "professor_id", null: false
     t.integer "time_block_id", null: false
     t.integer "priority", null: false
@@ -60,12 +60,12 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["time_block_id"], name: "fk_professor_has_time_block_time_block1_idx"
   end
 
-  add_foreign_key "assignment", "classroom", name: "fk_professor_has_time_block1_classroom1"
-  add_foreign_key "assignment", "course", name: "fk_professor_has_time_block1_class1"
-  add_foreign_key "assignment", "professor", name: "fk_professor_has_time_block1_professor1"
-  add_foreign_key "assignment", "time_block", name: "fk_professor_has_time_block1_time_block1"
-  add_foreign_key "course_preference", "course", name: "fk_professor_has_class_class1"
-  add_foreign_key "course_preference", "professor", name: "fk_professor_has_class_professor1"
-  add_foreign_key "time_preference", "professor", name: "fk_professor_has_time_block_professor"
-  add_foreign_key "time_preference", "time_block", name: "fk_professor_has_time_block_time_block1"
+  add_foreign_key "assignments", "classrooms", name: "fk_professor_has_time_block1_classroom1"
+  add_foreign_key "assignments", "courses", name: "fk_professor_has_time_block1_class1"
+  add_foreign_key "assignments", "professors", name: "fk_professor_has_time_block1_professor1"
+  add_foreign_key "assignments", "time_blocks", name: "fk_professor_has_time_block1_time_block1"
+  add_foreign_key "course_preferences", "courses", name: "fk_professor_has_class_class1"
+  add_foreign_key "course_preferences", "professors", name: "fk_professor_has_class_professor1"
+  add_foreign_key "time_preferences", "professors", name: "fk_professor_has_time_block_professor"
+  add_foreign_key "time_preferences", "time_blocks", name: "fk_professor_has_time_block_time_block1"
 end

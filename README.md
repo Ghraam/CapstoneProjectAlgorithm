@@ -24,7 +24,7 @@ Things you may want to cover:
 * ...
 
 ## ER Diagram
-![ER Diagram](https://i.imgur.com/KAkeMb4.png)
+![ER Diagram](https://i.imgur.com/BVqGaQt.png)
 
 ## API Specification
 ```json
