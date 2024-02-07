@@ -1,0 +1,32 @@
+<%= form_with(model: course_preference) do |form| %>
+  <% if course_preference.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(course_preference.errors.count, "error") %> prohibited this course_preference from being saved:</h2>
+
+      <ul>
+        <% course_preference.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :professor_id, style: "display: block" %>
+    <%= form.text_field :professor_id %>
+  </div>
+
+  <div>
+    <%= form.label :course_id, style: "display: block" %>
+    <%= form.text_field :course_id %>
+  </div>
+
+  <div>
+    <%= form.label :priority, style: "display: block" %>
+    <%= form.number_field :priority %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

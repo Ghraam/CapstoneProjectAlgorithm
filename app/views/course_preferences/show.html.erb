@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @course_preference %>
+
+<div>
+  <%= link_to "Edit this course preference", edit_course_preference_path(@course_preference) %> |
+  <%= link_to "Back to course preferences", course_preferences_path %>
+
+  <%= button_to "Destroy this course preference", @course_preference, method: :delete %>
+</div>

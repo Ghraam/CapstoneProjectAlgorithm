@@ -1,0 +1,32 @@
+<%= form_with(model: time_preference) do |form| %>
+  <% if time_preference.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(time_preference.errors.count, "error") %> prohibited this time_preference from being saved:</h2>
+
+      <ul>
+        <% time_preference.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :professor_id, style: "display: block" %>
+    <%= form.text_field :professor_id %>
+  </div>
+
+  <div>
+    <%= form.label :time_block_id, style: "display: block" %>
+    <%= form.text_field :time_block_id %>
+  </div>
+
+  <div>
+    <%= form.label :priority, style: "display: block" %>
+    <%= form.number_field :priority %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

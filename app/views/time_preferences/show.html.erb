@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @time_preference %>
+
+<div>
+  <%= link_to "Edit this time preference", edit_time_preference_path(@time_preference) %> |
+  <%= link_to "Back to time preferences", time_preferences_path %>
+
+  <%= button_to "Destroy this time preference", @time_preference, method: :delete %>
+</div>
