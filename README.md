@@ -24,4 +24,4 @@ Things you may want to cover:
 * ...
 
 ## ER Diagram
-![ER Diagram](https://i.imgur.com/IVgVHd8.png)
+![ER Diagram](https://i.imgur.com/KAkeMb4.png)
