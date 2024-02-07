@@ -71,3 +71,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Humanize Ruby values [https://github.com/radar/humanize]
+gem "humanize"
