@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["time_block_id"], name: "fk_professor_has_time_block1_time_block1_idx"
   end
 
-  create_table "classrooms", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "classrooms", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "room", limit: 45, null: false
     t.integer "is_lab", limit: 1, null: false
     t.integer "room_capacity", null: false
@@ -36,18 +36,18 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["professor_id"], name: "fk_professor_has_class_professor1_idx"
   end
 
-  create_table "courses", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "courses", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 45, null: false
     t.string "identifier", limit: 45, null: false
     t.integer "needs_lab", limit: 1, null: false
     t.integer "course_size", null: false
   end
 
-  create_table "professors", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "professors", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 45, null: false
   end
 
-  create_table "time_blocks", id: :integer, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "time_blocks", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "identifier", limit: 45, null: false
     t.integer "is_double", limit: 1, null: false
   end
