@@ -47,6 +47,9 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+
+  # Use faker to generate fake data [https://github.com/faker-ruby/faker]
+  gem "faker"
 end
 
 group :development do
@@ -58,6 +61,9 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # Use schema_to_scaffold to generate scaffolds from schema.rb [https://github.com/zeisler/schema_to_scaffold]
+  gem "schema_to_scaffold"
 end
 
 group :test do
@@ -65,5 +71,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "schema_to_scaffold", group: :development
