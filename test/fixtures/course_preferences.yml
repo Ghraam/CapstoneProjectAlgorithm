@@ -1,11 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  professor: one
-  course: one
-  priority: 1
-
-two:
-  professor: two
-  course: two
-  priority: 1
+<% 1.upto(5) do |n| %>
+<%= n.humanize %>:
+  professor: <%= n.humanize %>
+  course: <%= n.humanize %>
+  priority: <%= Faker::Number.number(digits: 1) %>
+<% end %>

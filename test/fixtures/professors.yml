@@ -1,7 +1,5 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-
-two:
-  name: MyString
+<% 1.upto(5) do |n| %>
+<%= n.humanize %>:
+  name: <%= Faker::Name.name %>
+<% end %>

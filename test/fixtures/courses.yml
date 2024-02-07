@@ -1,13 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-  identifier: MyString
-  needs_lab: false
-  course_size: 1
-
-two:
-  name: MyString
-  identifier: MyString
-  needs_lab: false
-  course_size: 1
+<% 1.upto(5) do |n| %>
+<%= n.humanize %>:
+  name: <%= Faker::Educator.course_name %>
+  identifier: "<%= Faker::Alphanumeric.alpha(number: 3).upcase %>-<%= Faker::Number.number(digits: 3) %>"
+  needs_lab: <%= Faker::Boolean.boolean %>
+  course_size: <%= Faker::Number.number(digits: 2) %>
+<% end %>

@@ -1,11 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  room: MyString
-  is_lab: false
-  room_capacity: 1
-
-two:
-  room: MyString
-  is_lab: false
-  room_capacity: 1
+<% 1.upto(5) do |n| %>
+<%= n.humanize %>:
+  room: "<%= Faker::Name.last_name %> <%= Faker::Number.number(digits: 3) %>"
+  is_lab: <%= Faker::Boolean.boolean %>
+  room_capacity: <%= Faker::Number.number(digits: 2) %>
+<% end %>
