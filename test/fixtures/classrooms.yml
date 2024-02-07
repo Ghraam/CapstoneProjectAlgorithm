@@ -2,10 +2,10 @@
 
 one:
   room: MyString
-  is_lab: 1
+  is_lab: false
   room_capacity: 1
 
 two:
   room: MyString
-  is_lab: 1
+  is_lab: false
   room_capacity: 1

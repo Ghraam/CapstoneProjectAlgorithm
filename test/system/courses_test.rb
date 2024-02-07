@@ -17,7 +17,7 @@ class CoursesTest < ApplicationSystemTestCase
     fill_in "Course size", with: @course.course_size
     fill_in "Identifier", with: @course.identifier
     fill_in "Name", with: @course.name
-    fill_in "Needs lab", with: @course.needs_lab
+    check "Needs lab" if @course.needs_lab
     click_on "Create Course"
 
     assert_text "Course was successfully created"
@@ -31,7 +31,7 @@ class CoursesTest < ApplicationSystemTestCase
     fill_in "Course size", with: @course.course_size
     fill_in "Identifier", with: @course.identifier
     fill_in "Name", with: @course.name
-    fill_in "Needs lab", with: @course.needs_lab
+    check "Needs lab" if @course.needs_lab
     click_on "Update Course"
 
     assert_text "Course was successfully updated"

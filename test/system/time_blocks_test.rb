@@ -15,7 +15,7 @@ class TimeBlocksTest < ApplicationSystemTestCase
     click_on "New time block"
 
     fill_in "Identifier", with: @time_block.identifier
-    fill_in "Is double", with: @time_block.is_double
+    check "Is double" if @time_block.is_double
     click_on "Create Time block"
 
     assert_text "Time block was successfully created"
@@ -27,7 +27,7 @@ class TimeBlocksTest < ApplicationSystemTestCase
     click_on "Edit this time block", match: :first
 
     fill_in "Identifier", with: @time_block.identifier
-    fill_in "Is double", with: @time_block.is_double
+    check "Is double" if @time_block.is_double
     click_on "Update Time block"
 
     assert_text "Time block was successfully updated"

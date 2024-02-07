@@ -14,7 +14,7 @@ class ClassroomsTest < ApplicationSystemTestCase
     visit classrooms_url
     click_on "New classroom"
 
-    fill_in "Is lab", with: @classroom.is_lab
+    check "Is lab" if @classroom.is_lab
     fill_in "Room", with: @classroom.room
     fill_in "Room capacity", with: @classroom.room_capacity
     click_on "Create Classroom"
@@ -27,7 +27,7 @@ class ClassroomsTest < ApplicationSystemTestCase
     visit classroom_url(@classroom)
     click_on "Edit this classroom", match: :first
 
-    fill_in "Is lab", with: @classroom.is_lab
+    check "Is lab" if @classroom.is_lab
     fill_in "Room", with: @classroom.room
     fill_in "Room capacity", with: @classroom.room_capacity
     click_on "Update Classroom"

@@ -3,11 +3,11 @@
 one:
   name: MyString
   identifier: MyString
-  needs_lab: 1
+  needs_lab: false
   course_size: 1
 
 two:
   name: MyString
   identifier: MyString
-  needs_lab: 1
+  needs_lab: false
   course_size: 1

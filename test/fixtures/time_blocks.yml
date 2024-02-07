@@ -2,8 +2,8 @@
 
 one:
   identifier: MyString
-  is_double: 1
+  is_double: false
 
 two:
   identifier: MyString
-  is_double: 1
+  is_double: false
