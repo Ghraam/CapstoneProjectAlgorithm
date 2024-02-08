@@ -27,194 +27,193 @@ Things you may want to cover:
 ![ER Diagram](https://i.imgur.com/qchVn0L.png)
 
 ## API Specification
-Not accurate. Will update.
 ```json
 {
     "assignments": {
         "index": {
-            "url": "/assignments",
+            "url": "/assignments.json",
             "method": "GET",
             "description": "Get all assignments"
         },
         "show": {
-            "url": "/assignments/:id",
+            "url": "/assignments/:id.json",
             "method": "GET",
             "description": "Get a single assignment"
         },
         "create": {
-            "url": "/assignments",
+            "url": "/assignments.json",
             "method": "POST",
             "description": "Create a new assignment"
         },
         "update": {
-            "url": "/assignments/:id",
+            "url": "/assignments/:id.json",
             "method": "PUT",
             "description": "Update an assignment"
         },
         "destroy": {
-            "url": "/assignments/:id",
+            "url": "/assignments/:id.json",
             "method": "DELETE",
             "description": "Delete an assignment"
         }
     },
     "classrooms": {
         "index": {
-            "url": "/classrooms",
+            "url": "/classrooms.json",
             "method": "GET",
             "description": "Get all classrooms"
         },
         "show": {
-            "url": "/classrooms/:id",
+            "url": "/classrooms/:id.json",
             "method": "GET",
             "description": "Get a single classroom"
         },
         "create": {
-            "url": "/classrooms",
+            "url": "/classrooms.json",
             "method": "POST",
             "description": "Create a new classroom"
         },
         "update": {
-            "url": "/classrooms/:id",
+            "url": "/classrooms/:id.json",
             "method": "PUT",
             "description": "Update a classroom"
         },
         "destroy": {
-            "url": "/classrooms/:id",
+            "url": "/classrooms/:id.json",
             "method": "DELETE",
             "description": "Delete a classroom"
         }
     },
     "course_preferences": {
         "index": {
-            "url": "/course_preferences",
+            "url": "/course_preferences.json",
             "method": "GET",
             "description": "Get all course preferences"
         },
         "show": {
-            "url": "/course_preferences/:id",
+            "url": "/course_preferences/:id.json",
             "method": "GET",
             "description": "Get a single course preference"
         },
         "create": {
-            "url": "/course_preferences",
+            "url": "/course_preferences.json",
             "method": "POST",
             "description": "Create a new course preference"
         },
         "update": {
-            "url": "/course_preferences/:id",
+            "url": "/course_preferences/:id.json",
             "method": "PUT",
             "description": "Update a course preference"
         },
         "destroy": {
-            "url": "/course_preferences/:id",
+            "url": "/course_preferences/:id.json",
             "method": "DELETE",
             "description": "Delete a course preference"
         }
     },
     "courses": {
         "index": {
-            "url": "/courses",
+            "url": "/courses.json",
             "method": "GET",
             "description": "Get all courses"
         },
         "show": {
-            "url": "/courses/:id",
+            "url": "/courses/:id.json",
             "method": "GET",
             "description": "Get a single course"
         },
         "create": {
-            "url": "/courses",
+            "url": "/courses.json",
             "method": "POST",
             "description": "Create a new course"
         },
         "update": {
-            "url": "/courses/:id",
+            "url": "/courses/:id.json",
             "method": "PUT",
             "description": "Update a course"
         },
         "destroy": {
-            "url": "/courses/:id",
+            "url": "/courses/:id.json",
             "method": "DELETE",
             "description": "Delete a course"
         }
     },
     "professors": {
         "index": {
-            "url": "/professors",
+            "url": "/professors.json",
             "method": "GET",
             "description": "Get all professors"
         },
         "show": {
-            "url": "/professors/:id",
+            "url": "/professors/:id.json",
             "method": "GET",
             "description": "Get a single professor"
         },
         "create": {
-            "url": "/professors",
+            "url": "/professors.json",
             "method": "POST",
             "description": "Create a new professor"
         },
         "update": {
-            "url": "/professors/:id",
+            "url": "/professors/:id.json",
             "method": "PUT",
             "description": "Update a professor"
         },
         "destroy": {
-            "url": "/professors/:id",
+            "url": "/professors/:id.json",
             "method": "DELETE",
             "description": "Delete a professor"
         }
     },
     "time_blocks": {
         "index": {
-            "url": "/time_blocks",
+            "url": "/time_blocks.json",
             "method": "GET",
             "description": "Get all time blocks"
         },
         "show": {
-            "url": "/time_blocks/:id",
+            "url": "/time_blocks/:id.json",
             "method": "GET",
             "description": "Get a single time block"
         },
         "create": {
-            "url": "/time_blocks",
+            "url": "/time_blocks.json",
             "method": "POST",
             "description": "Create a new time block"
         },
         "update": {
-            "url": "/time_blocks/:id",
+            "url": "/time_blocks/:id.json",
             "method": "PUT",
             "description": "Update a time block"
         },
         "destroy": {
-            "url": "/time_blocks/:id",
+            "url": "/time_blocks/:id.json",
             "method": "DELETE",
             "description": "Delete a time block"
         }
     },
     "time_preferences": {
         "index": {
-            "url": "/time_preferences",
+            "url": "/time_preferences.json",
             "method": "GET",
             "description": "Get all time preferences"
         },
         "show": {
-            "url": "/time_preferences/:id",
+            "url": "/time_preferences/:id.json",
             "method": "GET",
             "description": "Get a single time preference"
         },
         "create": {
-            "url": "/time_preferences",
+            "url": "/time_preferences.json",
             "method": "POST",
             "description": "Create a new time preference"
         },
         "update": {
-            "url": "/time_preferences/:id",
+            "url": "/time_preferences/:id.json",
             "method": "PUT",
             "description": "Update a time preference"
         },
         "destroy": {
-            "url": "/time_preferences/:id",
+            "url": "/time_preferences/:id.json",
             "method": "DELETE",
             "description": "Delete a time preference"
         }
