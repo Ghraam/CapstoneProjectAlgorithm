@@ -58,13 +58,14 @@ class AssignmentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_assignment
-      @assignment = Assignment.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def assignment_params
-      params.require(:assignment).permit(:professor_id, :time_block_id, :course_id, :classroom_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_assignment
+    @assignment = Assignment.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def assignment_params
+    params.require(:assignment).permit(:professor_id, :time_block_id, :course_id, :classroom_id)
+  end
 end
