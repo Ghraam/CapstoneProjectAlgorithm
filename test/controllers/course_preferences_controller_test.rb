@@ -17,7 +17,7 @@ class CoursePreferencesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create course_preference" do
     assert_difference("CoursePreference.count") do
-      post course_preferences_url, params: { course_preference: { course_id: @course_preference.course_id, priority: @course_preference.priority, professor_id: @course_preference.professor_id } }
+      post course_preferences_url, params: { course_preference: { course: @course_preference.course, priority: @course_preference.priority, professor: @course_preference.professor } }
     end
 
     assert_redirected_to course_preference_url(CoursePreference.last)
@@ -34,7 +34,7 @@ class CoursePreferencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update course_preference" do
-    patch course_preference_url(@course_preference), params: { course_preference: { course_id: @course_preference.course_id, priority: @course_preference.priority, professor_id: @course_preference.professor_id } }
+    patch course_preference_url(@course_preference), params: { course_preference: { course: @course_preference.course, priority: @course_preference.priority, professor: @course_preference.professor } }
     assert_redirected_to course_preference_url(@course_preference)
   end
 

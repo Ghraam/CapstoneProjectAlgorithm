@@ -17,7 +17,7 @@ class TimePreferencesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create time_preference" do
     assert_difference("TimePreference.count") do
-      post time_preferences_url, params: { time_preference: { priority: @time_preference.priority, professor_id: @time_preference.professor_id, time_block_id: @time_preference.time_block_id } }
+      post time_preferences_url, params: { time_preference: { priority: @time_preference.priority, professor: @time_preference.professor, time_block: @time_preference.time_block } }
     end
 
     assert_redirected_to time_preference_url(TimePreference.last)
@@ -34,7 +34,7 @@ class TimePreferencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update time_preference" do
-    patch time_preference_url(@time_preference), params: { time_preference: { priority: @time_preference.priority, professor_id: @time_preference.professor_id, time_block_id: @time_preference.time_block_id } }
+    patch time_preference_url(@time_preference), params: { time_preference: { priority: @time_preference.priority, professor: @time_preference.professor, time_block: @time_preference.time_block } }
     assert_redirected_to time_preference_url(@time_preference)
   end
 
