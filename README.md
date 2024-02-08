@@ -24,9 +24,10 @@ Things you may want to cover:
 * ...
 
 ## ER Diagram
-![ER Diagram](https://i.imgur.com/YI29QWG.png)
+![ER Diagram](https://i.imgur.com/qchVn0L.png)
 
 ## API Specification
+Not accurate. Will update.
 ```json
 {
     "assignments": {

@@ -16,6 +16,8 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.integer "time_block_id", null: false
     t.integer "course_id", null: false
     t.integer "classroom_id", null: false
+    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
     t.index ["classroom_id"], name: "fk_professor_has_time_block1_classroom1_idx"
     t.index ["course_id"], name: "fk_professor_has_time_block1_class1_idx"
     t.index ["professor_id"], name: "fk_professor_has_time_block1_professor1_idx"
@@ -26,12 +28,16 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.string "room", null: false
     t.integer "is_lab", limit: 1, null: false
     t.integer "room_capacity", null: false
+    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
   end
 
   create_table "course_preferences", primary_key: ["professor_id", "course_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "professor_id", null: false
     t.integer "course_id", null: false
     t.integer "priority", null: false
+    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
     t.index ["course_id"], name: "fk_professor_has_class_class1_idx"
     t.index ["professor_id"], name: "fk_professor_has_class_professor1_idx"
   end
@@ -41,21 +47,29 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.string "identifier", null: false
     t.integer "needs_lab", limit: 1, null: false
     t.integer "course_size", null: false
+    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
   end
 
   create_table "professors", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
+    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
   end
 
   create_table "time_blocks", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "identifier", null: false
     t.integer "is_double", limit: 1, null: false
+    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
   end
 
   create_table "time_preferences", primary_key: ["professor_id", "time_block_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "professor_id", null: false
     t.integer "time_block_id", null: false
     t.integer "priority", null: false
+    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
     t.index ["professor_id"], name: "fk_professor_has_time_block_professor_idx"
     t.index ["time_block_id"], name: "fk_professor_has_time_block_time_block1_idx"
   end
