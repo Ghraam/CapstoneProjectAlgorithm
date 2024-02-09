@@ -7,3 +7,21 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+data = YAML.load_file("data.yml")
+
+data["classrooms"].each do |classroom|
+  Classroom.find_or_create_by!(room: classroom["room"], is_lab: Faker::Boolean.boolean, room_capacity: Faker::Number.between(from: 10, to: 100))
+end
+
+data["courses"].each do |course|
+  Course.find_or_create_by!(name: course["name"], identifier: course["identifier"], needs_lab: Faker::Boolean.boolean, course_size: Faker::Number.between(from: 10, to: 100))
+end
+
+data["professors"].each do |professor|
+  Professor.find_or_create_by!(name: professor["name"])
+end
+
+data["course_preferences"].each do |course_preference|
+  CoursePreference.find_or_create_by!(professor: Professor.find_by(name: course_preference["professor"]), course: Course.find_by(identifier: course_preference["course"]), priority: course_preference["priority"])
+end
