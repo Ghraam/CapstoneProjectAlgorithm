@@ -47,6 +47,8 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.string "identifier", null: false
     t.integer "needs_lab", limit: 1, null: false
     t.integer "course_size", null: false
+    t.integer "level", null: false
+    t.integer "needs_double", limit: 1, null: false
     t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
   end
