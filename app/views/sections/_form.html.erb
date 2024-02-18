@@ -1,15 +1,25 @@
-<%= form_with(model: assignment) do |form| %>
-  <% if assignment.errors.any? %>
+<%= form_with(model: section) do |form| %>
+  <% if section.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+      <h2><%= pluralize(section.errors.count, "error") %> prohibited this section from being saved:</h2>
 
       <ul>
-        <% assignment.errors.each do |error| %>
+        <% section.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
+
+  <div>
+    <%= form.label :course_id, style: "display: block" %>
+    <%= form.text_field :course_id %>
+  </div>
+
+  <div>
+    <%= form.label :section_num, style: "display: block" %>
+    <%= form.number_field :section_num %>
+  </div>
 
   <div>
     <%= form.label :professor_id, style: "display: block" %>
@@ -19,11 +29,6 @@
   <div>
     <%= form.label :time_block_id, style: "display: block" %>
     <%= form.text_field :time_block_id %>
-  </div>
-
-  <div>
-    <%= form.label :course_id, style: "display: block" %>
-    <%= form.text_field :course_id %>
   </div>
 
   <div>

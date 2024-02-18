@@ -1,30 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Just updated the database schema, which probably broke everything. I'll fix it later.
 
 ## ER Diagram
-![ER Diagram](https://i.imgur.com/dvxh010.png)
+![ER Diagram](https://i.imgur.com/z0rwrBZ.png)
 
 ## API Specification
 ```json

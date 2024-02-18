@@ -1,8 +1,0 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-<% 1.upto(5) do |n| %>
-<%= n.humanize %>:
-  professor: <%= n.humanize %>
-  time_block: <%= n.humanize %>
-  course: <%= n.humanize %>
-  classroom: <%= n.humanize %>
-<% end %>
