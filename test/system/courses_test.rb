@@ -16,7 +16,9 @@ class CoursesTest < ApplicationSystemTestCase
 
     fill_in "Course size", with: @course.course_size
     fill_in "Identifier", with: @course.identifier
+    fill_in "Level", with: @course.level
     fill_in "Name", with: @course.name
+    check "Needs double" if @course.needs_double
     check "Needs lab" if @course.needs_lab
     click_on "Create Course"
 
@@ -30,7 +32,9 @@ class CoursesTest < ApplicationSystemTestCase
 
     fill_in "Course size", with: @course.course_size
     fill_in "Identifier", with: @course.identifier
+    fill_in "Level", with: @course.level
     fill_in "Name", with: @course.name
+    check "Needs double" if @course.needs_double
     check "Needs lab" if @course.needs_lab
     click_on "Update Course"
 

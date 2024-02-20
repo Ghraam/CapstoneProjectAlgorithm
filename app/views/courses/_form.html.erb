@@ -32,6 +32,16 @@
   </div>
 
   <div>
+    <%= form.label :level, style: "display: block" %>
+    <%= form.number_field :level %>
+  </div>
+
+  <div>
+    <%= form.label :needs_double, style: "display: block" %>
+    <%= form.check_box :needs_double %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
