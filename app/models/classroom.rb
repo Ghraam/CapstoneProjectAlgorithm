@@ -1,3 +1,3 @@
 class Classroom < ApplicationRecord
-  has_many :assignments, dependent: :destroy
+  has_many :sections, dependent: :destroy
 end
