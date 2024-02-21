@@ -17,8 +17,7 @@ password: password1234
 The server is currently set to use a MySQL database. To change this, edit the `config/database.yml` file. The database is currently set to use the `capstone_scheduling_project` database for development and the `capstone_scheduling_project_test` database for testing. To change this, edit the `config/database.yml` file.
 To set up the database, run the following commands:
 ```bash
-rails db:create
-rails db:migrate
+mysql -u capstone -p < db-create.sql
 rails db:seed
 ```
 ### Running the server
