@@ -4,6 +4,9 @@
 ### Rails installation
 See [Rails installation guide](https://guides.rubyonrails.org/v5.0/getting_started.html).
 
+#### Dependencies
+- `ruby-dev`
+
 ### Database setup
 Usernames and passwords are set in `config/database.yml`. Configuration is currently as follows:
 ```yaml
