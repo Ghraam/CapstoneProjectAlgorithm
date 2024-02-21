@@ -52,12 +52,12 @@ rails s
         "update": {
             "url": "/sections/:id.json",
             "method": "PUT",
-            "description": "Update an section"
+            "description": "Update a section"
         },
         "destroy": {
             "url": "/sections/:id.json",
             "method": "DELETE",
-            "description": "Delete an section"
+            "description": "Delete a section"
         }
     },
     "classrooms": {
