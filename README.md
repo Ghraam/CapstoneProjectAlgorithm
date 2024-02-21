@@ -1,6 +1,28 @@
 # README
 
-Just updated the database schema, which probably broke everything. I'll fix it later.
+## Setup
+### Rails installation
+See [Rails installation guide](https://guides.rubyonrails.org/v5.0/getting_started.html).
+
+### Database setup
+Usernames and passwords are set in `config/database.yml`. Configuration is currently as follows:
+```yaml
+---
+username: capstone
+password: password1234
+```
+The server is currently set to use a MySQL database. To change this, edit the `config/database.yml` file. The database is currently set to use the `capstone_scheduling_project` database for development and the `capstone_scheduling_project_test` database for testing. To change this, edit the `config/database.yml` file.
+To set up the database, run the following commands:
+```bash
+rails db:create
+rails db:migrate
+rails db:seed
+```
+### Running the server
+To run the server, run the following command:
+```bash
+rails s
+```
 
 ## ER Diagram
 ![ER Diagram](https://i.imgur.com/z0rwrBZ.png)
@@ -8,31 +30,31 @@ Just updated the database schema, which probably broke everything. I'll fix it l
 ## API Specification
 ```json
 {
-    "assignments": {
+    "sections": {
         "index": {
-            "url": "/assignments.json",
+            "url": "/sections.json",
             "method": "GET",
-            "description": "Get all assignments"
+            "description": "Get all sections"
         },
         "show": {
-            "url": "/assignments/:id.json",
+            "url": "/sections/:id.json",
             "method": "GET",
-            "description": "Get a single assignment"
+            "description": "Get a single section"
         },
         "create": {
-            "url": "/assignments.json",
+            "url": "/sections.json",
             "method": "POST",
-            "description": "Create a new assignment"
+            "description": "Create a new section"
         },
         "update": {
-            "url": "/assignments/:id.json",
+            "url": "/sections/:id.json",
             "method": "PUT",
-            "description": "Update an assignment"
+            "description": "Update an section"
         },
         "destroy": {
-            "url": "/assignments/:id.json",
+            "url": "/sections/:id.json",
             "method": "DELETE",
-            "description": "Delete an assignment"
+            "description": "Delete an section"
         }
     },
     "classrooms": {

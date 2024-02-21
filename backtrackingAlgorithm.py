@@ -20,25 +20,48 @@ BLOCK_SEVEN = 6
 BLOCK_EIGHT = 7
 
 
-class Room(NamedTuple):
+class Room(NamedTuple): # -> Classroom
     name: str
+    #isLab: bool
+    #capacity: int
 
 # represents a professor, and their level of class they can teach
 class Professor(NamedTuple):
     name: str
-    level: int
+    level: int # remove?
 
 # represents a course, whether its a double block, its name and what minimum level is required to teach it
 class Course(NamedTuple):
     name: str
-    doubleBlock: bool
-    minLevel: int
+    #identifier: str
+    #needsLab: bool
+    #courseSize: int
+    doubleBlock: bool # -> needsDouble
+    minLevel: int # -> level
 
 # representation of a single course, which room its in and the teacher
-class RoomCourse(NamedTuple):
+class RoomCourse(NamedTuple): # -> Section
     room: Room
     course: Course
     professor: Professor
+    # add time block once class is created
+
+class TimeBlock(NamedTuple):
+    identifier: str
+    isDouble: bool
+    # keep? (update schema accordingly)
+    #day: int
+    #time: int
+
+class CoursePreference(NamedTuple):
+    professor: Professor
+    course: Course
+    priority: int
+
+class TimePreference(NamedTuple):
+    professor: Professor
+    time: TimeBlock
+    priority: int
 
 # representation of the schedule being used by the csp
 # TODO: use a TimeBlock class to represent a time block instead of a grid of RoomCourses
