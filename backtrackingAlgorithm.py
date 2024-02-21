@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
 # calendar.py
 # Solve the scheduling problem using the backtracking search algorithm
 # Project done for CSI-480 Artificial Intelligence at Champlain College
 # Completed by: Alec Ross, Joe Marchesini, Raymond Zheng, Graham Finlayson-Fife, and Liam Cannon
-# With subsequent modifications by: Graham Finlayson-Fife
 # Date: 10/11/2022
 
 from xml import dom
@@ -26,44 +24,28 @@ class Room(NamedTuple):
     name: str
 
 # represents a professor, and their level of class they can teach
-
-
 class Professor(NamedTuple):
     name: str
     level: int
 
 # represents a course, whether its a double block, its name and what minimum level is required to teach it
-
-
 class Course(NamedTuple):
     name: str
     doubleBlock: bool
     minLevel: int
 
 # representation of a single course, which room its in and the teacher
-
-
 class RoomCourse(NamedTuple):
     room: Room
     course: Course
     professor: Professor
 
-
-class RoomCourseTime(NamedTuple):
-    RoomCourse: RoomCourse
-    day: int
-    time: int
-
-
 # representation of the schedule being used by the csp
-
-
+# TODO: use a TimeBlock class to represent a time block instead of a grid of RoomCourses
 class Schedule(NamedTuple):
     schedule: List[List[RoomCourse]]
 
 # converts a dictionary to a schedule, with making lists of roomcourses in positions that allow for multiple classes in the same timeslot
-
-
 def dict_to_schedule(variables, dict, schedule):
     newSched = deepcopy(schedule.schedule)
     list_of_domains = [dict[i].schedule for i in variables]
@@ -83,8 +65,6 @@ def generate_grid(rows: int, columns: int) -> Schedule:
     return Schedule([["-" for c in range(columns)] for r in range(rows)])
 
 # display the schedule
-
-
 def display_grid(grid: Schedule) -> None:
     # rotate the grid so that it displays correctly
     for i in range(len(grid[0])):
@@ -102,8 +82,6 @@ def display_grid(grid: Schedule) -> None:
         print("\n")
 
 # generates all combinations of courses at each time slot on each day in each room
-
-
 def generate_domain(course: Course, schedule: Schedule, prof: List[Professor], rooms: List[Room]) -> List[Schedule]:
     SCHEDULE_WIDTH = len(schedule.schedule)
     SCHEDULE_LENGTH = len(schedule.schedule[0])
@@ -139,8 +117,6 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor], r
     return domain
 
 # some of this code was generated with GitHub Copilot
-
-
 class ScheduleConstraint(Constraint[Course, List[Schedule]]):
     # can't have same class twice on same day
     # can't have same class twice on same time slot
@@ -173,8 +149,6 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
         return True
 
 # solution function, passed courses, rooms and professors
-
-
 def solution(courses: List[Course], rooms: List[Room], professors: List[Professor]) -> None:
     variableDict = {}
     # generate empty grid
@@ -196,9 +170,7 @@ def solution(courses: List[Course], rooms: List[Room], professors: List[Professo
         print("returned none")
     else:
         # displays solution neatly
-        sched = dict_to_schedule(courses, genOutcome, newSched)
-        print(sched)
-        display_grid(sched)
+        display_grid(dict_to_schedule(courses, genOutcome, newSched))
 
 
 if __name__ == "__main__":
