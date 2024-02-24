@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+	<script src="js/header.js" type="text/javascript"></script>
+	<style>
+		#container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 180px;
+			margin: 0;
+		}
+        form {
+            margin: 0 10px;
+        }
+		
+    </style>
+</head>
+<body>
+    <header-component></header-component>
+    <main>
+		<div id="container">
+			<form id="professors" onsubmit="updateDisplay('professors'); return false;">
+				<label for="professors">Professors</label></br>
+				<input type="text" id="professorsInput">
+				<p id="professorsDisplay"></p>
+				<button type="submit">Submit</button>
+			</form>
+			<form id="classes" onsubmit="updateDisplay('classes'); return false;">
+				<label for="classes">Classes</label></br>
+				<input type="text" id="classesInput">
+				<p id="classesDisplay"></p>
+				<button type="submit">Submit</button>
+			</form>
+			<form id="classrooms" onsubmit="updateDisplay('classrooms'); return false;">
+				<label for="classrooms">Classrooms</label></br>
+				<input type="text" id="classroomsInput">
+				<p id="classroomsDisplay"></p>
+				<button type="submit">Submit</button>
+			</form>
+		</div>
+	</main>
+    <script>
+        function updateDisplay(formId) {
+			var display = document.getElementById(formId + 'Display');
+			var input = document.getElementById(formId + 'Input');
+			var span = document.createElement('span');
+			span.textContent = input.value;
+			var comma = document.createTextNode(', ');
+			span.addEventListener('click', function() {
+				if (span.nextSibling) {
+					display.removeChild(span.nextSibling); // remove the following comma
+				} else if (span.previousSibling) {
+					display.removeChild(span.previousSibling); // remove the preceding comma if it's the last element
+				}
+				display.removeChild(span);
+			});
+			if (display.textContent !== '') {
+				display.appendChild(comma);
+			}
+			display.appendChild(span);
+			input.value = '';
+		}
+    </script>
+</body>
+</html>

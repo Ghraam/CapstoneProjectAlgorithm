@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Corrections</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+	<style>
+        body {
+            font-size: 0.9vw;
+        }
+        
+        .dropTarget {
+            display: inline-block;
+            min-height: 30px;
+            width: 100%;
+            padding: 1px;
+            margin: 0px;
+        }
+        
+        #cell00,
+        #cell01,
+        #cell02,
+        #cell03,
+        #cell04,
+        #cell05,
+        #cell06,
+        #cell07,
+        #cell08,
+        #cell09,
+        #cell010,
+        #cell011,
+        #cell012 {
+            border: 2px solid;
+            border-color: blue;
+            width: 5%;
+            min-height: 30px;
+            font-size: 11pt;
+            font-size: 0.9vw;
+            text-align: center;
+        }
+        
+        #courseNameContainer {
+            display: inline-block;
+            width: 98%;
+            min-height: 10px;
+            vertical-align: top;
+            font-size: 11pt;
+            font-size: 0.9vw;
+        }
+        
+        #nameBoxContainer {
+            border: 2px solid;
+            border-color: blue;
+            background-color: white;
+            min-height: 10px;
+            width: 30%;
+            vertical-align: top;
+            font-size: 11pt;
+            font-size: 0.9vw;
+        }
+        
+        #holdingPen {
+            padding: 2px;
+            border: 1px solid;
+            border-color: green;
+            margin-left: 30px;
+            min-height: 100px;
+            min-width: 100px;
+            font-size: 0.9vw;
+        }
+        
+        #surplusDiv {
+            float: left;
+            padding: 2px;
+            border: 1px solid;
+            border-color: green;
+            margin: 2px;
+            min-height: 20px;
+            min-width: 100px;
+            width: 98%;
+        }
+        
+        #nameDragTable td {
+            border: 1px solid;
+            border-color: green;
+            margin: 2px;
+            min-height: 3%;
+            margin-left: 50px;
+            font-size: 11pt;
+            font-size: 0.9vw;
+        }
+        
+        #nameDragTable td:nth-child(1) {
+            text-align: center;
+        }
+        
+        #addButton,
+        #addName {
+            vertical-align: middle;
+            font-size: .9vw;
+        }
+        
+        .dragger {
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 10px;
+            border-color: blue;
+            padding: 2px;
+            margin: 2px;
+            min-width: 70px;
+            text-align: center;
+            font-size: 0.8vw;
+        }
+        
+        #pastInfo {
+            padding: 2px;
+            margin: 2px;
+            width: 900px;
+            font-size: 11pt;
+            font-size: .8vw;
+            padding: 2px;
+            margin: 1px;
+            background: #4477a1;
+            background: -webkit-gradient(linear, left top, left bottom, from(#81a8cb), to(#4477a1));
+            background: -moz-linear-gradient(-90deg, #81a8cb, #4477a1);
+            filter: progid: DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#81a8cb', endColorstr='#4477a1');
+        }
+        
+        #status,
+        #wants,
+        #norm,
+        #sched,
+        #infoDiv,
+        #selectDiv,
+        #ty,
+        #TYClasses,
+        #ly,
+        #LYClasses,
+        #addName,
+        #addButton,
+        #trashAlert {
+            display: inline-block;
+            font-size: 10pt;
+            font-size: .8vw;
+            font-weight: bold;
+        }
+        
+        #infoDiv {
+            margin-left: 30px;
+            font-size: .8vw;
+        }
+        
+        #facultyNames {
+            font-size: 1vw;
+        }
+        
+        #trash {
+            margin-left: 1%;
+        }
+        
+        #trashAlert {
+            margin-right: 20px;
+        }
+        
+        #mainMenu,
+        inputMenu {
+            font-size: 1vw;
+        }
+        
+        .button {
+            font-size: .9vw;
+        }
+        
+        #clearHoldingButton {
+            height: 30%;
+            margin-left: 20px;
+            font-size: .8vw;
+        }
+        
+        #showName {
+            font-size: 11pt;
+            font-size: .8vw;
+        }
+        
+        #facultyCount {
+            color: red;
+            font-size: .9vw;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Schedule</a></li>
+                <li><a href="editdata.html">Edit Data</a></li>
+                <li><a href="export.html">Export</a></li>
+                <li><a href="corrections.html">Corrections</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Corrections</h1>
+        <!--<div class="drag-and-drop">
+            <div class="drop-area" id="dropArea" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="draggable-item" id="item1" draggable="true">Apple</div>
+				<div class="draggable-item" id="item2" draggable="true">Orange</div>
+				<div class="draggable-item" id="item3" draggable="true">Bannana</div>
+				<div class="draggable-item" id="item4" draggable="true">Pineapple</div>
+				<div class="draggable-item" id="item5" draggable="true">Lemon</div>
+			</div>
+        </div>-->
+		<div class="row" id="holdingRow">
+
+            <button type="button" id="clearHoldingButton" class="btn btn-primary  btn-small" onclick="clearHolding()">Clear<br>Names</button>
+			<div id="holdingPen" ondragover="allowDrop(event)" ondrop="drop(event, this)" onchange="readDragTable()" class="dropbox; col-sm-10"><div class="dragger" id="Banfill, Jonathan.2" name="Banfill, Jonathan.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(214, 238, 202);">Banfill, Jonathan</div><div class="dragger" id="Banfill, Jonathan.3" name="Banfill, Jonathan.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(214, 238, 202);">Banfill, Jonathan</div><div class="dragger" id="Bashaw, Charles.2" name="Bashaw, Charles.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(245, 176, 234);">Bashaw, Charles</div><div class="dragger" id="Bashaw, Charles.3" name="Bashaw, Charles.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(245, 176, 234);">Bashaw, Charles</div><div class="dragger" id="Bhonslay, Marianne.0" name="Bhonslay, Marianne.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(151, 230, 237);">Bhonslay, Marianne</div><div class="dragger" id="Bhonslay, Marianne.1" name="Bhonslay, Marianne.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(151, 230, 237);">Bhonslay, Marianne</div><div class="dragger" id="Bowen, Kelly Anne.0" name="Bowen, Kelly Anne.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(181, 212, 241);">Bowen, Kelly Anne</div><div class="dragger" id="Bowen, Kelly Anne.1" name="Bowen, Kelly Anne.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(181, 212, 241);">Bowen, Kelly Anne</div><div class="dragger" id="Brandenburg, Cyndi.0" name="Brandenburg, Cyndi.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(171, 167, 128);">Brandenburg, Cyndi</div><div class="dragger" id="Brandenburg, Cyndi.1" name="Brandenburg, Cyndi.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(171, 167, 128);">Brandenburg, Cyndi</div><div class="dragger" id="Brandenburg, Cyndi.2" name="Brandenburg, Cyndi.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(171, 167, 128);">Brandenburg, Cyndi</div><div class="dragger" id="Brandenburg, Cyndi.3" name="Brandenburg, Cyndi.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(171, 167, 128);">Brandenburg, Cyndi</div><div class="dragger" id="Brevik, Kristian.0" name="Brevik, Kristian.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(216, 200, 183);">Brevik, Kristian</div><div class="dragger" id="Brevik, Kristian.1" name="Brevik, Kristian.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(216, 200, 183);">Brevik, Kristian</div><div class="dragger" id="Brooks, Christine.0" name="Brooks, Christine.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(202, 210, 159);">Brooks, Christine</div><div class="dragger" id="Brooks, Christine.1" name="Brooks, Christine.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(202, 210, 159);">Brooks, Christine</div><div class="dragger" id="Bryant, Clinton Matthew.0" name="Bryant, Clinton Matthew.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(250, 235, 218);">Bryant, Clinton Matthew</div><div class="dragger" id="Bryant, Clinton Matthew.1" name="Bryant, Clinton Matthew.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(250, 235, 218);">Bryant, Clinton Matthew</div><div class="dragger" id="Buckley, Ciaran.0" name="Buckley, Ciaran.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(245, 190, 176);">Buckley, Ciaran</div><div class="dragger" id="Buckley, Ciaran.1" name="Buckley, Ciaran.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(245, 190, 176);">Buckley, Ciaran</div><div class="dragger" id="Buckley, Ciaran.2" name="Buckley, Ciaran.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(245, 190, 176);">Buckley, Ciaran</div><div class="dragger" id="Buckley, Ciaran.3" name="Buckley, Ciaran.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(245, 190, 176);">Buckley, Ciaran</div><div class="dragger" id="Burgess, Ariel.0" name="Burgess, Ariel.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(153, 166, 212);">Burgess, Ariel</div><div class="dragger" id="Burgess, Ariel.1" name="Burgess, Ariel.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(153, 166, 212);">Burgess, Ariel</div><div class="dragger" id="Cafferty, Edward.0" name="Cafferty, Edward.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(214, 179, 244);">Cafferty, Edward</div><div class="dragger" id="Cafferty, Edward.1" name="Cafferty, Edward.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(214, 179, 244);">Cafferty, Edward</div><div class="dragger" id="Cantelli, Veruska.0" name="Cantelli, Veruska.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(244, 243, 137);">Cantelli, Veruska</div><div class="dragger" id="Cantelli, Veruska.1" name="Cantelli, Veruska.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(244, 243, 137);">Cantelli, Veruska</div><div class="dragger" id="Cantelli, Veruska.2" name="Cantelli, Veruska.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(244, 243, 137);">Cantelli, Veruska</div><div class="dragger" id="Cantelli, Veruska.3" name="Cantelli, Veruska.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(244, 243, 137);">Cantelli, Veruska</div><div class="dragger" id="Capone, Alfonso.0" name="Capone, Alfonso.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(132, 174, 138);">Capone, Alfonso</div><div class="dragger" id="Capone, Alfonso.1" name="Capone, Alfonso.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(132, 174, 138);">Capone, Alfonso</div><div class="dragger" id="Capone, Alfonso.2" name="Capone, Alfonso.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(132, 174, 138);">Capone, Alfonso</div><div class="dragger" id="Capone, Alfonso.3" name="Capone, Alfonso.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(132, 174, 138);">Capone, Alfonso</div><div class="dragger" id="Casey, Cheryl.0" name="Casey, Cheryl.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(143, 134, 178);">Casey, Cheryl</div><div class="dragger" id="Casey, Cheryl.1" name="Casey, Cheryl.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(143, 134, 178);">Casey, Cheryl</div><div class="dragger" id="Cross, James.0" name="Cross, James.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(253, 169, 246);">Cross, James</div><div class="dragger" id="Cross, James.1" name="Cross, James.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(253, 169, 246);">Cross, James</div><div class="dragger" id="Cross, James.2" name="Cross, James.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(253, 169, 246);">Cross, James</div><div class="dragger" id="Cross, James.3" name="Cross, James.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(253, 169, 246);">Cross, James</div><div class="dragger" id="De Haro, Ines.0" name="De Haro, Ines.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(147, 153, 219);">De Haro, Ines</div><div class="dragger" id="De Haro, Ines.1" name="De Haro, Ines.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(147, 153, 219);">De Haro, Ines</div><div class="dragger" id="Deng, Weiling.0" name="Deng, Weiling.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(182, 204, 208);">Deng, Weiling</div><div class="dragger" id="Deng, Weiling.1" name="Deng, Weiling.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(182, 204, 208);">Deng, Weiling</div><div class="dragger" id="Deng, Weiling.2" name="Deng, Weiling.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(182, 204, 208);">Deng, Weiling</div><div class="dragger" id="Deng, Weiling.3" name="Deng, Weiling.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(182, 204, 208);">Deng, Weiling</div><div class="dragger" id="Esckilsen, Erik.0" name="Esckilsen, Erik.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(241, 132, 150);">Esckilsen, Erik</div><div class="dragger" id="Esckilsen, Erik.1" name="Esckilsen, Erik.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(241, 132, 150);">Esckilsen, Erik</div><div class="dragger" id="Esckilsen, Erik.2" name="Esckilsen, Erik.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(241, 132, 150);">Esckilsen, Erik</div><div class="dragger" id="Esckilsen, Erik.3" name="Esckilsen, Erik.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(241, 132, 150);">Esckilsen, Erik</div><div class="dragger" id="Farley, Joyce-Zoe.0" name="Farley, Joyce-Zoe.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(190, 141, 251);">Farley, Joyce-Zoe</div><div class="dragger" id="Farley, Joyce-Zoe.1" name="Farley, Joyce-Zoe.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(190, 141, 251);">Farley, Joyce-Zoe</div><div class="dragger" id="Glover, Gordon.0" name="Glover, Gordon.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(174, 147, 215);">Glover, Gordon</div><div class="dragger" id="Glover, Gordon.1" name="Glover, Gordon.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(174, 147, 215);">Glover, Gordon</div><div class="dragger" id="Glover, Gordon.2" name="Glover, Gordon.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(174, 147, 215);">Glover, Gordon</div><div class="dragger" id="Glover, Gordon.3" name="Glover, Gordon.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(174, 147, 215);">Glover, Gordon</div><div class="dragger" id="Horne, Miriam.0" name="Horne, Miriam.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(151, 225, 219);">Horne, Miriam</div><div class="dragger" id="Horne, Miriam.1" name="Horne, Miriam.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(151, 225, 219);">Horne, Miriam</div><div class="dragger" id="Horne, Miriam.2" name="Horne, Miriam.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(151, 225, 219);">Horne, Miriam</div><div class="dragger" id="Horne, Miriam.3" name="Horne, Miriam.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(151, 225, 219);">Horne, Miriam</div><div class="dragger" id="Howe, Amy.0" name="Howe, Amy.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(189, 147, 165);">Howe, Amy</div><div class="dragger" id="Howe, Amy.1" name="Howe, Amy.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(189, 147, 165);">Howe, Amy</div><div class="dragger" id="Jeso, Isabella.0" name="Jeso, Isabella.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(152, 194, 199);">Jeso, Isabella</div><div class="dragger" id="Jeso, Isabella.1" name="Jeso, Isabella.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(152, 194, 199);">Jeso, Isabella</div><div class="dragger" id="Kaarla, Erik.0" name="Kaarla, Erik.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(215, 185, 198);">Kaarla, Erik</div><div class="dragger" id="Kaarla, Erik.1" name="Kaarla, Erik.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(215, 185, 198);">Kaarla, Erik</div><div class="dragger" id="Kelly, Michael.0" name="Kelly, Michael.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(222, 171, 227);">Kelly, Michael</div><div class="dragger" id="Kelly, Michael.1" name="Kelly, Michael.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(222, 171, 227);">Kelly, Michael</div><div class="dragger" id="Kelly, Michael.2" name="Kelly, Michael.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(222, 171, 227);">Kelly, Michael</div><div class="dragger" id="Kelly, Michael.3" name="Kelly, Michael.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(222, 171, 227);">Kelly, Michael</div><div class="dragger" id="Kim, Rhiannon.0" name="Kim, Rhiannon.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(127, 212, 171);">Kim, Rhiannon</div><div class="dragger" id="Kim, Rhiannon.1" name="Kim, Rhiannon.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(127, 212, 171);">Kim, Rhiannon</div><div class="dragger" id="Kite, David.2" name="Kite, David.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(204, 131, 183);">Kite, David</div><div class="dragger" id="Kite, David.3" name="Kite, David.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(204, 131, 183);">Kite, David</div><div class="dragger" id="Kosnitsky, Fred.0" name="Kosnitsky, Fred.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(162, 194, 219);">Kosnitsky, Fred</div><div class="dragger" id="Kosnitsky, Fred.1" name="Kosnitsky, Fred.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(162, 194, 219);">Kosnitsky, Fred</div><div class="dragger" id="Lange, Alena.0" name="Lange, Alena.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(174, 240, 153);">Lange, Alena</div><div class="dragger" id="Lange, Alena.1" name="Lange, Alena.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(174, 240, 153);">Lange, Alena</div><div class="dragger" id="Lange, Michael.0" name="Lange, Michael.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(240, 164, 225);">Lange, Michael</div><div class="dragger" id="Lange, Michael.1" name="Lange, Michael.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(240, 164, 225);">Lange, Michael</div><div class="dragger" id="Martha, Moreno-Linares.0" name="Martha, Moreno-Linares.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(230, 216, 173);">Martha, Moreno-Linares</div><div class="dragger" id="Martha, Moreno-Linares.1" name="Martha, Moreno-Linares.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(230, 216, 173);">Martha, Moreno-Linares</div><div class="dragger" id="Mayer, Robert.2" name="Mayer, Robert.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(249, 176, 144);">Mayer, Robert</div><div class="dragger" id="Mayer, Robert.3" name="Mayer, Robert.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(249, 176, 144);">Mayer, Robert</div><div class="dragger" id="Moser-Hardy, Fiadhnait.0" name="Moser-Hardy, Fiadhnait.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(240, 210, 151);">Moser-Hardy, Fiadhnait</div><div class="dragger" id="Moser-Hardy, Fiadhnait.1" name="Moser-Hardy, Fiadhnait.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(240, 210, 151);">Moser-Hardy, Fiadhnait</div><div class="dragger" id="Nemazee, Rowshan.0" name="Nemazee, Rowshan.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(222, 155, 157);">Nemazee, Rowshan</div><div class="dragger" id="Nemazee, Rowshan.1" name="Nemazee, Rowshan.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(222, 155, 157);">Nemazee, Rowshan</div><div class="dragger" id="Nemazee, Rowshan.2" name="Nemazee, Rowshan.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(222, 155, 157);">Nemazee, Rowshan</div><div class="dragger" id="Nemazee, Rowshan.3" name="Nemazee, Rowshan.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(222, 155, 157);">Nemazee, Rowshan</div><div class="dragger" id="Noonan, Kerry.2" name="Noonan, Kerry.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(152, 128, 200);">Noonan, Kerry</div><div class="dragger" id="Noonan, Kerry.3" name="Noonan, Kerry.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(152, 128, 200);">Noonan, Kerry</div><div class="dragger" id="Novotny, Kristin.1" name="Novotny, Kristin.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(201, 132, 172);">Novotny, Kristin</div><div class="dragger" id="Novotny, Kristin.2" name="Novotny, Kristin.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(201, 132, 172);">Novotny, Kristin</div><div class="dragger" id="Novotny, Kristin.3" name="Novotny, Kristin.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(201, 132, 172);">Novotny, Kristin</div><div class="dragger" id="O'Connor, Teague.0" name="O'Connor, Teague.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(143, 134, 231);">O'Connor, Teague</div><div class="dragger" id="O'Connor, Teague.1" name="O'Connor, Teague.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(143, 134, 231);">O'Connor, Teague</div><div class="dragger" id="Paul, Velpula Anisha.0" name="Paul, Velpula Anisha.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(140, 185, 231);">Paul, Velpula Anisha</div><div class="dragger" id="Paul, Velpula Anisha.1" name="Paul, Velpula Anisha.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(140, 185, 231);">Paul, Velpula Anisha</div><div class="dragger" id="Pepin, Craig.1" name="Pepin, Craig.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(162, 168, 164);">Pepin, Craig</div><div class="dragger" id="Pepin, Craig.2" name="Pepin, Craig.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(162, 168, 164);">Pepin, Craig</div><div class="dragger" id="Pepin, Craig.3" name="Pepin, Craig.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(162, 168, 164);">Pepin, Craig</div><div class="dragger" id="Perriello, Tony.0" name="Perriello, Tony.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(166, 131, 246);">Perriello, Tony</div><div class="dragger" id="Perriello, Tony.1" name="Perriello, Tony.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(166, 131, 246);">Perriello, Tony</div><div class="dragger" id="Perriello, Tony.2" name="Perriello, Tony.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(166, 131, 246);">Perriello, Tony</div><div class="dragger" id="Perriello, Tony.3" name="Perriello, Tony.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(166, 131, 246);">Perriello, Tony</div><div class="dragger" id="Rizzo, Flavio.2" name="Rizzo, Flavio.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(168, 203, 183);">Rizzo, Flavio</div><div class="dragger" id="Rizzo, Flavio.3" name="Rizzo, Flavio.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(168, 203, 183);">Rizzo, Flavio</div><div class="dragger" id="Robinson, Frank.0" name="Robinson, Frank.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(134, 233, 149);">Robinson, Frank</div><div class="dragger" id="Robinson, Frank.1" name="Robinson, Frank.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(134, 233, 149);">Robinson, Frank</div><div class="dragger" id="Rossman, Kathryn.1" name="Rossman, Kathryn.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(236, 193, 165);">Rossman, Kathryn</div><div class="dragger" id="Scudder, Gary.0" name="Scudder, Gary.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(147, 148, 191);">Scudder, Gary</div><div class="dragger" id="Scudder, Gary.1" name="Scudder, Gary.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(147, 148, 191);">Scudder, Gary</div><div class="dragger" id="Scudder, Gary.2" name="Scudder, Gary.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(147, 148, 191);">Scudder, Gary</div><div class="dragger" id="Scudder, Gary.3" name="Scudder, Gary.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(147, 148, 191);">Scudder, Gary</div><div class="dragger" id="Shonstrom, Erik.2" name="Shonstrom, Erik.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(180, 245, 240);">Shonstrom, Erik</div><div class="dragger" id="Shonstrom, Erik.3" name="Shonstrom, Erik.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(180, 245, 240);">Shonstrom, Erik</div><div class="dragger" id="Stratton, William.0" name="Stratton, William.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(211, 252, 243);">Stratton, William</div><div class="dragger" id="Stratton, William.1" name="Stratton, William.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(211, 252, 243);">Stratton, William</div><div class="dragger" id="Thomas, Kelly.0" name="Thomas, Kelly.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(141, 251, 156);">Thomas, Kelly</div><div class="dragger" id="Thomas, Kelly.1" name="Thomas, Kelly.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(141, 251, 156);">Thomas, Kelly</div><div class="dragger" id="Thomas, Kelly.2" name="Thomas, Kelly.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(141, 251, 156);">Thomas, Kelly</div><div class="dragger" id="Thomas, Kelly.3" name="Thomas, Kelly.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(141, 251, 156);">Thomas, Kelly</div><div class="dragger" id="Toy, Caroline.0" name="Toy, Caroline.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(236, 174, 177);">Toy, Caroline</div><div class="dragger" id="Toy, Caroline.1" name="Toy, Caroline.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(236, 174, 177);">Toy, Caroline</div><div class="dragger" id="Wehmeyer, Stephen.0" name="Wehmeyer, Stephen.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(244, 248, 180);">Wehmeyer, Stephen</div><div class="dragger" id="Wehmeyer, Stephen.1" name="Wehmeyer, Stephen.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(244, 248, 180);">Wehmeyer, Stephen</div><div class="dragger" id="Wehmeyer, Stephen.2" name="Wehmeyer, Stephen.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(244, 248, 180);">Wehmeyer, Stephen</div><div class="dragger" id="Wehmeyer, Stephen.3" name="Wehmeyer, Stephen.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(244, 248, 180);">Wehmeyer, Stephen</div><div class="dragger" id="Williams, Rob.1" name="Williams, Rob.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(246, 251, 250);">Williams, Rob</div><div class="dragger" id="Wolf, Kristin.2" name="Wolf, Kristin.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(127, 207, 186);">Wolf, Kristin</div><div class="dragger" id="Wolf, Kristin.3" name="Wolf, Kristin.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(127, 207, 186);">Wolf, Kristin</div><div class="dragger" id="Wood, Micah Smith.1" name="Wood, Micah Smith.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(173, 252, 182);">Wood, Micah Smith</div><div class="dragger" id="Wright, Katheryn.0" name="Wright, Katheryn.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(215, 189, 168);">Wright, Katheryn</div><div class="dragger" id="Wright, Katheryn.1" name="Wright, Katheryn.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(215, 189, 168);">Wright, Katheryn</div><div class="dragger" id="Wright, Katheryn.2" name="Wright, Katheryn.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(215, 189, 168);">Wright, Katheryn</div><div class="dragger" id="Wright, Katheryn.3" name="Wright, Katheryn.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(215, 189, 168);">Wright, Katheryn</div><div class="dragger" id="Zale, Sanford.0" name="Zale, Sanford.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(249, 239, 133);">Zale, Sanford</div><div class="dragger" id="Zale, Sanford.1" name="Zale, Sanford.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(249, 239, 133);">Zale, Sanford</div><div class="dragger" id="Zale, Sanford.2" name="Zale, Sanford.2" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(249, 239, 133);">Zale, Sanford</div><div class="dragger" id="Zale, Sanford.3" name="Zale, Sanford.3" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(249, 239, 133);">Zale, Sanford</div></div>
+		</div>
+		<p>
+            <div id='infoDiv' class='col-12'>
+
+                <div class='row'>
+                    <div class='col-1' id="showName">Name: </div>
+                    <div id='facultyNames' class='col-5'></div>
+
+                    <div id='selectDiv' class="col-5">
+                        <select id='addName'></select>
+                        <button id='addButton' class="btn red-background btn-sm col-2" onclick="addNameToTable()">Add Name</button>
+                    </div>
+                    <div id="trashAlert" style="color: red"></div>
+                    <!--"offset-md-10"-->
+                </div>
+
+                <div class='row'>
+                    <div class='col-1'>Status: </div>
+                    <div id='status' class='col-1'></div>
+                    <div id='norm' class='col-1'></div>
+                    <div id='wants' class='col-1'></div>
+                    <div id='sched' class='col-1'></div>
+                </div>
+
+                <div class='row'>
+                    <div id='ty' class='col-1'>This Year:</div>
+                    <div id="TYClasses"></div>
+                </div>
+
+                <div class='row'>
+                    <div id='ly' class='col-1'>Last Year: </div>
+                    <div id='LYClasses'></div>
+                </div>
+
+                <div class='row'>
+                    <div id='ht' class='col-1'>Has Taught: </div>
+                    <div id='pastTaught'></div>
+                </div>
+
+                <div class='row'>
+                    <div id='wl' class='col-1'>Would Like: </div>
+                    <div id='wantedClasses'></div>
+                </div>
+                <p>
+
+                    <span id="facultyCount"></span>
+
+                    <!--p> </p>
+                    <button type="button" class="btn btn-secondary" id='btnList' onclick="clearDaysTable()"> Clear Table </button>
+                    <p></p-->
+
+                    <div id="courseNameContainer" class='col-12'></div>
+			<div id="courseNameContainer" class="col-12"><table class="nameDragTable" id="nameDragTable" style="width: 100%;"><tbody><tr><td id="cell00" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black; background-color: rgb(169, 245, 169);"><strong>COR-101</strong><br>1/1/0</td><td id="cell10" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black;"><div id="boxCOR-101" class="dropTarget" ondrop="drop(event, this)" ondragover="allowDrop(event)" style=""><div class="dragger" id="Banfill, Jonathan.0" name="Banfill, Jonathan.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(214, 238, 202);">Banfill, Jonathan</div></div></td></tr><tr><td id="cell01" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black; background-color: rgb(169, 245, 169);"><strong>COR-102</strong><br>1/1/0</td><td id="cell11" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black;"><div id="boxCOR-102" class="dropTarget" ondrop="drop(event, this)" ondragover="allowDrop(event)" style=""><div class="dragger" id="Banfill, Jonathan.1" name="Banfill, Jonathan.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(214, 238, 202);">Banfill, Jonathan</div></div></td></tr><tr><td id="cell02" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black; background-color: rgb(169, 245, 169);"><strong>COR-103</strong><br>10/10/0</td><td id="cell12" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black;"><div id="boxCOR-103" class="dropTarget" ondrop="drop(event, this)" ondragover="allowDrop(event)" style=""><div class="dragger" id="Bashaw, Charles.0" name="Bashaw, Charles.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(245, 176, 234);">Bashaw, Charles</div><div class="dragger" id="Bashaw, Charles.1" name="Bashaw, Charles.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(245, 176, 234);">Bashaw, Charles</div><div class="dragger" id="Haig, Jeffrey.0" name="Haig, Jeffrey.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(242, 160, 252);">Haig, Jeffrey</div><div class="dragger" id="Haig, Jeffrey.1" name="Haig, Jeffrey.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(242, 160, 252);">Haig, Jeffrey</div><div class="dragger" id="Kite, David.0" name="Kite, David.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(204, 131, 183);">Kite, David</div><div class="dragger" id="Kite, David.1" name="Kite, David.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(204, 131, 183);">Kite, David</div><div class="dragger" id="Mayer, Robert.0" name="Mayer, Robert.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(249, 176, 144);">Mayer, Robert</div><div class="dragger" id="Mayer, Robert.1" name="Mayer, Robert.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(249, 176, 144);">Mayer, Robert</div><div class="dragger" id="Shonstrom, Erik.0" name="Shonstrom, Erik.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(180, 245, 240);">Shonstrom, Erik</div><div class="dragger" id="Shonstrom, Erik.1" name="Shonstrom, Erik.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(180, 245, 240);">Shonstrom, Erik</div></div></td></tr><tr><td id="cell03" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black; background-color: rgb(243, 247, 129);"><strong>COR-104</strong><br>7/10/-3</td><td id="cell13" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black;"><div id="boxCOR-104" class="dropTarget" ondrop="drop(event, this)" ondragover="allowDrop(event)" style=""><div class="dragger" id="McCray-Woodruff, Kim.0" name="McCray-Woodruff, Kim.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(144, 150, 171);">McCray-Woodruff, Kim</div><div class="dragger" id="McCray-Woodruff, Kim.1" name="McCray-Woodruff, Kim.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(144, 150, 171);">McCray-Woodruff, Kim</div><div class="dragger" id="Spett, Emma.0" name="Spett, Emma.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(162, 242, 135);">Spett, Emma</div><div class="dragger" id="Spett, Emma.1" name="Spett, Emma.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(162, 242, 135);">Spett, Emma</div><div class="dragger" id="Wolf, Kristin.0" name="Wolf, Kristin.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(127, 207, 186);">Wolf, Kristin</div><div class="dragger" id="Wolf, Kristin.1" name="Wolf, Kristin.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(127, 207, 186);">Wolf, Kristin</div><div class="dragger" id="Wright, Katheryn.0" name="Wright, Katheryn.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(215, 189, 168);">Wright, Katheryn</div></div></td></tr><tr><td id="cell04" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black; background-color: rgb(243, 247, 129);"><strong>COR-203</strong><br>4/8/-4</td><td id="cell14" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black;"><div id="boxCOR-203" class="dropTarget" ondrop="drop(event, this)" ondragover="allowDrop(event)" style=""><div class="dragger" id="Novotny, Kristin.0" name="Novotny, Kristin.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(201, 132, 172);">Novotny, Kristin</div><div class="dragger" id="Pepin, Craig.0" name="Pepin, Craig.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(162, 168, 164);">Pepin, Craig</div><div class="dragger" id="Rossman, Kathryn.0" name="Rossman, Kathryn.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(236, 193, 165);">Rossman, Kathryn</div><div class="dragger" id="Williams, Rob.0" name="Williams, Rob.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(246, 251, 250);">Williams, Rob</div></div></td></tr><tr><td id="cell05" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black; background-color: rgb(169, 245, 169);"><strong>COR-204</strong><br>8/8/0</td><td id="cell15" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black;"><div id="boxCOR-204" class="dropTarget" ondrop="drop(event, this)" ondragover="allowDrop(event)" style=""><div class="dragger" id="Manga, Abijah.0" name="Manga, Abijah.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(254, 152, 181);">Manga, Abijah</div><div class="dragger" id="Manga, Abijah.1" name="Manga, Abijah.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(254, 152, 181);">Manga, Abijah</div><div class="dragger" id="Noonan, Kerry.0" name="Noonan, Kerry.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(152, 128, 200);">Noonan, Kerry</div><div class="dragger" id="Noonan, Kerry.1" name="Noonan, Kerry.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(152, 128, 200);">Noonan, Kerry</div><div class="dragger" id="Rizzo, Flavio.0" name="Rizzo, Flavio.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(168, 203, 183);">Rizzo, Flavio</div><div class="dragger" id="Rizzo, Flavio.1" name="Rizzo, Flavio.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(168, 203, 183);">Rizzo, Flavio</div><div class="dragger" id="Rous, David.0" name="Rous, David.0" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(246, 173, 154);">Rous, David</div><div class="dragger" id="Rous, David.1" name="Rous, David.1" draggable="true" ondragstart="drag(event, this)" style="background-color: rgb(246, 173, 154);">Rous, David</div></div></td></tr><tr><td id="cell06" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black; background-color: rgb(243, 247, 129);"><strong>COR-303</strong><br>0/9/-9</td><td id="cell16" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black;"><div id="boxCOR-303" class="dropTarget" ondrop="drop(event, this)" ondragover="allowDrop(event)"></div></td></tr><tr><td id="cell07" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black; background-color: rgb(243, 247, 129);"><strong>COR-304</strong><br>0/9/-9</td><td id="cell17" title="First number is the count of those scheduled. Second number is how many are required. Final number is the difference: a positive number means more are needed, a negative number means that there are too many. Yellow color means there are more needed, red that there are fewer needed, and green is just right.  " style="border: 1px solid black;"><div id="boxCOR-304" class="dropTarget" ondrop="drop(event, this)" ondragover="allowDrop(event)"></div></td></tr></tbody></table></div>
+                    <p>
+                        <!--div id="surplusDiv" ondrop="surplusDelete(event)" ondragover="allowDrop(event)">Surplus </div-->
+
+
+                        <div id="alertDiv"></div>
+    </main>
+    <script>
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("text");
+            var element = document.getElementById(data);
+            event.target.appendChild(element);
+        }
+		// Do something on drag
+		document.addEventListener("DOMContentLoaded", function () {
+			const draggableItems = document.querySelectorAll(".draggable-item");
+			draggableItems.forEach((item) => {
+				item.addEventListener("dragstart", (e) => {
+					e.dataTransfer.setData("text", e.target.id);
+				});
+			});
+		});
+
+		function allowDrop(event) {
+			event.preventDefault();
+		}
+
+		function drop(event) {
+			event.preventDefault();
+			var data = event.dataTransfer.getData("text");
+			var element = document.getElementById(data);
+			event.target.appendChild(element);
+		}
+
+    </script>
+	<script src="./js/FacCoursesDND.js"></script>
+	<!--<script src="./js/localforage.js"></script>
+    <script src="./js/FacCoursesCalc.js"></script>-->
+</body>
+</html>
