@@ -1,36 +1,49 @@
 # README
 
 ## Setup
+
 ### Rails installation
+
 See [Rails installation guide](https://guides.rubyonrails.org/v5.0/getting_started.html).
 
 #### Dependencies
+
 - `ruby-dev`
 
 ### Database setup
+
 Usernames and passwords are set in `config/database.yml`. Configuration is currently as follows:
+
 ```yaml
 ---
 username: capstone
 password: password1234
 ```
+
 The server is currently set to use a MySQL database. To change this, edit the `config/database.yml` file. The database is currently set to use the `capstone_scheduling_project` database for development and the `capstone_scheduling_project_test` database for testing. To change this, edit the `config/database.yml` file.
 To set up the database, run the following commands:
+
 ```bash
 mysql -u capstone -p < db-create.sql
 rails db:seed
 ```
+
 ### Running the server
+
 To run the server, run the following command:
+
 ```bash
 rails s
 ```
 
 ## ER Diagram
+
 ![ER Diagram](https://i.imgur.com/z0rwrBZ.png)
 
 ## API Specification
+
 ```json
+
 {
     "sections": {
         "index": {
@@ -222,3 +235,4 @@ rails s
         }
     },
 }
+```
