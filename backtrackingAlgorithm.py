@@ -44,24 +44,12 @@ class Course(NamedTuple):
     Represents a course, whether it is a double block, its name, and what
     minimum level is required to teach it.
     """
-    name: str
-    # identifier: str
+    # name: str
+    identifier: str
     # needsLab: bool
     # courseSize: int
     needsDouble: bool
     level: int
-
-
-class Section(NamedTuple):
-    """
-    Represents a section of a course, which classroom it is in, and which
-    professor is teaching it.
-    """
-    classroom: Classroom
-    # sectionNum: int
-    course: Course
-    professor: Professor
-    # timeBlock: TimeBlock
 
 
 class TimeBlock(NamedTuple):
@@ -74,6 +62,18 @@ class TimeBlock(NamedTuple):
     # TODO: update schema to match
     day: int  # x (0-4, M-F)
     timeslot: int  # y (0-7, ???)
+
+
+class Section(NamedTuple):
+    """
+    Represents a section of a course, which classroom it is in, and which
+    professor is teaching it.
+    """
+    classroom: Classroom
+    # sectionNum: int
+    course: Course
+    professor: Professor
+    timeBlock: TimeBlock
 
 
 class CoursePreference(NamedTuple):
@@ -99,7 +99,7 @@ class TimePreference(NamedTuple):
 class Schedule(NamedTuple):
     """
     Represents a schedule, which is a grid of sections.
-    TODO: use TimeBlock class to represent a time block instead of a grid of
+    TODO: Use TimeBlock class to represent a time block instead of a grid of
     Sections. This actually doesn't even need to be a class, it could just
     be a list of lists of Sections.
     """
@@ -138,7 +138,7 @@ def display_grid(grid: Schedule) -> None:
                 print("no class", end=" | ")
             else:
                 for x in range(len(grid[y][i])):
-                    print(grid[y][i][x].course.name + " " + grid[y][i]
+                    print(grid[y][i][x].course.identifier + " " + grid[y][i]
                           [x].professor.name + " " +
                           grid[y][i][x].classroom.room, end="")
                     if not (x+1 >= len(grid[y][i])):
@@ -162,7 +162,7 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
     for classroom in classrooms:
         shuffle(professors)
         for professor in professors:
-            section = Section(classroom, course, professor)
+            section = Section(classroom, course, professor, placeHolder)
             if section.professor.level >= section.course.level:
                 # generate domain for double block course (1x2)
                 if course.needsDouble:
@@ -223,6 +223,10 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
         return True
 
 
+placeHolder: TimeBlock = TimeBlock("placeHolder", False, -1, -1)
+# TODO: function to assign timeblocks to sections based on the schedule
+
+
 def solution(courses: List[Course], classrooms: List[Classroom],
              professors: List[Professor]) -> None:
     """
@@ -266,16 +270,16 @@ if __name__ == "__main__":
                                    Professor("Josh", 4)]
     classrooms: List[Classroom] = [Classroom("JOYC 201"), Classroom(
         "JOYC 210"), Classroom("JOYC 211"), Classroom("MIC 308")]
-    courses = [Course("120", False, 1), Course("140", False, 1),
-               Course("180", True, 1), Course("240", False, 2),
-               Course("230", False, 2), Course("281", False, 2),
-               Course("280", True, 2), Course("300", True, 3),
-               Course("320", False, 3), Course("351", False, 3),
-               Course("352", False, 3), Course("355", False, 3),
-               Course("357", True, 3), Course("370", False, 3),
-               Course("380", False, 3), Course("480", False, 4),
-               Course("330", True, 3), Course("340", False, 3),
-               Course("420", True, 4), Course("440", False, 4)]
+    courses = [Course("CSI-120", False, 1), Course("CSI-140", False, 1),
+               Course("CSI-180", True, 1), Course("CSI-240", False, 2),
+               Course("CSI-230", False, 2), Course("CSI-281", False, 2),
+               Course("CSI-280", True, 2), Course("CSI-300", True, 3),
+               Course("CSI-320", False, 3), Course("CSI-351", False, 3),
+               Course("CSI-352", False, 3), Course("CSI-355", False, 3),
+               Course("CSI-357", True, 3), Course("CSI-370", False, 3),
+               Course("CSI-380", False, 3), Course("CSI-480", False, 4),
+               Course("CSI-330", True, 3), Course("CSI-340", False, 3),
+               Course("CSI-420", True, 4), Course("CSI-440", False, 4)]
 
     # find and print answer
     solution(courses, classrooms, professors)
