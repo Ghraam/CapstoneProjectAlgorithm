@@ -51,8 +51,8 @@ class TimeBlock(NamedTuple):
     identifier: str
     isDouble: bool
     # keep? (update schema accordingly)
-    #day: int
-    #time: int
+    #day: int # x (0-4, M-F)
+    #timeslot: int # y (0-7, ???)
 
 class CoursePreference(NamedTuple):
     professor: Professor
