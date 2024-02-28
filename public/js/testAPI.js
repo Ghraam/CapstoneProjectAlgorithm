@@ -24,8 +24,10 @@ const apiSpec = {
     // ... (other endpoints)
 };
 
+let hostname = window.location.hostname;
+
 // Replace 'BASE_URL' with the actual base URL of your API
-const BASE_URL = 'http://bendrone.com:3000';
+const BASE_URL = 'http://' + hostname + ':3000';
 
 // Function to make a generic API request
 async function makeRequest(endpoint, method, data = null) {
