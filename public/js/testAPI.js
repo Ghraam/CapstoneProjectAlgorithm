@@ -65,7 +65,13 @@ async function makeRequest(endpoint, method, data = null) {
 }
 
 // Sample JSON data
-const jsonData = jsonResult;
+let jsonData = [
+    {"name": "John Doe", "age": 25, "city": "New York"},
+    {"name": "Jane Smith", "age": 30, "city": "Los Angeles"},
+    {"name": "Bob Johnson", "age": 28, "city": "Chicago"}
+];
+
+if (jsonResult) {jsonData = jsonResult;};
 
 // Function to generate HTML table from JSON
 function generateTable(jsonData) {
