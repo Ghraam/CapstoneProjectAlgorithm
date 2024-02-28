@@ -8,6 +8,7 @@ document.getElementById('testButton').addEventListener('click', function() {
 	displayText.textContent = "Making Call";
 	
 	jsonResult = makeRequest(apiSpec.professors.index, 'GET');
+    if (jsonResult) {console.log("Request successful" + jsonResult);}
 
 });
 
@@ -71,7 +72,7 @@ let jsonData = [
     {"name": "Bob Johnson", "age": 28, "city": "Chicago"}
 ];
 
-if (jsonResult) {jsonData = jsonResult;};
+if (jsonResult) {jsonData = jsonResult;}
 
 // Function to generate HTML table from JSON
 function generateTable(jsonData) {
