@@ -1,13 +1,13 @@
 // Test file to make calls to API
 
+var jsonResult;
 
 document.getElementById('testButton').addEventListener('click', function() {
 	console.log("Starting request");
 	var displayText = document.getElementById('textBox');
 	displayText.textContent = "Making Call";
 	
-	makeRequest(apiSpec.professors.index, 'GET')
-		.then(result => console.log("Sections - Get all: ", result));
+	jsonResult = makeRequest(apiSpec.professors.index, 'GET');
 
 });
 
@@ -63,4 +63,49 @@ async function makeRequest(endpoint, method, data = null) {
         return null;
     }
 }
+
+// Sample JSON data
+const jsonData = jsonResult;
+
+// Function to generate HTML table from JSON
+function generateTable(jsonData) {
+    const table = document.createElement('table');
+
+    // Create table header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
+    Object.keys(jsonData[0]).forEach(key => {
+        const th = document.createElement('th');
+        th.textContent = key;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Create table body
+    const tbody = document.createElement('tbody');
+
+    jsonData.forEach(data => {
+        const row = document.createElement('tr');
+
+        Object.values(data).forEach(value => {
+            const td = document.createElement('td');
+            td.textContent = value;
+            row.appendChild(td);
+        });
+
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+
+    return table;
+}
+
+// Get the body element and append the generated table
+const body = document.body;
+const tableElement = generateTable(jsonData);
+body.appendChild(tableElement);
 
