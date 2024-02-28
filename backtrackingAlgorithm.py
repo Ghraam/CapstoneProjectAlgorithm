@@ -43,6 +43,7 @@ class Course(NamedTuple):
 # representation of a single course, which room its in and the teacher
 class Section(NamedTuple):
     classroom: Classroom
+    #sectionNum: int
     course: Course
     professor: Professor
     #timeBlock: TimeBlock
@@ -50,9 +51,9 @@ class Section(NamedTuple):
 class TimeBlock(NamedTuple):
     identifier: str
     isDouble: bool
-    # keep? (update schema accordingly)
-    #day: int # x (0-4, M-F)
-    #timeslot: int # y (0-7, ???)
+    # TODO: update schema to match
+    day: int # x (0-4, M-F)
+    timeslot: int # y (0-7, ???)
 
 class CoursePreference(NamedTuple):
     professor: Professor
