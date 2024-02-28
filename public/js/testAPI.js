@@ -1,6 +1,6 @@
 // Test file to make calls to API
 
-var jsonResult;
+let jsonResult;
 
 document.getElementById('testButton').addEventListener('click', function() {
 	console.log("Starting request");
@@ -8,7 +8,7 @@ document.getElementById('testButton').addEventListener('click', function() {
 	displayText.textContent = "Making Call";
 	
 	jsonResult = makeRequest(apiSpec.professors.index, 'GET');
-    if (jsonResult) {console.log("Request successful" + jsonResult);}
+    if (jsonResult) {console.log("Request successful", jsonResult);}
 
 });
 
