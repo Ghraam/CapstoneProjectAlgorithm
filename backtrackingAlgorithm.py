@@ -21,8 +21,8 @@ BLOCK_SEVEN = 6
 BLOCK_EIGHT = 7
 
 
-class Room(NamedTuple): # -> Classroom
-    name: str
+class Classroom(NamedTuple):
+    room: str
     #isLab: bool
     #capacity: int
 
@@ -42,7 +42,7 @@ class Course(NamedTuple):
 
 # representation of a single course, which room its in and the teacher
 class Section(NamedTuple):
-    room: Room
+    classroom: Classroom
     course: Course
     professor: Professor
     #timeBlock: TimeBlock
@@ -61,7 +61,7 @@ class CoursePreference(NamedTuple):
 
 class TimePreference(NamedTuple):
     professor: Professor
-    time: TimeBlock
+    timeBlock: TimeBlock
     priority: int
 
 # representation of the schedule being used by the csp
@@ -98,7 +98,7 @@ def display_grid(grid: Schedule) -> None:
             else:
                 for x in range(len(grid[y][i])):
                     print(grid[y][i][x].course.name + " " + grid[y][i]
-                          [x].professor.name + " " + grid[y][i][x].room.name, end="")
+                          [x].professor.name + " " + grid[y][i][x].classroom.room, end="")
                     if not (x+1 >= len(grid[y][i])):
                         print(", ", end="")
                     if x+1 >= len(grid[y][i]):
@@ -106,17 +106,17 @@ def display_grid(grid: Schedule) -> None:
         print("\n")
 
 # generates all combinations of courses at each time slot on each day in each room
-def generate_domain(course: Course, schedule: Schedule, prof: List[Professor], rooms: List[Room]) -> List[Schedule]:
+def generate_domain(course: Course, schedule: Schedule, prof: List[Professor], classrooms: List[Classroom]) -> List[Schedule]:
     SCHEDULE_WIDTH = len(schedule.schedule)
     SCHEDULE_LENGTH = len(schedule.schedule[0])
     professors = deepcopy(prof)
 
     domain: List[Schedule] = []
 
-    for room in rooms:
+    for classroom in classrooms:
         shuffle(professors)
         for professor in professors:
-            section = Section(room, course, professor)
+            section = Section(classroom, course, professor)
             if section.professor.level >= section.course.level:
                 # generate domain for double block course (1x2)
                 if course.needsDouble:
@@ -144,7 +144,7 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor], r
 class ScheduleConstraint(Constraint[Course, List[Schedule]]):
     # can't have same class twice on same day
     # can't have same class twice on same time slot
-    # can't have overlapping classes in the same room
+    # can't have overlapping classes in the same classroom
     def __init__(self, variables: List[Course]) -> None:
         self.variables: List[Course] = variables
 
@@ -159,8 +159,8 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                         for y in range(len(i[0])):
                             # if there is a class in both schedules
                             if i[x][y] != "-" and j[x][y] != "-":
-                                # check if room or professor overlaps
-                                if i[x][y].room == j[x][y].room or i[x][y].professor == j[x][y].professor:
+                                # check if classroom or professor overlaps
+                                if i[x][y].classroom == j[x][y].classroom or i[x][y].professor == j[x][y].professor:
                                     return False
                             # check if courses are no no classes allowed days
                             if i[x][y] != "-" or j[x][y] != "-":
@@ -172,8 +172,8 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                                     return False
         return True
 
-# solution function, passed courses, rooms and professors
-def solution(courses: List[Course], rooms: List[Room], professors: List[Professor]) -> None:
+# solution function, passed courses, classrooms and professors
+def solution(courses: List[Course], classrooms: List[Classroom], professors: List[Professor]) -> None:
     variableDict = {}
     # generate empty grid
     newSched = generate_grid(5, 8)
@@ -182,7 +182,7 @@ def solution(courses: List[Course], rooms: List[Room], professors: List[Professo
     # generate domains for all courses
     for x in courses:
         variableDict[x] = generate_domain(
-            x, deepcopy(newSched), professors, rooms)
+            x, deepcopy(newSched), professors, classrooms)
 
     # run csp on generated domains
     csp = CSP(courses, variableDict)
@@ -201,12 +201,12 @@ if __name__ == "__main__":
     # set parameters
     professors: List[Professor] = [Professor("Murat", 4), Professor("David", 4), Professor("Brian", 4), Professor("Wei", 4), Professor(
         "Sarah", 4), Professor("Frank", 4), Professor("Brent", 4), Professor("Scott", 4), Professor("Alex", 4), Professor("Eric", 4), Professor("Josh", 4)]
-    rooms: List[Room] = [Room("JOYC 201"), Room(
-        "JOYC 210"), Room("JOYC 211"), Room("MIC 308")]
+    classrooms: List[Classroom] = [Classroom("JOYC 201"), Classroom(
+        "JOYC 210"), Classroom("JOYC 211"), Classroom("MIC 308")]
     courses = [Course("120", False, 1), Course("140", False, 1), Course("180", True, 1), Course("240", False, 2), Course("230", False, 2), Course("281", False, 2), Course("280", True, 2),
                Course("300", True, 3), Course("320", False, 3), Course("351", False, 3), Course(
                    "352", False, 3), Course("355", False, 3), Course("357", True, 3), Course("370", False, 3),
                Course("380", False, 3), Course("480", False, 4), Course("330", True, 3), Course("340", False, 3), Course("420", True, 4), Course("440", False, 4)]
 
     # find and print answer
-    solution(courses, rooms, professors)
+    solution(courses, classrooms, professors)
