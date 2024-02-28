@@ -37,15 +37,15 @@ class Course(NamedTuple):
     #identifier: str
     #needsLab: bool
     #courseSize: int
-    doubleBlock: bool # -> needsDouble
-    minLevel: int # -> level
+    needsDouble: bool
+    level: int
 
 # representation of a single course, which room its in and the teacher
-class RoomCourse(NamedTuple): # -> Section
+class Section(NamedTuple):
     room: Room
     course: Course
     professor: Professor
-    # add time block once class is created
+    #timeBlock: TimeBlock
 
 class TimeBlock(NamedTuple):
     identifier: str
@@ -65,11 +65,11 @@ class TimePreference(NamedTuple):
     priority: int
 
 # representation of the schedule being used by the csp
-# TODO: use a TimeBlock class to represent a time block instead of a grid of RoomCourses
+# TODO: use TimeBlock class to represent a time block instead of a grid of Sections
 class Schedule(NamedTuple):
-    schedule: List[List[RoomCourse]]
+    schedule: List[List[Section]]
 
-# converts a dictionary to a schedule, with making lists of roomcourses in positions that allow for multiple classes in the same timeslot
+# converts a dictionary to a schedule, with making lists of sections in positions that allow for multiple classes in the same timeslot
 def dict_to_schedule(variables, dict, schedule):
     newSched = deepcopy(schedule.schedule)
     list_of_domains = [dict[i].schedule for i in variables]
@@ -116,18 +116,18 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor], r
     for room in rooms:
         shuffle(professors)
         for professor in professors:
-            roomCourse = RoomCourse(room, course, professor)
-            if roomCourse.professor.level >= roomCourse.course.minLevel:
+            section = Section(room, course, professor)
+            if section.professor.level >= section.course.level:
                 # generate domain for double block course (1x2)
-                if course.doubleBlock:
+                if course.needsDouble:
                     for row in range(SCHEDULE_WIDTH):
                         for column in range(SCHEDULE_LENGTH):
                             if (column + 1 <= SCHEDULE_LENGTH-1):
                                 if (schedule.schedule[row][column] == "-" and schedule.schedule[row][column + 1] == "-"):
                                     tempCopy = deepcopy(schedule)
-                                    tempCopy.schedule[row][column] = roomCourse
+                                    tempCopy.schedule[row][column] = section
                                     tempCopy.schedule[row][column +
-                                                           1] = roomCourse
+                                                           1] = section
                                     domain.append(tempCopy)
                 else:
                     # generate domain for single block courses (1x1)
@@ -135,8 +135,8 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor], r
                         for column in range(len(schedule.schedule[0])):
                             if (schedule.schedule[row][column] == "-"):
                                 tempCopy = deepcopy(schedule)
-                                tempCopy.schedule[row][column] = roomCourse
-                                tempCopy.schedule[row+3][column] = roomCourse
+                                tempCopy.schedule[row][column] = section
+                                tempCopy.schedule[row+3][column] = section
                                 domain.append(tempCopy)
     return domain
 
