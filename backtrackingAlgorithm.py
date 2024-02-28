@@ -224,7 +224,73 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
 
 
 placeHolder: TimeBlock = TimeBlock("placeHolder", False, -1, -1)
-# TODO: function to assign timeblocks to sections based on the schedule
+
+
+timeBlockMatrix: List[List[TimeBlock]] = [
+    # Monday
+    [
+        TimeBlock("Monday 1", False, 0, 0),
+        TimeBlock("Monday 2", False, 0, 1),
+        TimeBlock("Monday 3", False, 0, 2),
+        TimeBlock("Monday 4", False, 0, 3),
+        TimeBlock("Monday 5", False, 0, 4),
+        TimeBlock("Monday 6", False, 0, 5),
+        TimeBlock("Monday 7", False, 0, 6),
+        TimeBlock("Monday 8", False, 0, 7),
+    ],
+    # Tuesday
+    [
+        TimeBlock("Tuesday 1", False, 1, 0),
+        TimeBlock("Tuesday 2", False, 1, 1),
+        TimeBlock("Tuesday 3", False, 1, 2),
+        TimeBlock("Tuesday 4", False, 1, 3),
+        TimeBlock("Tuesday 5", False, 1, 4),
+        TimeBlock("Tuesday 6", False, 1, 5),
+        TimeBlock("Tuesday 7", False, 1, 6),
+        TimeBlock("Tuesday 8", False, 1, 7),
+    ],
+    # Wednesday (double blocks early, 5th and 6th blocks off)
+    [
+        TimeBlock("Wednesday A", True, 2, 0),
+        TimeBlock("Wednesday B", True, 2, 2),
+        TimeBlock("Wednesday 7", False, 2, 6),
+        TimeBlock("Wednesday 8", False, 2, 7),
+    ],
+    # Thursday
+    [
+        TimeBlock("Thursday 1", False, 3, 0),
+        TimeBlock("Thursday 2", False, 3, 1),
+        TimeBlock("Thursday 3", False, 3, 2),
+        TimeBlock("Thursday 4", False, 3, 3),
+        TimeBlock("Thursday 5", False, 3, 4),
+        TimeBlock("Thursday 6", False, 3, 5),
+        TimeBlock("Thursday 7", False, 3, 6),
+        TimeBlock("Thursday 8", False, 3, 7),
+    ],
+    # Friday (no double blocks, 7th and 8th blocks off)
+    [
+        TimeBlock("Friday 1", False, 4, 0),
+        TimeBlock("Friday 2", False, 4, 1),
+        TimeBlock("Friday 3", False, 4, 2),
+        TimeBlock("Friday 4", False, 4, 3),
+        TimeBlock("Friday 5", False, 4, 4),
+        TimeBlock("Friday 6", False, 4, 5),
+    ],
+]
+
+
+def assign_timeblocks(schedule: Schedule) -> Schedule:
+    """
+    Assigns timeblocks to sections based on the schedule.
+    """
+    for day in timeBlockMatrix:
+        for timeBlock in day:
+            row = timeBlock.day
+            column = timeBlock.timeslot
+            schedule.schedule[row][column] = timeBlock
+            if timeBlock.isDouble:
+                schedule.schedule[row][column+1] = timeBlock
+    return schedule
 
 
 def solution(courses: List[Course], classrooms: List[Classroom],
