@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # calendar.py
 # Solve the scheduling problem using the backtracking search algorithm
 # Project done for CSI-480 Artificial Intelligence at Champlain College
