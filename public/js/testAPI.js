@@ -7,8 +7,13 @@ document.getElementById('testButton').addEventListener('click', function() {
 	var displayText = document.getElementById('textBox');
 	displayText.textContent = "Making Call";
 	
-	jsonResult = makeRequest(apiSpec.professors.index, 'GET');
-    if (jsonResult) {console.log("Request successful", jsonResult);}
+	jsonResult = makeRequest(apiSpec.professors.index, 'GET')
+        .then(result => console.log("Request successful: ", result));
+
+    // Get the body element and append the generated table
+    const body = document.body;
+    const tableElement = generateTable(jsonResult);
+    body.appendChild(tableElement);
 
 });
 
@@ -111,8 +116,5 @@ function generateTable(jsonData) {
     return table;
 }
 
-// Get the body element and append the generated table
-const body = document.body;
-const tableElement = generateTable(jsonData);
-body.appendChild(tableElement);
+
 
