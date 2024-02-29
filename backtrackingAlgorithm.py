@@ -210,7 +210,8 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                                 if i[x][y].classroom == j[x][y].classroom or \
                                         i[x][y].professor == j[x][y].professor:
                                     return False
-                            # check if courses are no no classes allowed days
+                            # TODO: Stop hardcoding this!
+                            # check if courses are on no classes allowed days
                             if i[x][y] != "-" or j[x][y] != "-":
                                 # time slots where classes are not allowed
                                 if (x == WEDNESDAY and (y == BLOCK_FIVE or
@@ -219,6 +220,10 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                                 # time slots where classes are not allowed
                                 elif x == FRIDAY and (y == BLOCK_SEVEN or
                                                       y == BLOCK_EIGHT):
+                                    return False
+                            # make sure double block classes are on Wednesday
+                            if i[x][y] != "-" and i[x][y].course.needsDouble:
+                                if x != WEDNESDAY:
                                     return False
         return True
 
