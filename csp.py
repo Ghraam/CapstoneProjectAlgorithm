@@ -1,4 +1,5 @@
-# Taken from Chapter 3 of the Book Classic Computer Science Problems in Python by David Kopec
+# Taken from Chapter 3 of the Book Classic Computer Science Problems in Python
+# by David Kopec
 from typing import Generic, TypeVar, Dict, List, Optional
 from abc import ABC, abstractmethod
 
@@ -25,7 +26,8 @@ class CSP(Generic[V, D]):
     def __init__(self, variables: List[V], domains: Dict[V, List[D]]) -> None:
         # variables to be constrained | Chips
         self.variables: List[V] = variables
-        # domain of each variable  grid location chips can be at, list of list of grid locations
+        # domain of each variable  grid location chips can be at, list of list
+        # of grid locations
         self.domains: Dict[V, List[D]] = domains
         # Within board bounds, no overlapping
         self.constraints: Dict[V, List[Constraint[V, D]]] = {}
@@ -40,7 +42,10 @@ class CSP(Generic[V, D]):
             if variable not in self.variables:
                 print(self.variables)
                 print(constraint.variables)
-                raise LookupError(f"Variable {variable} in constraint not in CSP")
+                raise LookupError(
+                    f"Variable {variable} in constraint not in"
+                    + " CSP"
+                )
             else:
                 self.constraints[variable].append(constraint)
 
@@ -52,7 +57,9 @@ class CSP(Generic[V, D]):
                 return False
         return True
 
-    def backtracking_search(self, assignment: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
+    def backtracking_search(
+        self, assignment: Dict[V, D] = {}
+    ) -> Optional[Dict[V, D]]:
         # assignment is complete if every variable is assigned (our base case)
         if len(assignment) == len(self.variables):
             return assignment
