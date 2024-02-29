@@ -221,9 +221,11 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                                 elif x == FRIDAY and (y == BLOCK_SEVEN or
                                                       y == BLOCK_EIGHT):
                                     return False
-                            # make sure double block classes are on Wednesday
-                            if i[x][y] != "-" and i[x][y].course.needsDouble:
-                                if x != WEDNESDAY:
+                            # make sure non double block classes are only
+                            # on evening time slots on wednesday
+                            if i[x][y] != "-" and \
+                                    not i[x][y].course.needsDouble:
+                                if x == WEDNESDAY and y < BLOCK_SEVEN:
                                     return False
         return True
 
