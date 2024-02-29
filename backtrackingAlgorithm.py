@@ -228,58 +228,59 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
         return True
 
 
-placeHolder: TimeBlock = TimeBlock("placeHolder", False, -1, -1)
+placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", isDouble=False,
+                                   day=-1, timeslot=-1)
 
 
 timeBlockMatrix: List[List[TimeBlock]] = [
     # Monday
     [
-        TimeBlock("Monday 1", False, 0, 0),
-        TimeBlock("Monday 2", False, 0, 1),
-        TimeBlock("Monday 3", False, 0, 2),
-        TimeBlock("Monday 4", False, 0, 3),
-        TimeBlock("Monday 5", False, 0, 4),
-        TimeBlock("Monday 6", False, 0, 5),
-        TimeBlock("Monday 7", False, 0, 6),
-        TimeBlock("Monday 8", False, 0, 7),
+        TimeBlock(identifier="Monday 1", isDouble=False, day=0, timeslot=0),
+        TimeBlock(identifier="Monday 2", isDouble=False, day=0, timeslot=1),
+        TimeBlock(identifier="Monday 3", isDouble=False, day=0, timeslot=2),
+        TimeBlock(identifier="Monday 4", isDouble=False, day=0, timeslot=3),
+        TimeBlock(identifier="Monday 5", isDouble=False, day=0, timeslot=4),
+        TimeBlock(identifier="Monday 6", isDouble=False, day=0, timeslot=5),
+        TimeBlock(identifier="Monday 7", isDouble=False, day=0, timeslot=6),
+        TimeBlock(identifier="Monday 8", isDouble=False, day=0, timeslot=7),
     ],
     # Tuesday
     [
-        TimeBlock("Tuesday 1", False, 1, 0),
-        TimeBlock("Tuesday 2", False, 1, 1),
-        TimeBlock("Tuesday 3", False, 1, 2),
-        TimeBlock("Tuesday 4", False, 1, 3),
-        TimeBlock("Tuesday 5", False, 1, 4),
-        TimeBlock("Tuesday 6", False, 1, 5),
-        TimeBlock("Tuesday 7", False, 1, 6),
-        TimeBlock("Tuesday 8", False, 1, 7),
+        TimeBlock(identifier="Tuesday 1", isDouble=False, day=1, timeslot=0),
+        TimeBlock(identifier="Tuesday 2", isDouble=False, day=1, timeslot=1),
+        TimeBlock(identifier="Tuesday 3", isDouble=False, day=1, timeslot=2),
+        TimeBlock(identifier="Tuesday 4", isDouble=False, day=1, timeslot=3),
+        TimeBlock(identifier="Tuesday 5", isDouble=False, day=1, timeslot=4),
+        TimeBlock(identifier="Tuesday 6", isDouble=False, day=1, timeslot=5),
+        TimeBlock(identifier="Tuesday 7", isDouble=False, day=1, timeslot=6),
+        TimeBlock(identifier="Tuesday 8", isDouble=False, day=1, timeslot=7),
     ],
     # Wednesday (double blocks early, 5th and 6th blocks off)
     [
-        TimeBlock("Wednesday A", True, 2, 0),
-        TimeBlock("Wednesday B", True, 2, 2),
-        TimeBlock("Wednesday 7", False, 2, 6),
-        TimeBlock("Wednesday 8", False, 2, 7),
+        TimeBlock(identifier="Wednesday A", isDouble=True, day=2, timeslot=0),
+        TimeBlock(identifier="Wednesday B", isDouble=True, day=2, timeslot=2),
+        TimeBlock(identifier="Wednesday 7", isDouble=False, day=2, timeslot=6),
+        TimeBlock(identifier="Wednesday 8", isDouble=False, day=2, timeslot=7),
     ],
     # Thursday
     [
-        TimeBlock("Thursday 1", False, 3, 0),
-        TimeBlock("Thursday 2", False, 3, 1),
-        TimeBlock("Thursday 3", False, 3, 2),
-        TimeBlock("Thursday 4", False, 3, 3),
-        TimeBlock("Thursday 5", False, 3, 4),
-        TimeBlock("Thursday 6", False, 3, 5),
-        TimeBlock("Thursday 7", False, 3, 6),
-        TimeBlock("Thursday 8", False, 3, 7),
+        TimeBlock(identifier="Thursday 1", isDouble=False, day=3, timeslot=0),
+        TimeBlock(identifier="Thursday 2", isDouble=False, day=3, timeslot=1),
+        TimeBlock(identifier="Thursday 3", isDouble=False, day=3, timeslot=2),
+        TimeBlock(identifier="Thursday 4", isDouble=False, day=3, timeslot=3),
+        TimeBlock(identifier="Thursday 5", isDouble=False, day=3, timeslot=4),
+        TimeBlock(identifier="Thursday 6", isDouble=False, day=3, timeslot=5),
+        TimeBlock(identifier="Thursday 7", isDouble=False, day=3, timeslot=6),
+        TimeBlock(identifier="Thursday 8", isDouble=False, day=3, timeslot=7),
     ],
     # Friday (no double blocks, 7th and 8th blocks off)
     [
-        TimeBlock("Friday 1", False, 4, 0),
-        TimeBlock("Friday 2", False, 4, 1),
-        TimeBlock("Friday 3", False, 4, 2),
-        TimeBlock("Friday 4", False, 4, 3),
-        TimeBlock("Friday 5", False, 4, 4),
-        TimeBlock("Friday 6", False, 4, 5),
+        TimeBlock(identifier="Friday 1", isDouble=False, day=4, timeslot=0),
+        TimeBlock(identifier="Friday 2", isDouble=False, day=4, timeslot=1),
+        TimeBlock(identifier="Friday 3", isDouble=False, day=4, timeslot=2),
+        TimeBlock(identifier="Friday 4", isDouble=False, day=4, timeslot=3),
+        TimeBlock(identifier="Friday 5", isDouble=False, day=4, timeslot=4),
+        TimeBlock(identifier="Friday 6", isDouble=False, day=4, timeslot=5),
     ],
 ]
 
@@ -328,29 +329,41 @@ def solution(courses: List[Course], classrooms: List[Classroom],
 
 if __name__ == "__main__":
     # set parameters
-    professors: List[Professor] = [Professor("Murat", 4),
-                                   Professor("David", 4),
-                                   Professor("Brian", 4),
-                                   Professor("Wei", 4),
-                                   Professor("Sarah", 4),
-                                   Professor("Frank", 4),
-                                   Professor("Brent", 4),
-                                   Professor("Scott", 4),
-                                   Professor("Alex", 4),
-                                   Professor("Eric", 4),
-                                   Professor("Josh", 4)]
-    classrooms: List[Classroom] = [Classroom("JOYC 201"), Classroom(
-        "JOYC 210"), Classroom("JOYC 211"), Classroom("MIC 308")]
-    courses = [Course("CSI-120", False, 1), Course("CSI-140", False, 1),
-               Course("CSI-180", True, 1), Course("CSI-240", False, 2),
-               Course("CSI-230", False, 2), Course("CSI-281", False, 2),
-               Course("CSI-280", True, 2), Course("CSI-300", True, 3),
-               Course("CSI-320", False, 3), Course("CSI-351", False, 3),
-               Course("CSI-352", False, 3), Course("CSI-355", False, 3),
-               Course("CSI-357", True, 3), Course("CSI-370", False, 3),
-               Course("CSI-380", False, 3), Course("CSI-480", False, 4),
-               Course("CSI-330", True, 3), Course("CSI-340", False, 3),
-               Course("CSI-420", True, 4), Course("CSI-440", False, 4)]
+    professors: List[Professor] = [Professor(name="Murat", level=4),
+                                   Professor(name="David", level=4),
+                                   Professor(name="Brian", level=4),
+                                   Professor(name="Wei", level=4),
+                                   Professor(name="Sarah", level=4),
+                                   Professor(name="Frank", level=4),
+                                   Professor(name="Brent", level=4),
+                                   Professor(name="Scott", level=4),
+                                   Professor(name="Alex", level=4),
+                                   Professor(name="Eric", level=4),
+                                   Professor(name="Josh", level=4)]
+    classrooms: List[Classroom] = [Classroom(room="JOYC 201"),
+                                   Classroom(room="JOYC 210"),
+                                   Classroom(room="JOYC 211"),
+                                   Classroom(room="MIC 308")]
+    courses = [Course(identifier="CSI-120", needsDouble=False, level=1),
+               Course(identifier="CSI-140", needsDouble=False, level=1),
+               Course(identifier="CSI-180", needsDouble=True, level=1),
+               Course(identifier="CSI-240", needsDouble=False, level=2),
+               Course(identifier="CSI-230", needsDouble=False, level=2),
+               Course(identifier="CSI-281", needsDouble=False, level=2),
+               Course(identifier="CSI-280", needsDouble=True, level=2),
+               Course(identifier="CSI-300", needsDouble=True, level=3),
+               Course(identifier="CSI-320", needsDouble=False, level=3),
+               Course(identifier="CSI-351", needsDouble=False, level=3),
+               Course(identifier="CSI-352", needsDouble=False, level=3),
+               Course(identifier="CSI-355", needsDouble=False, level=3),
+               Course(identifier="CSI-357", needsDouble=True, level=3),
+               Course(identifier="CSI-370", needsDouble=False, level=3),
+               Course(identifier="CSI-380", needsDouble=False, level=3),
+               Course(identifier="CSI-480", needsDouble=False, level=4),
+               Course(identifier="CSI-330", needsDouble=True, level=3),
+               Course(identifier="CSI-340", needsDouble=False, level=3),
+               Course(identifier="CSI-420", needsDouble=True, level=4),
+               Course(identifier="CSI-440", needsDouble=False, level=4)]
 
     # find and print answer
     solution(courses, classrooms, professors)
