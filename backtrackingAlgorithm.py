@@ -215,11 +215,9 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                             if i[x][y] != "-" or j[x][y] != "-":
                                 # time slots where classes are not allowed
                                 if (x == WEDNESDAY and (y == BLOCK_FIVE or
-                                                        y == BLOCK_SIX)):
-                                    return False
-                                # time slots where classes are not allowed
-                                elif x == FRIDAY and (y == BLOCK_SEVEN or
-                                                      y == BLOCK_EIGHT):
+                                                        y == BLOCK_SIX)) or \
+                                    (x == FRIDAY and (y == BLOCK_SEVEN or
+                                                      y == BLOCK_EIGHT)):
                                     return False
                             # make sure non double block classes are only
                             # on evening time slots on wednesday
@@ -294,9 +292,9 @@ def assign_timeblocks(schedule: Schedule) -> Schedule:
         for timeBlock in day:
             row = timeBlock.day
             column = timeBlock.timeslot
-            schedule.schedule[row][column] = timeBlock
+            schedule.schedule[row][column].timeBlock = timeBlock
             if timeBlock.isDouble:
-                schedule.schedule[row][column+1] = timeBlock
+                schedule.schedule[row][column+1].timeBlock = timeBlock
     return schedule
 
 
