@@ -141,9 +141,9 @@ def display_grid(grid: Schedule) -> None:
                     print(grid[y][i][x].course.identifier + " " + grid[y][i]
                           [x].professor.name + " " +
                           grid[y][i][x].classroom.room, end="")
-                    if not (x+1 >= len(grid[y][i])):
+                    if not (x + 1 >= len(grid[y][i])):
                         print(", ", end="")
-                    if x+1 >= len(grid[y][i]):
+                    if x + 1 >= len(grid[y][i]):
                         print(" | ", end="")
         print("\n")
 
@@ -168,7 +168,7 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
                 if course.needsDouble:
                     for row in range(SCHEDULE_WIDTH):
                         for column in range(SCHEDULE_LENGTH):
-                            if (column + 1 <= SCHEDULE_LENGTH-1) and \
+                            if (column + 1 <= SCHEDULE_LENGTH - 1) and \
                                     (schedule.schedule[row][column] == "-" and
                                      schedule.schedule[row][column + 1] == "-"
                                      ):
@@ -183,7 +183,7 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
                             if (schedule.schedule[row][column] == "-"):
                                 tempCopy = deepcopy(schedule)
                                 tempCopy.schedule[row][column] = section
-                                tempCopy.schedule[row+3][column] = section
+                                tempCopy.schedule[row + 3][column] = section
                                 domain.append(tempCopy)
     return domain
 
@@ -294,7 +294,7 @@ def assign_timeblocks(schedule: Schedule) -> Schedule:
             column = timeBlock.timeslot
             schedule.schedule[row][column].timeBlock = timeBlock
             if timeBlock.isDouble:
-                schedule.schedule[row][column+1].timeBlock = timeBlock
+                schedule.schedule[row][column + 1].timeBlock = timeBlock
     return schedule
 
 
