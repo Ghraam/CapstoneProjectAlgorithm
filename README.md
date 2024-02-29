@@ -24,7 +24,7 @@ The server is currently set to use a MySQL database. To change this, edit the `c
 To set up the database, run the following commands:
 
 ```bash
-mysql -u capstone -p < db-create.sql
+mysql -u capstone -p < db/schema.sql
 rails db:seed
 ```
 
