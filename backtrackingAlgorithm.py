@@ -27,8 +27,8 @@ class Classroom(NamedTuple):
     Represents a classroom, whether it is a lab or not, and its capacity.
     """
     room: str
-    # isLab: bool
-    # capacity: int
+    isLab: bool
+    capacity: int
 
 
 class Professor(NamedTuple):
@@ -43,10 +43,10 @@ class Course(NamedTuple):
     Represents a course, whether it is a double block, its name, and what
     minimum level is required to teach it.
     """
-    # name: str
+    name: str
     identifier: str
-    # needsLab: bool
-    # courseSize: int
+    needsLab: bool
+    courseSize: int
     level: int
     needsDouble: bool
 
@@ -68,7 +68,7 @@ class Section(NamedTuple):
     professor is teaching it.
     """
     course: Course
-    # sectionNum: int
+    # sectionNum: int  # circle back to this?
     professor: Professor
     timeBlock: TimeBlock
     classroom: Classroom
@@ -338,30 +338,62 @@ if __name__ == "__main__":
                                    Professor(name="Alex"),
                                    Professor(name="Eric"),
                                    Professor(name="Josh")]
-    classrooms: List[Classroom] = [Classroom(room="JOYC 201"),
-                                   Classroom(room="JOYC 210"),
-                                   Classroom(room="JOYC 211"),
-                                   Classroom(room="MIC 308")]
-    courses = [Course(identifier="CSI-120", needsDouble=False, level=1),
-               Course(identifier="CSI-140", needsDouble=False, level=1),
-               Course(identifier="CSI-180", needsDouble=True, level=1),
-               Course(identifier="CSI-240", needsDouble=False, level=2),
-               Course(identifier="CSI-230", needsDouble=False, level=2),
-               Course(identifier="CSI-281", needsDouble=False, level=2),
-               Course(identifier="CSI-280", needsDouble=True, level=2),
-               Course(identifier="CSI-300", needsDouble=True, level=3),
-               Course(identifier="CSI-320", needsDouble=False, level=3),
-               Course(identifier="CSI-351", needsDouble=False, level=3),
-               Course(identifier="CSI-352", needsDouble=False, level=3),
-               Course(identifier="CSI-355", needsDouble=False, level=3),
-               Course(identifier="CSI-357", needsDouble=True, level=3),
-               Course(identifier="CSI-370", needsDouble=False, level=3),
-               Course(identifier="CSI-380", needsDouble=False, level=3),
-               Course(identifier="CSI-480", needsDouble=False, level=4),
-               Course(identifier="CSI-330", needsDouble=True, level=3),
-               Course(identifier="CSI-340", needsDouble=False, level=3),
-               Course(identifier="CSI-420", needsDouble=True, level=4),
-               Course(identifier="CSI-440", needsDouble=False, level=4)]
+    classrooms = [Classroom(room="JOYC 201", isLab=True, capacity=30),
+                  Classroom(room="JOYC 210", isLab=False, capacity=30),
+                  Classroom(room="JOYC 211", isLab=False, capacity=30),
+                  Classroom(room="MIC 308", isLab=True, capacity=45),]
+    courses = [Course(identifier="CSI-120", needsDouble=False, level=1,
+               needsLab=False, courseSize=30,
+               name="Intro to Mobile & Web Development"),
+               Course(identifier="CSI-140", needsDouble=False, level=1,
+               needsLab=False, courseSize=30,
+               name="Introduction to Programming"),
+               Course(identifier="CSI-180", needsDouble=True, level=1,
+               needsLab=False, courseSize=30,
+               name="Innovation 1: Technology Sandbox"),
+               Course(identifier="CSI-240", needsDouble=False, level=2,
+               needsLab=True, courseSize=15, name="Advanced Programming"),
+               Course(identifier="CSI-230", needsDouble=False, level=2,
+               needsLab=True, courseSize=15, name="Linux/Unix Programming"),
+               Course(identifier="CSI-281", needsDouble=False, level=2,
+               needsLab=False, courseSize=30,
+               name="Data Structures and Algorithms"),
+               Course(identifier="CSI-280", needsDouble=True, level=2,
+               needsLab=False, courseSize=30,
+               name="Innovation 2: Open Source Software Development"),
+               Course(identifier="CSI-300", needsDouble=True, level=3,
+               needsLab=False, courseSize=30,
+               name="Database Management Systems"),
+               Course(identifier="CSI-320", needsDouble=False, level=3,
+               needsLab=True, courseSize=20, name="Global IT and Ethics"),
+               Course(identifier="CSI-351", needsDouble=False, level=3,
+               needsLab=False, courseSize=35, name="Software Testing"),
+               Course(identifier="CSI-352", needsDouble=False, level=3,
+               needsLab=False, courseSize=35, name="Advanced Algorithms"),
+               Course(identifier="CSI-355", needsDouble=False, level=3,
+               needsLab=False, courseSize=35,
+               name="Operating Systems Architecture"),
+               Course(identifier="CSI-357", needsDouble=True, level=3,
+               needsLab=False, courseSize=25,
+               name="Server-side Web Development"),
+               Course(identifier="CSI-370", needsDouble=False, level=3,
+               needsLab=False, courseSize=30, name="Computer Architecture"),
+               Course(identifier="CSI-380", needsDouble=False, level=3,
+               needsLab=False, courseSize=30,
+               name="Innovation 3: Emerging Languages"),
+               Course(identifier="CSI-480", needsDouble=False, level=4,
+               needsLab=False, courseSize=30,
+               name="Innovation 4: Topics in AI"),
+               Course(identifier="CSI-330", needsDouble=True, level=3,
+               needsLab=False, courseSize=15,
+               name="Software Development Methodologies"),
+               Course(identifier="CSI-340", needsDouble=False, level=3,
+               needsLab=False, courseSize=30, name="Software Design Patterns"),
+               Course(identifier="CSI-420", needsDouble=True, level=4,
+               needsLab=False, courseSize=30, name="Software Refactoring"),
+               Course(identifier="CSI-440", needsDouble=False, level=4,
+               needsLab=False, courseSize=20,
+               name="Software Requirements Engineering"),]
 
     # find and print answer
     solution(courses, classrooms, professors)
