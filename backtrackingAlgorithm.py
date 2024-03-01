@@ -68,7 +68,7 @@ class Section(NamedTuple):
     professor is teaching it.
     """
     course: Course
-    # sectionNum: int  # circle back to this?
+    sectionNum: int  # circle back to this?
     professor: Professor
     timeBlock: TimeBlock
     classroom: Classroom
@@ -161,7 +161,8 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
         shuffle(professors)
         for professor in professors:
             section = Section(classroom=classroom, course=course,
-                              professor=professor, timeBlock=placeHolder)
+                              professor=professor, timeBlock=placeHolder,
+                              sectionNum=-1)
             # generate domain for double block course (1x2)
             if course.needsDouble:
                 for row in range(SCHEDULE_WIDTH):
