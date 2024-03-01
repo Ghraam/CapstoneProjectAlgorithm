@@ -42,3 +42,12 @@ data["course_preferences"].each do |course_preference|
     priority: course_preference["priority"],
   )
 end
+
+data["time_blocks"].each do |time_block|
+  TimeBlock.find_or_create_by!(
+    identifier: time_block["identifier"],
+    is_double: time_block["is_double"],
+    day: time_block["day"],
+    timeslot: time_block["timeslot"],
+  )
+end

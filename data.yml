@@ -1537,3 +1537,140 @@ classrooms:
 - room: JOYC 210
 - room: JOYC 211
 - room: MIC 308
+time_blocks:
+- identifier: Monday 1
+  is_double: false
+  day: 0
+  timeslot: 0
+- identifier: Monday 2
+  is_double: false
+  day: 0
+  timeslot: 1
+- identifier: Monday 3
+  is_double: false
+  day: 0
+  timeslot: 2
+- identifier: Monday 4
+  is_double: false
+  day: 0
+  timeslot: 3
+- identifier: Monday 5
+  is_double: false
+  day: 0
+  timeslot: 4
+- identifier: Monday 6
+  is_double: false
+  day: 0
+  timeslot: 5
+- identifier: Monday 7
+  is_double: false
+  day: 0
+  timeslot: 6
+- identifier: Monday 8
+  is_double: false
+  day: 0
+  timeslot: 7
+- identifier: Tuesday 1
+  is_double: false
+  day: 1
+  timeslot: 0
+- identifier: Tuesday 2
+  is_double: false
+  day: 1
+  timeslot: 1
+- identifier: Tuesday 3
+  is_double: false
+  day: 1
+  timeslot: 2
+- identifier: Tuesday 4
+  is_double: false
+  day: 1
+  timeslot: 3
+- identifier: Tuesday 5
+  is_double: false
+  day: 1
+  timeslot: 4
+- identifier: Tuesday 6
+  is_double: false
+  day: 1
+  timeslot: 5
+- identifier: Tuesday 7
+  is_double: false
+  day: 1
+  timeslot: 6
+- identifier: Tuesday 8
+  is_double: false
+  day: 1
+  timeslot: 7
+- identifier: Wednesday A
+  is_double: true
+  day: 2
+  timeslot: 0
+- identifier: Wednesday B
+  is_double: true
+  day: 2
+  timeslot: 2
+- identifier: Wednesday 7
+  is_double: false
+  day: 2
+  timeslot: 6
+- identifier: Wednesday 8
+  is_double: false
+  day: 2
+  timeslot: 7
+- identifier: Thursday 1
+  is_double: false
+  day: 3
+  timeslot: 0
+- identifier: Thursday 2
+  is_double: false
+  day: 3
+  timeslot: 1
+- identifier: Thursday 3
+  is_double: false
+  day: 3
+  timeslot: 2
+- identifier: Thursday 4
+  is_double: false
+  day: 3
+  timeslot: 3
+- identifier: Thursday 5
+  is_double: false
+  day: 3
+  timeslot: 4
+- identifier: Thursday 6
+  is_double: false
+  day: 3
+  timeslot: 5
+- identifier: Thursday 7
+  is_double: false
+  day: 3
+  timeslot: 6
+- identifier: Thursday 8
+  is_double: false
+  day: 3
+  timeslot: 7
+- identifier: Friday 1
+  is_double: false
+  day: 4
+  timeslot: 0
+- identifier: Friday 2
+  is_double: false
+  day: 4
+  timeslot: 1
+- identifier: Friday 3
+  is_double: false
+  day: 4
+  timeslot: 2
+- identifier: Friday 4
+  is_double: false
+  day: 4
+  timeslot: 3
+- identifier: Friday 5
+  is_double: false
+  day: 4
+  timeslot: 4
+- identifier: Friday 6
+  is_double: false
+  day: 4
+  timeslot: 5
