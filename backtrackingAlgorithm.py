@@ -48,8 +48,8 @@ class Course(NamedTuple):
     identifier: str
     # needsLab: bool
     # courseSize: int
-    needsDouble: bool
     level: int
+    needsDouble: bool
 
 
 class TimeBlock(NamedTuple):
@@ -69,11 +69,11 @@ class Section(NamedTuple):
     Represents a section of a course, which classroom it is in, and which
     professor is teaching it.
     """
-    classroom: Classroom
-    # sectionNum: int
     course: Course
+    # sectionNum: int
     professor: Professor
     timeBlock: TimeBlock
+    classroom: Classroom
 
 
 class CoursePreference(NamedTuple):
@@ -162,7 +162,8 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
     for classroom in classrooms:
         shuffle(professors)
         for professor in professors:
-            section = Section(classroom, course, professor, placeHolder)
+            section = Section(classroom=classroom, course=course,
+                              professor=professor, timeBlock=placeHolder)
             if section.professor.level >= section.course.level:
                 # generate domain for double block course (1x2)
                 if course.needsDouble:
