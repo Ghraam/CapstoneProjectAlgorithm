@@ -48,7 +48,8 @@ CREATE TABLE IF NOT EXISTS `capstone_scheduling_project`.`time_blocks` (
   `timeslot` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX (`day` ASC, `timeslot` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

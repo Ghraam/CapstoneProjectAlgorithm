@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.integer "timeslot", null: false
     t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
+    t.index ["day", "timeslot"], name: "day", unique: true
   end
 
   create_table "time_preferences", primary_key: ["professor_id", "time_block_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
