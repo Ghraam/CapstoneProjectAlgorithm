@@ -36,7 +36,6 @@ class Professor(NamedTuple):
     Represents a professor, and their level of class they can teach.
     """
     name: str
-    level: int  # remove?
 
 
 class Course(NamedTuple):
@@ -163,28 +162,27 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
         for professor in professors:
             section = Section(classroom=classroom, course=course,
                               professor=professor, timeBlock=placeHolder)
-            if section.professor.level >= section.course.level:
-                # generate domain for double block course (1x2)
-                if course.needsDouble:
-                    for row in range(SCHEDULE_WIDTH):
-                        for column in range(SCHEDULE_LENGTH):
-                            if (column + 1 <= SCHEDULE_LENGTH - 1) and \
-                                    (schedule.schedule[row][column] == "-" and
-                                     schedule.schedule[row][column + 1] == "-"
-                                     ):
-                                tempCopy = deepcopy(schedule)
-                                tempCopy.schedule[row][column] = section
-                                tempCopy.schedule[row][column + 1] = section
-                                domain.append(tempCopy)
-                else:
-                    # generate domain for single block courses (1x1)
-                    for row in range(2):
-                        for column in range(len(schedule.schedule[0])):
-                            if (schedule.schedule[row][column] == "-"):
-                                tempCopy = deepcopy(schedule)
-                                tempCopy.schedule[row][column] = section
-                                tempCopy.schedule[row + 3][column] = section
-                                domain.append(tempCopy)
+            # generate domain for double block course (1x2)
+            if course.needsDouble:
+                for row in range(SCHEDULE_WIDTH):
+                    for column in range(SCHEDULE_LENGTH):
+                        if (column + 1 <= SCHEDULE_LENGTH - 1) and \
+                                (schedule.schedule[row][column] == "-" and
+                                 schedule.schedule[row][column + 1] == "-"
+                                 ):
+                            tempCopy = deepcopy(schedule)
+                            tempCopy.schedule[row][column] = section
+                            tempCopy.schedule[row][column + 1] = section
+                            domain.append(tempCopy)
+            else:
+                # generate domain for single block courses (1x1)
+                for row in range(2):
+                    for column in range(len(schedule.schedule[0])):
+                        if (schedule.schedule[row][column] == "-"):
+                            tempCopy = deepcopy(schedule)
+                            tempCopy.schedule[row][column] = section
+                            tempCopy.schedule[row + 3][column] = section
+                            domain.append(tempCopy)
     return domain
 
 
@@ -329,17 +327,17 @@ def solution(courses: List[Course], classrooms: List[Classroom],
 
 if __name__ == "__main__":
     # set parameters
-    professors: List[Professor] = [Professor(name="Murat", level=4),
-                                   Professor(name="David", level=4),
-                                   Professor(name="Brian", level=4),
-                                   Professor(name="Wei", level=4),
-                                   Professor(name="Sarah", level=4),
-                                   Professor(name="Frank", level=4),
-                                   Professor(name="Brent", level=4),
-                                   Professor(name="Scott", level=4),
-                                   Professor(name="Alex", level=4),
-                                   Professor(name="Eric", level=4),
-                                   Professor(name="Josh", level=4)]
+    professors: List[Professor] = [Professor(name="Murat"),
+                                   Professor(name="David"),
+                                   Professor(name="Brian"),
+                                   Professor(name="Wei"),
+                                   Professor(name="Sarah"),
+                                   Professor(name="Frank"),
+                                   Professor(name="Brent"),
+                                   Professor(name="Scott"),
+                                   Professor(name="Alex"),
+                                   Professor(name="Eric"),
+                                   Professor(name="Josh")]
     classrooms: List[Classroom] = [Classroom(room="JOYC 201"),
                                    Classroom(room="JOYC 210"),
                                    Classroom(room="JOYC 211"),
