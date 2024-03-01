@@ -68,7 +68,7 @@ class Section(NamedTuple):
     professor is teaching it.
     """
     course: Course
-    sectionNum: int  # circle back to this?
+    sectionNum: int
     professor: Professor
     timeBlock: TimeBlock
     classroom: Classroom
@@ -298,6 +298,20 @@ def assign_timeblocks(
             schedule.schedule[row][column].timeBlock = timeBlock
             if timeBlock.isDouble:
                 schedule.schedule[row][column + 1].timeBlock = timeBlock
+    return schedule
+
+
+def assign_sections_nums(schedule: Schedule) -> Schedule:
+    """
+    Assigns section numbers to sections based on the schedule.
+    """
+    # WIP
+    sectionNum = 1
+    for row in schedule.schedule:
+        for section in row:
+            if section != "-":
+                section.sectionNum = sectionNum
+                sectionNum += 1
     return schedule
 
 
