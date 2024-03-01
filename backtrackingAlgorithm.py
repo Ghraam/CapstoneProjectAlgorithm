@@ -283,11 +283,14 @@ timeBlockMatrix: List[List[TimeBlock]] = [
 ]
 
 
-def assign_timeblocks(schedule: Schedule) -> Schedule:
+def assign_timeblocks(
+    schedule: Schedule,
+    timeBlocks: List[List[TimeBlock]]
+) -> Schedule:
     """
     Assigns timeblocks to sections based on the schedule.
     """
-    for day in timeBlockMatrix:
+    for day in timeBlocks:
         for timeBlock in day:
             row = timeBlock.day
             column = timeBlock.timeslot
