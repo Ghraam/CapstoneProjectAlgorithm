@@ -65,6 +65,6 @@ class TimeBlocksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def time_block_params
-      params.require(:time_block).permit(:identifier, :is_double)
+      params.require(:time_block).permit(:identifier, :is_double, :day, :timeslot)
     end
 end

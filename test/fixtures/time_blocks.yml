@@ -3,4 +3,6 @@
 <%= n.humanize %>:
   identifier: "<%= Faker::Alphanumeric.alpha(number: 2).upcase %><%= Faker::Number.number(digits: 2) %>"
   is_double: <%= Faker::Boolean.boolean %>
+  day: <%= Faker::Number.between(from: 0, to: 4) %>
+  timeslot: <%= Faker::Number.between(from: 0, to: 7) %>
 <% end %>

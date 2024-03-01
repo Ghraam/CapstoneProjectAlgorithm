@@ -59,7 +59,6 @@ class TimeBlock(NamedTuple):
     """
     identifier: str
     isDouble: bool
-    # TODO: update schema to match
     day: int  # x (0-4, M-F)
     timeslot: int  # y (0-7, ???)
 

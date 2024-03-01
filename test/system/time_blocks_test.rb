@@ -14,8 +14,10 @@ class TimeBlocksTest < ApplicationSystemTestCase
     visit time_blocks_url
     click_on "New time block"
 
+    fill_in "Day", with: @time_block.day
     fill_in "Identifier", with: @time_block.identifier
     check "Is double" if @time_block.is_double
+    fill_in "Timeslot", with: @time_block.timeslot
     click_on "Create Time block"
 
     assert_text "Time block was successfully created"
@@ -26,8 +28,10 @@ class TimeBlocksTest < ApplicationSystemTestCase
     visit time_block_url(@time_block)
     click_on "Edit this time block", match: :first
 
+    fill_in "Day", with: @time_block.day
     fill_in "Identifier", with: @time_block.identifier
     check "Is double" if @time_block.is_double
+    fill_in "Timeslot", with: @time_block.timeslot
     click_on "Update Time block"
 
     assert_text "Time block was successfully updated"

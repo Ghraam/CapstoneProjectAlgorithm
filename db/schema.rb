@@ -65,6 +65,8 @@ ActiveRecord::Schema[7.1].define(version: 0) do
   create_table "time_blocks", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "identifier", null: false
     t.integer "is_double", limit: 1, null: false
+    t.integer "day", null: false
+    t.integer "timeslot", null: false
     t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
   end

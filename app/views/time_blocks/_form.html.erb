@@ -22,6 +22,16 @@
   </div>
 
   <div>
+    <%= form.label :day, style: "display: block" %>
+    <%= form.number_field :day %>
+  </div>
+
+  <div>
+    <%= form.label :timeslot, style: "display: block" %>
+    <%= form.number_field :timeslot %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

@@ -17,7 +17,7 @@ class TimeBlocksControllerTest < ActionDispatch::IntegrationTest
 
   test "should create time_block" do
     assert_difference("TimeBlock.count") do
-      post time_blocks_url, params: { time_block: { identifier: @time_block.identifier, is_double: @time_block.is_double } }
+      post time_blocks_url, params: { time_block: { day: @time_block.day, identifier: @time_block.identifier, is_double: @time_block.is_double, timeslot: @time_block.timeslot } }
     end
 
     assert_redirected_to time_block_url(TimeBlock.last)
@@ -34,7 +34,7 @@ class TimeBlocksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update time_block" do
-    patch time_block_url(@time_block), params: { time_block: { identifier: @time_block.identifier, is_double: @time_block.is_double } }
+    patch time_block_url(@time_block), params: { time_block: { day: @time_block.day, identifier: @time_block.identifier, is_double: @time_block.is_double, timeslot: @time_block.timeslot } }
     assert_redirected_to time_block_url(@time_block)
   end
 
