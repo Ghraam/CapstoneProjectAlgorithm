@@ -66,7 +66,6 @@ ActiveRecord::Schema[7.1].define(version: 0) do
 
   create_table "time_blocks", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "identifier", null: false
-    t.integer "may_start", limit: 1, null: false
     t.integer "block_type", null: false
     t.integer "day", null: false
     t.integer "timeslot", null: false

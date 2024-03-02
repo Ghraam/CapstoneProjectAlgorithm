@@ -17,7 +17,6 @@ class TimeBlocksTest < ApplicationSystemTestCase
     fill_in "Block type", with: @time_block.block_type
     fill_in "Day", with: @time_block.day
     fill_in "Identifier", with: @time_block.identifier
-    check "May start" if @time_block.may_start
     fill_in "Timeslot", with: @time_block.timeslot
     click_on "Create Time block"
 
@@ -32,7 +31,6 @@ class TimeBlocksTest < ApplicationSystemTestCase
     fill_in "Block type", with: @time_block.block_type
     fill_in "Day", with: @time_block.day
     fill_in "Identifier", with: @time_block.identifier
-    check "May start" if @time_block.may_start
     fill_in "Timeslot", with: @time_block.timeslot
     click_on "Update Time block"
 

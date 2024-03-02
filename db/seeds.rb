@@ -46,7 +46,6 @@ end
 data["time_blocks"].each do |time_block|
   TimeBlock.find_or_create_by!(
     identifier: time_block["identifier"],
-    may_start: time_block["may_start"],
     block_type: time_block["block_type"],
     day: time_block["day"],
     timeslot: time_block["timeslot"],

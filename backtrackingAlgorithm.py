@@ -57,7 +57,7 @@ class TimeBlock(NamedTuple):
     whether it is a double block.
     """
     identifier: str
-    mayStart: bool  # candidate for removal
+    blockType: int  # 0 = single, 1 = double_start, 2 = double_end
     day: int  # x (0-4, M-F)
     timeslot: int  # y (0-7, ???)
 
@@ -227,59 +227,59 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
         return True
 
 
-placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", mayStart=False,
-                                   day=-1, timeslot=-1)
+placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", day=-1,
+                                   timeslot=-1)
 
 
 timeBlockMatrix: List[List[TimeBlock]] = [
     # Monday
     [
-        TimeBlock(identifier="Monday 1", mayStart=False, day=0, timeslot=0),
-        TimeBlock(identifier="Monday 2", mayStart=False, day=0, timeslot=1),
-        TimeBlock(identifier="Monday 3", mayStart=False, day=0, timeslot=2),
-        TimeBlock(identifier="Monday 4", mayStart=False, day=0, timeslot=3),
-        TimeBlock(identifier="Monday 5", mayStart=False, day=0, timeslot=4),
-        TimeBlock(identifier="Monday 6", mayStart=False, day=0, timeslot=5),
-        TimeBlock(identifier="Monday 7", mayStart=False, day=0, timeslot=6),
-        TimeBlock(identifier="Monday 8", mayStart=False, day=0, timeslot=7),
+        TimeBlock(identifier="Monday 1", day=0, timeslot=0),
+        TimeBlock(identifier="Monday 2", day=0, timeslot=1),
+        TimeBlock(identifier="Monday 3", day=0, timeslot=2),
+        TimeBlock(identifier="Monday 4", day=0, timeslot=3),
+        TimeBlock(identifier="Monday 5", day=0, timeslot=4),
+        TimeBlock(identifier="Monday 6", day=0, timeslot=5),
+        TimeBlock(identifier="Monday 7", day=0, timeslot=6),
+        TimeBlock(identifier="Monday 8", day=0, timeslot=7),
     ],
     # Tuesday
     [
-        TimeBlock(identifier="Tuesday 1", mayStart=False, day=1, timeslot=0),
-        TimeBlock(identifier="Tuesday 2", mayStart=False, day=1, timeslot=1),
-        TimeBlock(identifier="Tuesday 3", mayStart=False, day=1, timeslot=2),
-        TimeBlock(identifier="Tuesday 4", mayStart=False, day=1, timeslot=3),
-        TimeBlock(identifier="Tuesday 5", mayStart=False, day=1, timeslot=4),
-        TimeBlock(identifier="Tuesday 6", mayStart=False, day=1, timeslot=5),
-        TimeBlock(identifier="Tuesday 7", mayStart=False, day=1, timeslot=6),
-        TimeBlock(identifier="Tuesday 8", mayStart=False, day=1, timeslot=7),
+        TimeBlock(identifier="Tuesday 1", day=1, timeslot=0),
+        TimeBlock(identifier="Tuesday 2", day=1, timeslot=1),
+        TimeBlock(identifier="Tuesday 3", day=1, timeslot=2),
+        TimeBlock(identifier="Tuesday 4", day=1, timeslot=3),
+        TimeBlock(identifier="Tuesday 5", day=1, timeslot=4),
+        TimeBlock(identifier="Tuesday 6", day=1, timeslot=5),
+        TimeBlock(identifier="Tuesday 7", day=1, timeslot=6),
+        TimeBlock(identifier="Tuesday 8", day=1, timeslot=7),
     ],
     # Wednesday (double blocks early, 5th and 6th blocks off)
     [
-        TimeBlock(identifier="Wednesday A", mayStart=True, day=2, timeslot=0),
-        TimeBlock(identifier="Wednesday B", mayStart=True, day=2, timeslot=2),
-        TimeBlock(identifier="Wednesday 7", mayStart=False, day=2, timeslot=6),
-        TimeBlock(identifier="Wednesday 8", mayStart=False, day=2, timeslot=7),
+        TimeBlock(identifier="Wednesday A", day=2, timeslot=0),
+        TimeBlock(identifier="Wednesday B", day=2, timeslot=2),
+        TimeBlock(identifier="Wednesday 7", day=2, timeslot=6),
+        TimeBlock(identifier="Wednesday 8", day=2, timeslot=7),
     ],
     # Thursday
     [
-        TimeBlock(identifier="Thursday 1", mayStart=False, day=3, timeslot=0),
-        TimeBlock(identifier="Thursday 2", mayStart=False, day=3, timeslot=1),
-        TimeBlock(identifier="Thursday 3", mayStart=False, day=3, timeslot=2),
-        TimeBlock(identifier="Thursday 4", mayStart=False, day=3, timeslot=3),
-        TimeBlock(identifier="Thursday 5", mayStart=False, day=3, timeslot=4),
-        TimeBlock(identifier="Thursday 6", mayStart=False, day=3, timeslot=5),
-        TimeBlock(identifier="Thursday 7", mayStart=False, day=3, timeslot=6),
-        TimeBlock(identifier="Thursday 8", mayStart=False, day=3, timeslot=7),
+        TimeBlock(identifier="Thursday 1", day=3, timeslot=0),
+        TimeBlock(identifier="Thursday 2", day=3, timeslot=1),
+        TimeBlock(identifier="Thursday 3", day=3, timeslot=2),
+        TimeBlock(identifier="Thursday 4", day=3, timeslot=3),
+        TimeBlock(identifier="Thursday 5", day=3, timeslot=4),
+        TimeBlock(identifier="Thursday 6", day=3, timeslot=5),
+        TimeBlock(identifier="Thursday 7", day=3, timeslot=6),
+        TimeBlock(identifier="Thursday 8", day=3, timeslot=7),
     ],
     # Friday (no double blocks, 7th and 8th blocks off)
     [
-        TimeBlock(identifier="Friday 1", mayStart=False, day=4, timeslot=0),
-        TimeBlock(identifier="Friday 2", mayStart=False, day=4, timeslot=1),
-        TimeBlock(identifier="Friday 3", mayStart=False, day=4, timeslot=2),
-        TimeBlock(identifier="Friday 4", mayStart=False, day=4, timeslot=3),
-        TimeBlock(identifier="Friday 5", mayStart=False, day=4, timeslot=4),
-        TimeBlock(identifier="Friday 6", mayStart=False, day=4, timeslot=5),
+        TimeBlock(identifier="Friday 1", day=4, timeslot=0),
+        TimeBlock(identifier="Friday 2", day=4, timeslot=1),
+        TimeBlock(identifier="Friday 3", day=4, timeslot=2),
+        TimeBlock(identifier="Friday 4", day=4, timeslot=3),
+        TimeBlock(identifier="Friday 5", day=4, timeslot=4),
+        TimeBlock(identifier="Friday 6", day=4, timeslot=5),
     ],
 ]
 
@@ -296,8 +296,6 @@ def assign_timeblocks(
             row = timeBlock.day
             column = timeBlock.timeslot
             schedule.schedule[row][column].timeBlock = timeBlock
-            if timeBlock.mayStart:
-                schedule.schedule[row][column + 1].timeBlock = timeBlock
     return schedule
 
 

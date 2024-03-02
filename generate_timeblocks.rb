@@ -16,7 +16,6 @@ timeblocks = timeblock_matrix.map.with_index do |row, i|
     identifier = "#{weekdays[j]} #{cell == "&" ? cell_above : cell}#{type > 0 ? type : ""}"
     {
       "identifier" => identifier,
-      "may_start" => true,
       "block_type" => type,
       "day" => j,
       "timeslot" => i,
