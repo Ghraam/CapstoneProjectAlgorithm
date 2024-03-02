@@ -38,7 +38,7 @@ rails s
 
 ## ER Diagram
 
-![ER Diagram](https://i.imgur.com/Mq6l4rT.png)
+![ER Diagram](https://i.imgur.com/qz2Vmg3.png)
 
 ## API Specification
 

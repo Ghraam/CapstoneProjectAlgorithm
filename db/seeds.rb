@@ -25,7 +25,7 @@ data["courses"].each do |course|
     needs_lab: Faker::Boolean.boolean,
     course_size: Faker::Number.between(from: 10, to: 100),
     level: course["identifier"][4].to_i,
-    needs_double: Faker::Boolean.boolean,
+    double_block: Faker::Boolean.boolean,
   )
 end
 
@@ -46,7 +46,8 @@ end
 data["time_blocks"].each do |time_block|
   TimeBlock.find_or_create_by!(
     identifier: time_block["identifier"],
-    is_double: time_block["is_double"],
+    may_start: time_block["may_start"],
+    block_type: time_block["block_type"],
     day: time_block["day"],
     timeslot: time_block["timeslot"],
   )

@@ -15,10 +15,10 @@ class CoursesTest < ApplicationSystemTestCase
     click_on "New course"
 
     fill_in "Course size", with: @course.course_size
+    check "Double block" if @course.double_block
     fill_in "Identifier", with: @course.identifier
     fill_in "Level", with: @course.level
     fill_in "Name", with: @course.name
-    check "Needs double" if @course.needs_double
     check "Needs lab" if @course.needs_lab
     click_on "Create Course"
 
@@ -31,10 +31,10 @@ class CoursesTest < ApplicationSystemTestCase
     click_on "Edit this course", match: :first
 
     fill_in "Course size", with: @course.course_size
+    check "Double block" if @course.double_block
     fill_in "Identifier", with: @course.identifier
     fill_in "Level", with: @course.level
     fill_in "Name", with: @course.name
-    check "Needs double" if @course.needs_double
     check "Needs lab" if @course.needs_lab
     click_on "Update Course"
 

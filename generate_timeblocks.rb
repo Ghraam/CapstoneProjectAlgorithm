@@ -10,10 +10,14 @@ weekdays = %w[Monday Tuesday Wednesday Thursday Friday]
 
 timeblocks = timeblock_matrix.map.with_index do |row, i|
   row.map.with_index do |cell, j|
-    next if cell == "%" or cell == "&"
+    cell_above = (timeblock_matrix[i - 1][j] if i > 0) || " "
+    next if cell == "%"
+    type = cell == "&" ? 2 : ("A".."Z").include?(cell) ? 1 : 0
+    identifier = "#{weekdays[j]} #{cell == "&" ? cell_above : cell}#{type > 0 ? type : ""}"
     {
-      "identifier" => "#{weekdays[j]} #{cell}",
-      "is_double" => ("A".."Z").include?(cell),
+      "identifier" => identifier,
+      "may_start" => true,
+      "block_type" => type,
       "day" => j,
       "timeslot" => i,
     }

@@ -16,9 +16,10 @@ class SectionsTest < ApplicationSystemTestCase
 
     fill_in "Classroom", with: @section.classroom_id
     fill_in "Course", with: @section.course_id
+    fill_in "End", with: @section.end
     fill_in "Professor", with: @section.professor_id
     fill_in "Section num", with: @section.section_num
-    fill_in "Time block", with: @section.time_block_id
+    fill_in "Start", with: @section.start
     click_on "Create Section"
 
     assert_text "Section was successfully created"
@@ -31,9 +32,10 @@ class SectionsTest < ApplicationSystemTestCase
 
     fill_in "Classroom", with: @section.classroom_id
     fill_in "Course", with: @section.course_id
+    fill_in "End", with: @section.end
     fill_in "Professor", with: @section.professor_id
     fill_in "Section num", with: @section.section_num
-    fill_in "Time block", with: @section.time_block_id
+    fill_in "Start", with: @section.start
     click_on "Update Section"
 
     assert_text "Section was successfully updated"

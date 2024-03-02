@@ -48,7 +48,7 @@ class Course(NamedTuple):
     needsLab: bool
     courseSize: int
     level: int
-    needsDouble: bool
+    doubleBlock: bool
 
 
 class TimeBlock(NamedTuple):
@@ -57,7 +57,7 @@ class TimeBlock(NamedTuple):
     whether it is a double block.
     """
     identifier: str
-    isDouble: bool
+    mayStart: bool  # candidate for removal
     day: int  # x (0-4, M-F)
     timeslot: int  # y (0-7, ???)
 
@@ -164,7 +164,7 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
                               professor=professor, timeBlock=placeHolder,
                               sectionNum=-1)
             # generate domain for double block course (1x2)
-            if course.needsDouble:
+            if course.doubleBlock:
                 for row in range(SCHEDULE_WIDTH):
                     for column in range(SCHEDULE_LENGTH):
                         if (column + 1 <= SCHEDULE_LENGTH - 1) and \
@@ -227,59 +227,59 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
         return True
 
 
-placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", isDouble=False,
+placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", mayStart=False,
                                    day=-1, timeslot=-1)
 
 
 timeBlockMatrix: List[List[TimeBlock]] = [
     # Monday
     [
-        TimeBlock(identifier="Monday 1", isDouble=False, day=0, timeslot=0),
-        TimeBlock(identifier="Monday 2", isDouble=False, day=0, timeslot=1),
-        TimeBlock(identifier="Monday 3", isDouble=False, day=0, timeslot=2),
-        TimeBlock(identifier="Monday 4", isDouble=False, day=0, timeslot=3),
-        TimeBlock(identifier="Monday 5", isDouble=False, day=0, timeslot=4),
-        TimeBlock(identifier="Monday 6", isDouble=False, day=0, timeslot=5),
-        TimeBlock(identifier="Monday 7", isDouble=False, day=0, timeslot=6),
-        TimeBlock(identifier="Monday 8", isDouble=False, day=0, timeslot=7),
+        TimeBlock(identifier="Monday 1", mayStart=False, day=0, timeslot=0),
+        TimeBlock(identifier="Monday 2", mayStart=False, day=0, timeslot=1),
+        TimeBlock(identifier="Monday 3", mayStart=False, day=0, timeslot=2),
+        TimeBlock(identifier="Monday 4", mayStart=False, day=0, timeslot=3),
+        TimeBlock(identifier="Monday 5", mayStart=False, day=0, timeslot=4),
+        TimeBlock(identifier="Monday 6", mayStart=False, day=0, timeslot=5),
+        TimeBlock(identifier="Monday 7", mayStart=False, day=0, timeslot=6),
+        TimeBlock(identifier="Monday 8", mayStart=False, day=0, timeslot=7),
     ],
     # Tuesday
     [
-        TimeBlock(identifier="Tuesday 1", isDouble=False, day=1, timeslot=0),
-        TimeBlock(identifier="Tuesday 2", isDouble=False, day=1, timeslot=1),
-        TimeBlock(identifier="Tuesday 3", isDouble=False, day=1, timeslot=2),
-        TimeBlock(identifier="Tuesday 4", isDouble=False, day=1, timeslot=3),
-        TimeBlock(identifier="Tuesday 5", isDouble=False, day=1, timeslot=4),
-        TimeBlock(identifier="Tuesday 6", isDouble=False, day=1, timeslot=5),
-        TimeBlock(identifier="Tuesday 7", isDouble=False, day=1, timeslot=6),
-        TimeBlock(identifier="Tuesday 8", isDouble=False, day=1, timeslot=7),
+        TimeBlock(identifier="Tuesday 1", mayStart=False, day=1, timeslot=0),
+        TimeBlock(identifier="Tuesday 2", mayStart=False, day=1, timeslot=1),
+        TimeBlock(identifier="Tuesday 3", mayStart=False, day=1, timeslot=2),
+        TimeBlock(identifier="Tuesday 4", mayStart=False, day=1, timeslot=3),
+        TimeBlock(identifier="Tuesday 5", mayStart=False, day=1, timeslot=4),
+        TimeBlock(identifier="Tuesday 6", mayStart=False, day=1, timeslot=5),
+        TimeBlock(identifier="Tuesday 7", mayStart=False, day=1, timeslot=6),
+        TimeBlock(identifier="Tuesday 8", mayStart=False, day=1, timeslot=7),
     ],
     # Wednesday (double blocks early, 5th and 6th blocks off)
     [
-        TimeBlock(identifier="Wednesday A", isDouble=True, day=2, timeslot=0),
-        TimeBlock(identifier="Wednesday B", isDouble=True, day=2, timeslot=2),
-        TimeBlock(identifier="Wednesday 7", isDouble=False, day=2, timeslot=6),
-        TimeBlock(identifier="Wednesday 8", isDouble=False, day=2, timeslot=7),
+        TimeBlock(identifier="Wednesday A", mayStart=True, day=2, timeslot=0),
+        TimeBlock(identifier="Wednesday B", mayStart=True, day=2, timeslot=2),
+        TimeBlock(identifier="Wednesday 7", mayStart=False, day=2, timeslot=6),
+        TimeBlock(identifier="Wednesday 8", mayStart=False, day=2, timeslot=7),
     ],
     # Thursday
     [
-        TimeBlock(identifier="Thursday 1", isDouble=False, day=3, timeslot=0),
-        TimeBlock(identifier="Thursday 2", isDouble=False, day=3, timeslot=1),
-        TimeBlock(identifier="Thursday 3", isDouble=False, day=3, timeslot=2),
-        TimeBlock(identifier="Thursday 4", isDouble=False, day=3, timeslot=3),
-        TimeBlock(identifier="Thursday 5", isDouble=False, day=3, timeslot=4),
-        TimeBlock(identifier="Thursday 6", isDouble=False, day=3, timeslot=5),
-        TimeBlock(identifier="Thursday 7", isDouble=False, day=3, timeslot=6),
-        TimeBlock(identifier="Thursday 8", isDouble=False, day=3, timeslot=7),
+        TimeBlock(identifier="Thursday 1", mayStart=False, day=3, timeslot=0),
+        TimeBlock(identifier="Thursday 2", mayStart=False, day=3, timeslot=1),
+        TimeBlock(identifier="Thursday 3", mayStart=False, day=3, timeslot=2),
+        TimeBlock(identifier="Thursday 4", mayStart=False, day=3, timeslot=3),
+        TimeBlock(identifier="Thursday 5", mayStart=False, day=3, timeslot=4),
+        TimeBlock(identifier="Thursday 6", mayStart=False, day=3, timeslot=5),
+        TimeBlock(identifier="Thursday 7", mayStart=False, day=3, timeslot=6),
+        TimeBlock(identifier="Thursday 8", mayStart=False, day=3, timeslot=7),
     ],
     # Friday (no double blocks, 7th and 8th blocks off)
     [
-        TimeBlock(identifier="Friday 1", isDouble=False, day=4, timeslot=0),
-        TimeBlock(identifier="Friday 2", isDouble=False, day=4, timeslot=1),
-        TimeBlock(identifier="Friday 3", isDouble=False, day=4, timeslot=2),
-        TimeBlock(identifier="Friday 4", isDouble=False, day=4, timeslot=3),
-        TimeBlock(identifier="Friday 5", isDouble=False, day=4, timeslot=4),
-        TimeBlock(identifier="Friday 6", isDouble=False, day=4, timeslot=5),
+        TimeBlock(identifier="Friday 1", mayStart=False, day=4, timeslot=0),
+        TimeBlock(identifier="Friday 2", mayStart=False, day=4, timeslot=1),
+        TimeBlock(identifier="Friday 3", mayStart=False, day=4, timeslot=2),
+        TimeBlock(identifier="Friday 4", mayStart=False, day=4, timeslot=3),
+        TimeBlock(identifier="Friday 5", mayStart=False, day=4, timeslot=4),
+        TimeBlock(identifier="Friday 6", mayStart=False, day=4, timeslot=5),
     ],
 ]
 
@@ -296,7 +296,7 @@ def assign_timeblocks(
             row = timeBlock.day
             column = timeBlock.timeslot
             schedule.schedule[row][column].timeBlock = timeBlock
-            if timeBlock.isDouble:
+            if timeBlock.mayStart:
                 schedule.schedule[row][column + 1].timeBlock = timeBlock
     return schedule
 
@@ -360,56 +360,56 @@ if __name__ == "__main__":
                   Classroom(room="JOYC 210", isLab=False, capacity=30),
                   Classroom(room="JOYC 211", isLab=False, capacity=30),
                   Classroom(room="MIC 308", isLab=True, capacity=45),]
-    courses = [Course(identifier="CSI-120", needsDouble=False, level=1,
+    courses = [Course(identifier="CSI-120", doubleBlock=False, level=1,
                needsLab=False, courseSize=30,
                name="Intro to Mobile & Web Development"),
-               Course(identifier="CSI-140", needsDouble=False, level=1,
+               Course(identifier="CSI-140", doubleBlock=False, level=1,
                needsLab=False, courseSize=30,
                name="Introduction to Programming"),
-               Course(identifier="CSI-180", needsDouble=True, level=1,
+               Course(identifier="CSI-180", doubleBlock=True, level=1,
                needsLab=False, courseSize=30,
                name="Innovation 1: Technology Sandbox"),
-               Course(identifier="CSI-240", needsDouble=False, level=2,
+               Course(identifier="CSI-240", doubleBlock=False, level=2,
                needsLab=True, courseSize=15, name="Advanced Programming"),
-               Course(identifier="CSI-230", needsDouble=False, level=2,
+               Course(identifier="CSI-230", doubleBlock=False, level=2,
                needsLab=True, courseSize=15, name="Linux/Unix Programming"),
-               Course(identifier="CSI-281", needsDouble=False, level=2,
+               Course(identifier="CSI-281", doubleBlock=False, level=2,
                needsLab=False, courseSize=30,
                name="Data Structures and Algorithms"),
-               Course(identifier="CSI-280", needsDouble=True, level=2,
+               Course(identifier="CSI-280", doubleBlock=True, level=2,
                needsLab=False, courseSize=30,
                name="Innovation 2: Open Source Software Development"),
-               Course(identifier="CSI-300", needsDouble=True, level=3,
+               Course(identifier="CSI-300", doubleBlock=True, level=3,
                needsLab=False, courseSize=30,
                name="Database Management Systems"),
-               Course(identifier="CSI-320", needsDouble=False, level=3,
+               Course(identifier="CSI-320", doubleBlock=False, level=3,
                needsLab=True, courseSize=20, name="Global IT and Ethics"),
-               Course(identifier="CSI-351", needsDouble=False, level=3,
+               Course(identifier="CSI-351", doubleBlock=False, level=3,
                needsLab=False, courseSize=35, name="Software Testing"),
-               Course(identifier="CSI-352", needsDouble=False, level=3,
+               Course(identifier="CSI-352", doubleBlock=False, level=3,
                needsLab=False, courseSize=35, name="Advanced Algorithms"),
-               Course(identifier="CSI-355", needsDouble=False, level=3,
+               Course(identifier="CSI-355", doubleBlock=False, level=3,
                needsLab=False, courseSize=35,
                name="Operating Systems Architecture"),
-               Course(identifier="CSI-357", needsDouble=True, level=3,
+               Course(identifier="CSI-357", doubleBlock=True, level=3,
                needsLab=False, courseSize=25,
                name="Server-side Web Development"),
-               Course(identifier="CSI-370", needsDouble=False, level=3,
+               Course(identifier="CSI-370", doubleBlock=False, level=3,
                needsLab=False, courseSize=30, name="Computer Architecture"),
-               Course(identifier="CSI-380", needsDouble=False, level=3,
+               Course(identifier="CSI-380", doubleBlock=False, level=3,
                needsLab=False, courseSize=30,
                name="Innovation 3: Emerging Languages"),
-               Course(identifier="CSI-480", needsDouble=False, level=4,
+               Course(identifier="CSI-480", doubleBlock=False, level=4,
                needsLab=False, courseSize=30,
                name="Innovation 4: Topics in AI"),
-               Course(identifier="CSI-330", needsDouble=True, level=3,
+               Course(identifier="CSI-330", doubleBlock=True, level=3,
                needsLab=False, courseSize=15,
                name="Software Development Methodologies"),
-               Course(identifier="CSI-340", needsDouble=False, level=3,
+               Course(identifier="CSI-340", doubleBlock=False, level=3,
                needsLab=False, courseSize=30, name="Software Design Patterns"),
-               Course(identifier="CSI-420", needsDouble=True, level=4,
+               Course(identifier="CSI-420", doubleBlock=True, level=4,
                needsLab=False, courseSize=30, name="Software Refactoring"),
-               Course(identifier="CSI-440", needsDouble=False, level=4,
+               Course(identifier="CSI-440", doubleBlock=False, level=4,
                needsLab=False, courseSize=20,
                name="Software Requirements Engineering"),]
 
