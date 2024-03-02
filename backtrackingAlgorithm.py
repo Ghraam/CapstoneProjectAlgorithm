@@ -70,7 +70,8 @@ class Section(NamedTuple):
     course: Course
     sectionNum: int
     professor: Professor
-    timeBlock: TimeBlock
+    start: TimeBlock
+    end: TimeBlock
     classroom: Classroom
 
 
@@ -161,8 +162,8 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
         shuffle(professors)
         for professor in professors:
             section = Section(classroom=classroom, course=course,
-                              professor=professor, timeBlock=placeHolder,
-                              sectionNum=-1)
+                              professor=professor, start=placeHolder,
+                              end=placeHolder, sectionNum=-1)
             # generate domain for double block course (1x2)
             if course.doubleBlock:
                 for row in range(SCHEDULE_WIDTH):
@@ -227,59 +228,61 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
         return True
 
 
-placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", day=-1,
-                                   timeslot=-1)
+placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", blockType=-1,
+                                   day=-1, timeslot=-1)
 
 
 timeBlockMatrix: List[List[TimeBlock]] = [
     # Monday
     [
-        TimeBlock(identifier="Monday 1", day=0, timeslot=0),
-        TimeBlock(identifier="Monday 2", day=0, timeslot=1),
-        TimeBlock(identifier="Monday 3", day=0, timeslot=2),
-        TimeBlock(identifier="Monday 4", day=0, timeslot=3),
-        TimeBlock(identifier="Monday 5", day=0, timeslot=4),
-        TimeBlock(identifier="Monday 6", day=0, timeslot=5),
-        TimeBlock(identifier="Monday 7", day=0, timeslot=6),
-        TimeBlock(identifier="Monday 8", day=0, timeslot=7),
+        TimeBlock(identifier="Monday 1", blockType=0, day=0, timeslot=0),
+        TimeBlock(identifier="Monday 2", blockType=0, day=0, timeslot=1),
+        TimeBlock(identifier="Monday 3", blockType=0, day=0, timeslot=2),
+        TimeBlock(identifier="Monday 4", blockType=0, day=0, timeslot=3),
+        TimeBlock(identifier="Monday 5", blockType=0, day=0, timeslot=4),
+        TimeBlock(identifier="Monday 6", blockType=0, day=0, timeslot=5),
+        TimeBlock(identifier="Monday 7", blockType=0, day=0, timeslot=6),
+        TimeBlock(identifier="Monday 8", blockType=0, day=0, timeslot=7),
     ],
     # Tuesday
     [
-        TimeBlock(identifier="Tuesday 1", day=1, timeslot=0),
-        TimeBlock(identifier="Tuesday 2", day=1, timeslot=1),
-        TimeBlock(identifier="Tuesday 3", day=1, timeslot=2),
-        TimeBlock(identifier="Tuesday 4", day=1, timeslot=3),
-        TimeBlock(identifier="Tuesday 5", day=1, timeslot=4),
-        TimeBlock(identifier="Tuesday 6", day=1, timeslot=5),
-        TimeBlock(identifier="Tuesday 7", day=1, timeslot=6),
-        TimeBlock(identifier="Tuesday 8", day=1, timeslot=7),
+        TimeBlock(identifier="Tuesday 1", blockType=0, day=1, timeslot=0),
+        TimeBlock(identifier="Tuesday 2", blockType=0, day=1, timeslot=1),
+        TimeBlock(identifier="Tuesday 3", blockType=0, day=1, timeslot=2),
+        TimeBlock(identifier="Tuesday 4", blockType=0, day=1, timeslot=3),
+        TimeBlock(identifier="Tuesday 5", blockType=0, day=1, timeslot=4),
+        TimeBlock(identifier="Tuesday 6", blockType=0, day=1, timeslot=5),
+        TimeBlock(identifier="Tuesday 7", blockType=0, day=1, timeslot=6),
+        TimeBlock(identifier="Tuesday 8", blockType=0, day=1, timeslot=7),
     ],
     # Wednesday (double blocks early, 5th and 6th blocks off)
     [
-        TimeBlock(identifier="Wednesday A", day=2, timeslot=0),
-        TimeBlock(identifier="Wednesday B", day=2, timeslot=2),
-        TimeBlock(identifier="Wednesday 7", day=2, timeslot=6),
-        TimeBlock(identifier="Wednesday 8", day=2, timeslot=7),
+        TimeBlock(identifier="Wednesday A1", blockType=1, day=2, timeslot=0),
+        TimeBlock(identifier="Wednesday A2", blockType=2, day=2, timeslot=1),
+        TimeBlock(identifier="Wednesday B1", blockType=1, day=2, timeslot=2),
+        TimeBlock(identifier="Wednesday B2", blockType=2, day=2, timeslot=3),
+        TimeBlock(identifier="Wednesday 7", blockType=0, day=2, timeslot=6),
+        TimeBlock(identifier="Wednesday 8", blockType=0, day=2, timeslot=7),
     ],
     # Thursday
     [
-        TimeBlock(identifier="Thursday 1", day=3, timeslot=0),
-        TimeBlock(identifier="Thursday 2", day=3, timeslot=1),
-        TimeBlock(identifier="Thursday 3", day=3, timeslot=2),
-        TimeBlock(identifier="Thursday 4", day=3, timeslot=3),
-        TimeBlock(identifier="Thursday 5", day=3, timeslot=4),
-        TimeBlock(identifier="Thursday 6", day=3, timeslot=5),
-        TimeBlock(identifier="Thursday 7", day=3, timeslot=6),
-        TimeBlock(identifier="Thursday 8", day=3, timeslot=7),
+        TimeBlock(identifier="Thursday 1", blockType=0, day=3, timeslot=0),
+        TimeBlock(identifier="Thursday 2", blockType=0, day=3, timeslot=1),
+        TimeBlock(identifier="Thursday 3", blockType=0, day=3, timeslot=2),
+        TimeBlock(identifier="Thursday 4", blockType=0, day=3, timeslot=3),
+        TimeBlock(identifier="Thursday 5", blockType=0, day=3, timeslot=4),
+        TimeBlock(identifier="Thursday 6", blockType=0, day=3, timeslot=5),
+        TimeBlock(identifier="Thursday 7", blockType=0, day=3, timeslot=6),
+        TimeBlock(identifier="Thursday 8", blockType=0, day=3, timeslot=7),
     ],
     # Friday (no double blocks, 7th and 8th blocks off)
     [
-        TimeBlock(identifier="Friday 1", day=4, timeslot=0),
-        TimeBlock(identifier="Friday 2", day=4, timeslot=1),
-        TimeBlock(identifier="Friday 3", day=4, timeslot=2),
-        TimeBlock(identifier="Friday 4", day=4, timeslot=3),
-        TimeBlock(identifier="Friday 5", day=4, timeslot=4),
-        TimeBlock(identifier="Friday 6", day=4, timeslot=5),
+        TimeBlock(identifier="Friday 1", blockType=0, day=4, timeslot=0),
+        TimeBlock(identifier="Friday 2", blockType=0, day=4, timeslot=1),
+        TimeBlock(identifier="Friday 3", blockType=0, day=4, timeslot=2),
+        TimeBlock(identifier="Friday 4", blockType=0, day=4, timeslot=3),
+        TimeBlock(identifier="Friday 5", blockType=0, day=4, timeslot=4),
+        TimeBlock(identifier="Friday 6", blockType=0, day=4, timeslot=5),
     ],
 ]
 
@@ -295,6 +298,7 @@ def assign_timeblocks(
         for timeBlock in day:
             row = timeBlock.day
             column = timeBlock.timeslot
+            # TODO: Use `start` and `end` instead of `timeBlock`
             schedule.schedule[row][column].timeBlock = timeBlock
     return schedule
 
