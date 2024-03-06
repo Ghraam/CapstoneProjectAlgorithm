@@ -1,10 +1,6 @@
 class StaticPagesController < ApplicationController
   skip_before_action :verify_authenticity_token  # Skip CSRF protection for the generate action
 
-  # The home page
-  def home
-  end
-
   # Generate the schedule (assignments) using a python backtracking algorithm
   def generate
     # Get all tables
