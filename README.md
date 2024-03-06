@@ -67,7 +67,7 @@ rails db:seed
 To run the server, run the following command:
 
 ```bash
-rails s -b [YOUR_IP_ADDRESS]
+rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | awk -F/ '{print $1}'`
 ```
 
 ## ER Diagram
