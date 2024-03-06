@@ -28,7 +28,7 @@ mysql -u capstone -p < db/schema.sql
 rails db:seed
 ```
 
-### Running the server
+## Running the server
 
 To run the server, run the following command:
 
