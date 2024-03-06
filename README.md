@@ -24,6 +24,12 @@ To install Ruby 3.3.0, run the following command:
 rvm install 3.3.0
 ```
 
+To use Ruby 3.3.0 and set it as default, run the following command:
+
+```bash
+rvm use --default 3.3.0
+```
+
 ### Dependencies
 
 To install the ruby dependencies, run the following command:
