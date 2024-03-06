@@ -6,9 +6,19 @@
 
 See [Rails installation guide](https://guides.rubyonrails.org/v5.0/getting_started.html).
 
-#### Dependencies
+### Dependencies
 
-- `ruby-dev`
+To install the ruby dependencies, run the following command:
+
+```bash
+bundle install
+```
+
+To install the python dependencies, run the following command:
+
+```bash
+pip install -r requirements.txt
+```
 
 ### Database setup
 
