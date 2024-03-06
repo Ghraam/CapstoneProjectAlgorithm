@@ -2,9 +2,27 @@
 
 ## Setup
 
-### Rails installation
+### Ruby installation
 
-See [Rails installation guide](https://guides.rubyonrails.org/v5.0/getting_started.html).
+We recommend using [RVM](https://rvm.io/) to manage your Ruby installation. To install RVM, run the following commands:
+
+```bash
+sudo apt install gnupg2
+gpg2 --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+\curl -sSL https://get.rvm.io | bash -s stable
+```
+
+In order to use RVM as a function, you need to run the following command:
+
+```bash
+source ~/.rvm/scripts/rvm
+```
+
+To install Ruby 3.3.0, run the following command:
+
+```bash
+rvm install 3.3.0
+```
 
 ### Dependencies
 
