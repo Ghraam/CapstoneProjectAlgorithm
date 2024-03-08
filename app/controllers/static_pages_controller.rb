@@ -16,6 +16,13 @@ class StaticPagesController < ApplicationController
       courses: courses,
       classrooms: classrooms,
     }
+    
+    data.each_value do |table|
+      table.each do |record|
+        %w[created_at updated_at].each(&record.method(:delete))
+      end
+    end
+
     File.open("data.json", "w") { |file| file.write(data.to_json) }
 
     # Redirect to the root path (move this to the end of the method once the python script is working)
