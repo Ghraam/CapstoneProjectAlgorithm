@@ -11,6 +11,7 @@ from typing import Dict, List, NamedTuple  # , Optional
 from csp import CSP, Constraint
 from copy import deepcopy
 from random import shuffle
+import yaml
 
 # set constants
 WEDNESDAY = 2
@@ -26,15 +27,17 @@ class Classroom(NamedTuple):
     """
     Represents a classroom, whether it is a lab or not, and its capacity.
     """
+    id: int
     room: str
-    isLab: bool
-    capacity: int
+    is_lab: bool
+    room_capacity: int
 
 
 class Professor(NamedTuple):
     """
     Represents a professor, and their level of class they can teach.
     """
+    id: int
     name: str
 
 
@@ -43,12 +46,13 @@ class Course(NamedTuple):
     Represents a course, whether it is a double block, its name, and what
     minimum level is required to teach it.
     """
+    id: int
     name: str
     identifier: str
-    needsLab: bool
-    courseSize: int
+    needs_lab: bool
+    course_size: int
     level: int
-    doubleBlock: bool
+    double_block: bool
 
 
 class TimeBlock(NamedTuple):
@@ -56,8 +60,9 @@ class TimeBlock(NamedTuple):
     Represents a time block, which day it is on, which timeslot it is in, and
     whether it is a double block.
     """
+    id: int
     identifier: str
-    blockType: int  # 0 = single, 1 = double_start, 2 = double_end
+    block_type: int  # 0 = single, 1 = double_start, 2 = double_end
     day: int  # x (0-4, M-F)
     timeslot: int  # y (0-7, ???)
 
@@ -68,7 +73,7 @@ class Section(NamedTuple):
     professor is teaching it.
     """
     course: Course
-    sectionNum: int
+    section_num: int
     professor: Professor
     start: TimeBlock
     end: TimeBlock
@@ -91,7 +96,7 @@ class TimePreference(NamedTuple):
     timeblock it is, and what priority it is.
     """
     professor: Professor
-    timeBlock: TimeBlock
+    time_block: TimeBlock
     priority: int
 
 
@@ -163,9 +168,9 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
         for professor in professors:
             section = Section(classroom=classroom, course=course,
                               professor=professor, start=placeHolder,
-                              end=placeHolder, sectionNum=-1)
+                              end=placeHolder, section_num=-1)
             # generate domain for double block course (1x2)
-            if course.doubleBlock:
+            if course.double_block:
                 for row in range(SCHEDULE_WIDTH):
                     for column in range(SCHEDULE_LENGTH):
                         if (column + 1 <= SCHEDULE_LENGTH - 1) and \
@@ -222,69 +227,14 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                             # make sure non double block classes are only
                             # on evening time slots on wednesday
                             if i[x][y] != "-" and \
-                                    not i[x][y].course.doubleBlock:
+                                    not i[x][y].course.double_block:
                                 if x == WEDNESDAY and y < BLOCK_SEVEN:
                                     return False
         return True
 
 
-placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", blockType=-1,
-                                   day=-1, timeslot=-1)
-
-
-timeBlockMatrix: List[List[TimeBlock]] = [
-    # Monday
-    [
-        TimeBlock(identifier="Monday 1", blockType=0, day=0, timeslot=0),
-        TimeBlock(identifier="Monday 2", blockType=0, day=0, timeslot=1),
-        TimeBlock(identifier="Monday 3", blockType=0, day=0, timeslot=2),
-        TimeBlock(identifier="Monday 4", blockType=0, day=0, timeslot=3),
-        TimeBlock(identifier="Monday 5", blockType=0, day=0, timeslot=4),
-        TimeBlock(identifier="Monday 6", blockType=0, day=0, timeslot=5),
-        TimeBlock(identifier="Monday 7", blockType=0, day=0, timeslot=6),
-        TimeBlock(identifier="Monday 8", blockType=0, day=0, timeslot=7),
-    ],
-    # Tuesday
-    [
-        TimeBlock(identifier="Tuesday 1", blockType=0, day=1, timeslot=0),
-        TimeBlock(identifier="Tuesday 2", blockType=0, day=1, timeslot=1),
-        TimeBlock(identifier="Tuesday 3", blockType=0, day=1, timeslot=2),
-        TimeBlock(identifier="Tuesday 4", blockType=0, day=1, timeslot=3),
-        TimeBlock(identifier="Tuesday 5", blockType=0, day=1, timeslot=4),
-        TimeBlock(identifier="Tuesday 6", blockType=0, day=1, timeslot=5),
-        TimeBlock(identifier="Tuesday 7", blockType=0, day=1, timeslot=6),
-        TimeBlock(identifier="Tuesday 8", blockType=0, day=1, timeslot=7),
-    ],
-    # Wednesday (double blocks early, 5th and 6th blocks off)
-    [
-        TimeBlock(identifier="Wednesday A1", blockType=1, day=2, timeslot=0),
-        TimeBlock(identifier="Wednesday A2", blockType=2, day=2, timeslot=1),
-        TimeBlock(identifier="Wednesday B1", blockType=1, day=2, timeslot=2),
-        TimeBlock(identifier="Wednesday B2", blockType=2, day=2, timeslot=3),
-        TimeBlock(identifier="Wednesday 7", blockType=0, day=2, timeslot=6),
-        TimeBlock(identifier="Wednesday 8", blockType=0, day=2, timeslot=7),
-    ],
-    # Thursday
-    [
-        TimeBlock(identifier="Thursday 1", blockType=0, day=3, timeslot=0),
-        TimeBlock(identifier="Thursday 2", blockType=0, day=3, timeslot=1),
-        TimeBlock(identifier="Thursday 3", blockType=0, day=3, timeslot=2),
-        TimeBlock(identifier="Thursday 4", blockType=0, day=3, timeslot=3),
-        TimeBlock(identifier="Thursday 5", blockType=0, day=3, timeslot=4),
-        TimeBlock(identifier="Thursday 6", blockType=0, day=3, timeslot=5),
-        TimeBlock(identifier="Thursday 7", blockType=0, day=3, timeslot=6),
-        TimeBlock(identifier="Thursday 8", blockType=0, day=3, timeslot=7),
-    ],
-    # Friday (no double blocks, 7th and 8th blocks off)
-    [
-        TimeBlock(identifier="Friday 1", blockType=0, day=4, timeslot=0),
-        TimeBlock(identifier="Friday 2", blockType=0, day=4, timeslot=1),
-        TimeBlock(identifier="Friday 3", blockType=0, day=4, timeslot=2),
-        TimeBlock(identifier="Friday 4", blockType=0, day=4, timeslot=3),
-        TimeBlock(identifier="Friday 5", blockType=0, day=4, timeslot=4),
-        TimeBlock(identifier="Friday 6", blockType=0, day=4, timeslot=5),
-    ],
-]
+placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", block_type=-1,
+                                   day=-1, timeslot=-1, id=-1)
 
 
 def assign_timeblocks(
@@ -312,7 +262,7 @@ def assign_sections_nums(schedule: Schedule) -> Schedule:
     for row in schedule.schedule:
         for section in row:
             if section != "-":
-                section.sectionNum = sectionNum
+                section.section_num = sectionNum
                 sectionNum += 1
     return schedule
 
@@ -346,74 +296,15 @@ def solution(courses: List[Course], classrooms: List[Classroom],
 
 
 if __name__ == "__main__":
-    # set parameters
-    professors: List[Professor] = [Professor(name="Murat"),
-                                   Professor(name="David"),
-                                   Professor(name="Brian"),
-                                   Professor(name="Wei"),
-                                   Professor(name="Sarah"),
-                                   Professor(name="Frank"),
-                                   Professor(name="Brent"),
-                                   Professor(name="Scott"),
-                                   Professor(name="Alex"),
-                                   Professor(name="Eric"),
-                                   Professor(name="Josh")]
-    classrooms = [Classroom(room="JOYC 201", isLab=True, capacity=30),
-                  Classroom(room="JOYC 210", isLab=False, capacity=30),
-                  Classroom(room="JOYC 211", isLab=False, capacity=30),
-                  Classroom(room="MIC 308", isLab=True, capacity=45),]
-    courses = [Course(identifier="CSI-120", doubleBlock=False, level=1,
-               needsLab=False, courseSize=30,
-               name="Intro to Mobile & Web Development"),
-               Course(identifier="CSI-140", doubleBlock=False, level=1,
-               needsLab=False, courseSize=30,
-               name="Introduction to Programming"),
-               Course(identifier="CSI-180", doubleBlock=True, level=1,
-               needsLab=False, courseSize=30,
-               name="Innovation 1: Technology Sandbox"),
-               Course(identifier="CSI-240", doubleBlock=False, level=2,
-               needsLab=True, courseSize=15, name="Advanced Programming"),
-               Course(identifier="CSI-230", doubleBlock=False, level=2,
-               needsLab=True, courseSize=15, name="Linux/Unix Programming"),
-               Course(identifier="CSI-281", doubleBlock=False, level=2,
-               needsLab=False, courseSize=30,
-               name="Data Structures and Algorithms"),
-               Course(identifier="CSI-280", doubleBlock=True, level=2,
-               needsLab=False, courseSize=30,
-               name="Innovation 2: Open Source Software Development"),
-               Course(identifier="CSI-300", doubleBlock=True, level=3,
-               needsLab=False, courseSize=30,
-               name="Database Management Systems"),
-               Course(identifier="CSI-320", doubleBlock=False, level=3,
-               needsLab=True, courseSize=20, name="Global IT and Ethics"),
-               Course(identifier="CSI-351", doubleBlock=False, level=3,
-               needsLab=False, courseSize=35, name="Software Testing"),
-               Course(identifier="CSI-352", doubleBlock=False, level=3,
-               needsLab=False, courseSize=35, name="Advanced Algorithms"),
-               Course(identifier="CSI-355", doubleBlock=False, level=3,
-               needsLab=False, courseSize=35,
-               name="Operating Systems Architecture"),
-               Course(identifier="CSI-357", doubleBlock=True, level=3,
-               needsLab=False, courseSize=25,
-               name="Server-side Web Development"),
-               Course(identifier="CSI-370", doubleBlock=False, level=3,
-               needsLab=False, courseSize=30, name="Computer Architecture"),
-               Course(identifier="CSI-380", doubleBlock=False, level=3,
-               needsLab=False, courseSize=30,
-               name="Innovation 3: Emerging Languages"),
-               Course(identifier="CSI-480", doubleBlock=False, level=4,
-               needsLab=False, courseSize=30,
-               name="Innovation 4: Topics in AI"),
-               Course(identifier="CSI-330", doubleBlock=True, level=3,
-               needsLab=False, courseSize=15,
-               name="Software Development Methodologies"),
-               Course(identifier="CSI-340", doubleBlock=False, level=3,
-               needsLab=False, courseSize=30, name="Software Design Patterns"),
-               Course(identifier="CSI-420", doubleBlock=True, level=4,
-               needsLab=False, courseSize=30, name="Software Refactoring"),
-               Course(identifier="CSI-440", doubleBlock=False, level=4,
-               needsLab=False, courseSize=20,
-               name="Software Requirements Engineering"),]
+    # get parameters from data.json
+    with open("data.json", "r") as file:
+        data = yaml.safe_load(file)
+
+    # create objects from data
+    courses = [Course(**course) for course in data["courses"]]
+    classrooms = [Classroom(**classroom) for classroom in data["classrooms"]]
+    professors = [Professor(**professor) for professor in data["professors"]]
+    timeBlocks = [TimeBlock(**timeBlock) for timeBlock in data["time_blocks"]]
 
     # find and print answer
     solution(courses, classrooms, professors)
