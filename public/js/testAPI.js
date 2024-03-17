@@ -8,12 +8,26 @@ document.getElementById('testButton').addEventListener('click', function() {
 	displayText.textContent = "Making Call";
 	
 	jsonResult = makeRequest(apiSpec.professors.index, 'GET')
-        .then(result => console.log("Request successful: ", result));
+        //.then(result => console.log("Request successful: ", result));
 
     // Get the body element and append the generated table
     const body = document.body;
-    const tableElement = generateTable(jsonResult);
-    body.appendChild(tableElement);
+    const displayFields = ['name'];
+    const tableName = "Professors";
+    // console.log("JSON: ", jsonResult)
+    jsonResult.then(data => {
+        const tableElement = generateTable(data, displayFields, tableName);
+
+        if (tableElement) {
+            body.appendChild(tableElement);
+        } else {
+            console.error('Failed to generate table. Check JSON data structure.');
+        }
+    }).catch(error => {
+        console.error('Error fetching data:', error);
+    });
+    // const tableElement = generateTable(jsonResult);
+    // body.appendChild(tableElement);
 
 });
 
@@ -80,31 +94,65 @@ let jsonData = [
 if (jsonResult) {jsonData = jsonResult;}
 
 // Function to generate HTML table from JSON
-function generateTable(jsonData) {
-    const table = document.createElement('table');
+function generateTable(jsonData, displayFields, tableName) {
+    if (!Array.isArray(jsonData) || jsonData.length === 0) {
+        console.error('Invalid JSON data structure.');
+        return null;
+    }
 
-    // Create table header
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
+    let table = document.getElementById(tableName);
 
-    Object.keys(jsonData[0]).forEach(key => {
+    // If the table does not exist, create a new one
+    if (!table) {
+        table = document.createElement('table');
+        table.id = tableName;
+
+        // Create a caption for the table (you can uncomment these lines if you want the caption)
+        // const caption = document.createElement('caption');
+        // caption.textContent = tableName;
+        // table.appendChild(caption);
+
+        // Create table header
+        const thead = document.createElement('thead');
+        // thead.textContent = tableName; // Include your line here
+        table.appendChild(thead);
+
+        const headerRow = document.createElement('tr');
         const th = document.createElement('th');
-        th.textContent = key;
+        th.textContent = tableName;
         headerRow.appendChild(th);
-    });
+        thead.appendChild(headerRow);
 
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
+        const fieldsToDisplay = displayFields || Object.keys(jsonData[0]);
+
+        fieldsToDisplay.forEach(key => {
+            const th = document.createElement('th');
+            th.textContent = key;
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+    } else {
+        // If the table exists, clear its content before updating
+        table.innerHTML = '';
+    }
 
     // Create table body
     const tbody = document.createElement('tbody');
 
     jsonData.forEach(data => {
+        if (typeof data !== 'object') {
+            console.error('Invalid JSON data structure.');
+            return null;
+        }
+
         const row = document.createElement('tr');
 
-        Object.values(data).forEach(value => {
+        const fieldsToDisplay = displayFields || Object.keys(data);
+
+        fieldsToDisplay.forEach(field => {
             const td = document.createElement('td');
-            td.textContent = value;
+            td.textContent = data[field] || ''; // Display empty string if the field is undefined
             row.appendChild(td);
         });
 
@@ -115,6 +163,13 @@ function generateTable(jsonData) {
 
     return table;
 }
+
+
+
+
+
+
+
 
 
 
