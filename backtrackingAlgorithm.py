@@ -12,6 +12,8 @@ from csp import CSP, Constraint
 from copy import deepcopy
 from random import shuffle
 import yaml
+import json
+import sys
 
 # set constants
 WEDNESDAY = 2
@@ -239,17 +241,25 @@ placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", block_type=-1,
 
 def assign_timeblocks(
     schedule: Schedule,
-    timeBlocks: List[List[TimeBlock]]
+    timeBlocks: List[TimeBlock]
 ) -> Schedule:
     """
     Assigns timeblocks to sections based on the schedule.
     """
-    for day in timeBlocks:
-        for timeBlock in day:
-            row = timeBlock.day
-            column = timeBlock.timeslot
-            # TODO: Use `start` and `end` instead of `timeBlock`
-            schedule.schedule[row][column].timeBlock = timeBlock
+    # keep track of which sections already have a start block
+    startBlocks: Dict[Section, bool] = {}
+    for timeBlock in timeBlocks:
+        row: int = timeBlock.day
+        column: int = timeBlock.timeslot
+        section: Section = schedule.schedule[row][column]
+        # print(section)
+        if section == "-":
+            continue
+        if startBlocks.get(section) is None:
+            startBlocks[section] = True
+            section.start = timeBlock
+        else:
+            section.end = timeBlock
     return schedule
 
 
@@ -268,7 +278,7 @@ def assign_sections_nums(schedule: Schedule) -> Schedule:
 
 
 def solution(courses: List[Course], classrooms: List[Classroom],
-             professors: List[Professor]) -> None:
+             professors: List[Professor], timeBlocks: List[TimeBlock]) -> None:
     """
     Generates a schedule for the given courses, classrooms, and professors.
     """
@@ -292,12 +302,16 @@ def solution(courses: List[Course], classrooms: List[Classroom],
         print("returned none")
     else:
         # displays solution neatly
-        display_grid(dict_to_schedule(courses, genOutcome, newSched))
+        newSched = assign_timeblocks(newSched, timeBlocks)
+        # display_grid(dict_to_schedule(courses, genOutcome, newSched))
+        print(json.dumps(dict_to_schedule(courses, genOutcome, newSched),
+                         indent=4))
 
 
 if __name__ == "__main__":
-    # get parameters from data.json
-    with open("data.json", "r") as file:
+    filename = sys.argv[1]
+    # get parameters from [filename]
+    with open(filename, "r") as file:
         data = yaml.safe_load(file)
 
     # create objects from data
@@ -307,4 +321,4 @@ if __name__ == "__main__":
     timeBlocks = [TimeBlock(**timeBlock) for timeBlock in data["time_blocks"]]
 
     # find and print answer
-    solution(courses, classrooms, professors)
+    solution(courses, classrooms, professors, timeBlocks)

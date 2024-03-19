@@ -30,7 +30,7 @@ class StaticPagesController < ApplicationController
     return # derp
 
     # Run the python script
-    system("python3 backtrackingAlgorithm.py")
+    system("python3 backtrackingAlgorithm.py data.json")
 
     # Read the output file
     output = File.read("output.json")
