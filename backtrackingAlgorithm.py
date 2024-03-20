@@ -14,6 +14,7 @@ from random import shuffle
 import yaml
 import json
 import sys
+from itertools import chain
 
 # set constants
 WEDNESDAY = 2
@@ -112,7 +113,8 @@ class Schedule(NamedTuple):
     schedule: List[List[Section]]
 
 
-def dict_to_schedule(variables, dict, schedule):
+def dict_to_schedule(variables, dict, schedule: Schedule
+                     ) -> List[List[Section]]:
     """
     Converts a dictionary to a schedule, with making lists of sections in
     positions that allow for multiple classes in the same timeslot.
@@ -277,6 +279,18 @@ def assign_sections_nums(schedule: Schedule) -> Schedule:
     return schedule
 
 
+def section_as_dict(y):
+    if y == "-":
+        return y
+    if len(y) > 1:
+        return list(map(lambda x: x._asdict(), y))
+    return y[0]._asdict()
+
+
+def flatten_chain(matrix):
+    return list(chain.from_iterable(matrix))
+
+
 def solution(courses: List[Course], classrooms: List[Classroom],
              professors: List[Professor], timeBlocks: List[TimeBlock]) -> None:
     """
@@ -303,15 +317,30 @@ def solution(courses: List[Course], classrooms: List[Classroom],
     else:
         # displays solution neatly
         newSched = assign_timeblocks(newSched, timeBlocks)
-        # display_grid(dict_to_schedule(courses, genOutcome, newSched))
-        print(json.dumps(dict_to_schedule(courses, genOutcome, newSched),
-                         indent=4))
+        schedOutput = dict_to_schedule(courses, genOutcome, newSched)
+        flattened = list(filter(lambda x: x != "-", flatten_chain(list(map(
+            lambda x: list(map(section_as_dict, x)), schedOutput)))))
+        ids = list(map(lambda x: {
+            "course_id": x["course"].id,
+            "section_num": x["section_num"],
+            "professor_id": x["professor"].id,
+            "start": x["start"].id,
+            "end": x["end"].id,
+            "classroom_id": x["classroom"].id
+            }, flattened))
+        outputFile = sys.argv[2]
+        with open(outputFile, "w") as file:
+            file.write(json.dumps(ids))
 
 
 if __name__ == "__main__":
-    filename = sys.argv[1]
-    # get parameters from [filename]
-    with open(filename, "r") as file:
+    if len(sys.argv) != 3:
+        print("Usage: python3 backtrackingAlgorithm.py <input-file> "
+              "<output-file>")
+        sys.exit(1)
+    inputFile = sys.argv[1]
+    # get parameters from input file
+    with open(inputFile, "r") as file:
         data = yaml.safe_load(file)
 
     # create objects from data

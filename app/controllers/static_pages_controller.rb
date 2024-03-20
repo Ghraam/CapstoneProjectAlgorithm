@@ -25,27 +25,26 @@ class StaticPagesController < ApplicationController
 
     File.open("data.json", "w") { |file| file.write(data.to_json) }
 
-    # Redirect to the root path (move this to the end of the method once the python script is working)
-    redirect_to "/"
-    return # derp
-
     # Run the python script
-    system("python3 backtrackingAlgorithm.py data.json")
+    system("python3 backtrackingAlgorithm.py data.json output.json")
 
     # Read the output file
     output = File.read("output.json")
 
     # Parse the output file
-    assignments = JSON.parse(output)
+    sections = JSON.parse(output)
 
-    # Create the assignments
-    assignments.each do |assignment|
-      Assignment.create(
-        professor_id: assignment["professor_id"],
-        time_block_id: assignment["time_block_id"],
-        course_id: assignment["course_id"],
-        classroom_id: assignment["classroom_id"],
+    # Create the sections
+    sections.each do |section|
+      Section.create(
+        professor_id: section["professor_id"],
+        time_block_id: section["time_block_id"],
+        course_id: section["course_id"],
+        classroom_id: section["classroom_id"],
       )
     end
+
+    # Redirect to the root path
+    redirect_to "/"
   end
 end
