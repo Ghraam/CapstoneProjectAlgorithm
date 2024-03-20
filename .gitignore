@@ -37,5 +37,6 @@
 # Ignore __pycache__ directories
 __pycache__/
 
-# Ignore data.json
+# Ignore data.json and output.json
 /data.json
+/output.json
