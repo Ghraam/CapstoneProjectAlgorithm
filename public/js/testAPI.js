@@ -2,47 +2,245 @@
 
 let jsonResult;
 
-document.getElementById('testButton').addEventListener('click', function() {
-	console.log("Starting request");
-	var displayText = document.getElementById('textBox');
-	displayText.textContent = "Making Call";
-	
-	jsonResult = makeRequest(apiSpec.professors.index, 'GET')
-        //.then(result => console.log("Request successful: ", result));
-
-    // Get the body element and append the generated table
-    const body = document.body;
-    const displayFields = ['name'];
-    const tableName = "Professors";
-    // console.log("JSON: ", jsonResult)
-    jsonResult.then(data => {
-        const tableElement = generateTable(data, displayFields, tableName);
-
-        if (tableElement) {
-            body.appendChild(tableElement);
-        } else {
-            console.error('Failed to generate table. Check JSON data structure.');
-        }
-    }).catch(error => {
-        console.error('Error fetching data:', error);
-    });
-    // const tableElement = generateTable(jsonResult);
-    // body.appendChild(tableElement);
-
-});
+// document.getElementById('testButton').addEventListener('click', function() {
+// 	console.log("Starting request");
+//     const displayText = document.getElementById('textBox');
+//     displayText.textContent = "Making Call";
+//
+//     const header = "professors";
+//     const sub = "index";
+//
+// 	jsonResult = makeRequest(apiSpec[header][sub], 'GET')
+//         //.then(result => console.log("Request successful: ", result));
+//
+//     // Get the body element and append the generated table
+//     const body = document.body;
+//     const displayFields = ['name'];
+//     const tableName = "Professors";
+//     // console.log("JSON: ", jsonResult)
+//     jsonResult.then(data => {
+//         const tableElement = generateTable(data, displayFields, tableName);
+//
+//         if (tableElement) {
+//             body.appendChild(tableElement);
+//         } else {
+//             console.error('Failed to generate table. Check JSON data structure.');
+//         }
+//     }).catch(error => {
+//         console.error('Error fetching data:', error);
+//     });
+//     // const tableElement = generateTable(jsonResult);
+//     // body.appendChild(tableElement);
+//
+// });
 
 // API Specification
-const apiSpec = {
-    "professors": {
-        "index": {
-            "url": "/professors.json",
-            "method": "GET",
-            "description": "Get all professors"
+const apiSpec =
+
+    {
+        "sections": {
+            "index": {
+                "url": "/sections.json",
+                "method": "GET",
+                "description": "Get all sections"
+            },
+            "show": {
+                "url": "/sections/:id.json",
+                "method": "GET",
+                "description": "Get a single section"
+            },
+            "create": {
+                "url": "/sections.json",
+                "method": "POST",
+                "description": "Create a new section"
+            },
+            "update": {
+                "url": "/sections/:id.json",
+                "method": "PUT",
+                "description": "Update a section"
+            },
+            "destroy": {
+                "url": "/sections/:id.json",
+                "method": "DELETE",
+                "description": "Delete a section"
+            }
         },
-        // ... (other assignment methods)
-    },
-    // ... (other endpoints)
-};
+        "classrooms": {
+            "index": {
+                "url": "/classrooms.json",
+                "method": "GET",
+                "description": "Get all classrooms"
+            },
+            "show": {
+                "url": "/classrooms/:id.json",
+                "method": "GET",
+                "description": "Get a single classroom"
+            },
+            "create": {
+                "url": "/classrooms.json",
+                "method": "POST",
+                "description": "Create a new classroom"
+            },
+            "update": {
+                "url": "/classrooms/:id.json",
+                "method": "PUT",
+                "description": "Update a classroom"
+            },
+            "destroy": {
+                "url": "/classrooms/:id.json",
+                "method": "DELETE",
+                "description": "Delete a classroom"
+            }
+        },
+        "course_preferences": {
+            "index": {
+                "url": "/course_preferences.json",
+                "method": "GET",
+                "description": "Get all course preferences"
+            },
+            "show": {
+                "url": "/course_preferences/:id.json",
+                "method": "GET",
+                "description": "Get a single course preference"
+            },
+            "create": {
+                "url": "/course_preferences.json",
+                "method": "POST",
+                "description": "Create a new course preference"
+            },
+            "update": {
+                "url": "/course_preferences/:id.json",
+                "method": "PUT",
+                "description": "Update a course preference"
+            },
+            "destroy": {
+                "url": "/course_preferences/:id.json",
+                "method": "DELETE",
+                "description": "Delete a course preference"
+            }
+        },
+        "courses": {
+            "index": {
+                "url": "/courses.json",
+                "method": "GET",
+                "description": "Get all courses"
+            },
+            "show": {
+                "url": "/courses/:id.json",
+                "method": "GET",
+                "description": "Get a single course"
+            },
+            "create": {
+                "url": "/courses.json",
+                "method": "POST",
+                "description": "Create a new course"
+            },
+            "update": {
+                "url": "/courses/:id.json",
+                "method": "PUT",
+                "description": "Update a course"
+            },
+            "destroy": {
+                "url": "/courses/:id.json",
+                "method": "DELETE",
+                "description": "Delete a course"
+            }
+        },
+        "professors": {
+            "index": {
+                "url": "/professors.json",
+                "method": "GET",
+                "description": "Get all professors"
+            },
+            "show": {
+                "url": "/professors/:id.json",
+                "method": "GET",
+                "description": "Get a single professor"
+            },
+            "create": {
+                "url": "/professors.json",
+                "method": "POST",
+                "description": "Create a new professor"
+            },
+            "update": {
+                "url": "/professors/:id.json",
+                "method": "PUT",
+                "description": "Update a professor"
+            },
+            "destroy": {
+                "url": "/professors/:id.json",
+                "method": "DELETE",
+                "description": "Delete a professor"
+            }
+        },
+        "time_blocks": {
+            "index": {
+                "url": "/time_blocks.json",
+                "method": "GET",
+                "description": "Get all time blocks"
+            },
+            "show": {
+                "url": "/time_blocks/:id.json",
+                "method": "GET",
+                "description": "Get a single time block"
+            },
+            "create": {
+                "url": "/time_blocks.json",
+                "method": "POST",
+                "description": "Create a new time block"
+            },
+            "update": {
+                "url": "/time_blocks/:id.json",
+                "method": "PUT",
+                "description": "Update a time block"
+            },
+            "destroy": {
+                "url": "/time_blocks/:id.json",
+                "method": "DELETE",
+                "description": "Delete a time block"
+            }
+        },
+        "time_preferences": {
+            "index": {
+                "url": "/time_preferences.json",
+                "method": "GET",
+                "description": "Get all time preferences"
+            },
+            "show": {
+                "url": "/time_preferences/:id.json",
+                "method": "GET",
+                "description": "Get a single time preference"
+            },
+            "create": {
+                "url": "/time_preferences.json",
+                "method": "POST",
+                "description": "Create a new time preference"
+            },
+            "update": {
+                "url": "/time_preferences/:id.json",
+                "method": "PUT",
+                "description": "Update a time preference"
+            },
+            "destroy": {
+                "url": "/time_preferences/:id.json",
+                "method": "DELETE",
+                "description": "Delete a time preference"
+            }
+        },
+        "algorithm": {
+            "generate": {
+                "url": "/generate",
+                "method": "POST",
+                "description": "Start the algorithm to generate a schedule"
+            },
+            // Not implemented (404)
+            "status": {
+                "url": "/status",
+                "method": "GET",
+                "description": "Get the status of the algorithm"
+            }
+        }
+    };
 
 let hostname = window.location.hostname;
 
