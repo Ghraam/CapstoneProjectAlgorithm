@@ -79,6 +79,7 @@ rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | awk -F/ '{pr
 ```json
 
 {
+    // "destroy" is not working (422 Unprocessable Entity)
     "sections": {
         "index": {
             "url": "/sections.json",
