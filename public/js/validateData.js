@@ -1,13 +1,13 @@
 // Validate input data
 
 // Classroom buildings
-const buildings = ['SKFA', 'CCM', 'GBTC', 'JOYC', 'MIC', 'WICK', 'FREE', 'MCLC', 'FOST', 'HULA', 'BARN'];
+export const buildings = ['SKFA', 'CCM', 'GBTC', 'JOYC', 'MIC', 'WICK', 'FREE', 'MCLC', 'FOST', 'HULA', 'BARN'];
 
 // Classroom format
-const classroomFormat = ""; // buildings + " " + num
+export const classroomFormat = ""; // buildings + " " + num
 
 // Course Designations
-const courseDesignations = [
+export const courseDesignations = [
     'ACC', 'ACCT', 'ACI', 'ANM', 'APP', 'ART', 'ARTS', 'ASU',
     'BANL', 'BESC', 'BLAW', 'BRD', 'BUS',
     'CCC', 'CCM', 'CCX', 'CFDI', 'CIS', 'CIT', 'CMGT', 'CMIT', 'CMP', 'COM', 'COMM', 'COR', 'CRE', 'CRIM', 'CRIT', 'CRJ', 'CSCI', 'CSI', 'CST', 'CYBR', 'CYSA',
@@ -28,8 +28,8 @@ const courseDesignations = [
     'WEB', 'WEBD', 'WRIT', 'WRT'];
 
 // Course format
-const courseFormat = ""; // courseDesignations + "-" + num(>100 & < 500) + ( "String possible"? | \(\d{3}\)? )
+export const courseFormat = ""; // courseDesignations + "-" + num(>100 & < 500) + ( "String possible"? | \(\d{3}\)? )
 
 // Professor format
-const profFormat = ""; // String
+export const profFormat = ""; // String
 

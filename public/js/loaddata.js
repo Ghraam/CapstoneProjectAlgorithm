@@ -27,7 +27,7 @@ async function fetchSubsectionData(apiSpecHeader, elementId) {
             throw new Error(`Element with ID ${elementId} not found.`);
         }
         if (data) {
-            console.log(data)
+            // console.log(data)
             return data;
         } else {
             throw new Error('Failed to fetch data.');
@@ -113,7 +113,3 @@ function confirmRemoval(id, apiHeader) {
         alert("Removed from current session, element remains in the database.");
     }
 }
-
-
-
-
