@@ -70,6 +70,16 @@ To run the server, run the following command:
 bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | awk -F/ '{print $1}'`
 ```
 
+## Planned constraints
+1. No professor can teach multiple classes in the same timeslot
+2. No classroom can have multiple classes in the same timeslot
+3. Double block timeslots contain only double block classes
+4. No class may start in the second half of a double block
+5. Blocks for double block classes must be consecutive to one another
+6. Blocks for single block classes must be at the same time each day
+7. Professor must be willing to teach the course
+8. Professor must be willing to teach during the assigned timeslot
+
 ## ER Diagram
 
 ![ER Diagram](https://i.imgur.com/WdEoziK.png)
@@ -283,4 +293,10 @@ bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | 
         }
     }
 }
+```
+
+## Sample Output From Script
+
+```json
+[{"course_id": 4, "section_num": -1, "professor_id": 1, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 1, "section_num": -1, "professor_id": 6, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 1, "section_num": -1, "professor_id": 6, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 5, "section_num": -1, "professor_id": 12, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 7, "section_num": -1, "professor_id": 2, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 7, "section_num": -1, "professor_id": 2, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 2, "section_num": -1, "professor_id": 6, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 6, "section_num": -1, "professor_id": 12, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 8, "section_num": -1, "professor_id": 6, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 8, "section_num": -1, "professor_id": 6, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 3, "section_num": -1, "professor_id": 10, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 4, "section_num": -1, "professor_id": 1, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 5, "section_num": -1, "professor_id": 12, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 2, "section_num": -1, "professor_id": 6, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 6, "section_num": -1, "professor_id": 12, "start": -1, "end": -1, "classroom_id": 1}, {"course_id": 3, "section_num": -1, "professor_id": 10, "start": -1, "end": -1, "classroom_id": 1}]
 ```
