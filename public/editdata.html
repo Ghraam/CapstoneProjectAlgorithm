@@ -6,9 +6,7 @@
 	<script type="module" src="js/apicall.js"></script>
 	<script type="module" src="js/loaddata.js"></script>
 	<script type="module" src="js/validateData.js"></script>
-	<script type="module">
-		import { updateDisplay } from "./js/addData.js";
-	</script>
+	<script type="module" src="js/addData.js"></script>
 	<style>
 		#container {
 			display: flex;
@@ -58,5 +56,27 @@
 			</div>
 		</div>
 	</main>
+    <script>
+		function updateDisplay(formId) {
+			var display = document.getElementById(formId + 'Display');
+			var input = document.getElementById(formId + 'Input');
+			var span = document.createElement('span');
+			span.textContent = input.value;
+			var comma = document.createTextNode(', ');
+			span.addEventListener('click', function() {
+				if (span.nextSibling) {
+					display.removeChild(span.nextSibling); // remove the following comma
+				} else if (span.previousSibling) {
+					display.removeChild(span.previousSibling); // remove the preceding comma if it's the last element
+				}
+				display.removeChild(span);
+			});
+			if (display.textContent !== '') {
+				display.appendChild(comma);
+			}
+			display.appendChild(span);
+			input.value = '';
+		}
+    </script>
 </body>
 </html>

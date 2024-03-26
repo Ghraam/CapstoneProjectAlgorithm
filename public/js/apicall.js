@@ -260,7 +260,7 @@ async function makeRequest(header, subsection, method, data = null, id = null) {
 export async function comAPI(header, subsection, method, data = null, id = null) {
     const jsonData = await makeRequest(header, subsection, method, data, id);
 
-    if (method === 'DELETE') {
+    if (method !== 'GET') {
         return null;
     }
 
