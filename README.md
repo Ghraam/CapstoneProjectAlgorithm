@@ -71,6 +71,7 @@ bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | 
 ```
 
 ## Planned constraints
+
 1. No professor can teach multiple classes in the same timeslot
 2. No classroom can have multiple classes in the same timeslot
 3. Double block timeslots contain only double block classes
@@ -89,7 +90,6 @@ bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | 
 ```json
 
 {
-    // "destroy" is not working (422 Unprocessable Entity)
     "sections": {
         "index": {
             "url": "/sections.json",
