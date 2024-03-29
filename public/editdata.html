@@ -13,8 +13,15 @@
 			justify-content: center;
 			align-items: center;
 			height: 180px;
-			margin: 0;
+			margin: 20px 0;
 		}
+		/* Style for the container wrapper */
+		.container-wrapper {
+			background-color: #e0e0e0;
+			padding: 20px;
+			border-radius: 8px;
+		}
+
         form {
             margin: 0 10px;
         }
@@ -23,36 +30,72 @@
 			#border: 1px solid black;
 			margin: 5px;
 		}
-		
-    </style>
+		/* Style for the search box */
+		.search-box {
+			background-color: #f0f0f0;
+			padding: 10px;
+		}
+
+		/* Style for the search form */
+		#searchForm {
+			display: flex;
+			align-items: center;
+		}
+
+		/* Style for the search input */
+		#searchInput {
+			flex: 1;
+			margin-right: 10px; /* Add some space between input and button */
+		}
+
+		/* Style for the search button */
+		#searchForm button {
+			background-color: #4caf50;
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			cursor: pointer;
+		}
+
+
+	</style>
 </head>
 <body>
     <header-component></header-component>
     <main>
-		<div id="container">
-			<div class="section">
-				<form id="professors" onsubmit="updateDisplay('professors'); return false;">
-					<label for="professors">Professors</label></br>
-					<input type="text" id="professorsInput">
-					<p id="professorsDisplay"></p>
-					<button type="submit">Submit</button>
-				</form>
-			</div>
-			<div class="section">
-				<form id="classes" onsubmit="updateDisplay('classes'); return false;">
-					<label for="classes">Classes</label></br>
-					<input type="text" id="classesInput">
-					<p id="classesDisplay"></p>
-					<button type="submit">Submit</button>
-				</form>
-			</div>
-			<div class="section">
-				<form id="classrooms" onsubmit="updateDisplay('classrooms'); return false;">
-					<label for="classrooms">Classrooms</label></br>
-					<input type="text" id="classroomsInput">
-					<p id="classroomsDisplay"></p>
-					<button type="submit">Submit</button>
-				</form>
+		<div class="search-box">
+			<form id="searchForm">
+				<label for="searchInput">Search:</label>
+				<input type="text" id="searchInput" placeholder="Search...">
+				<button type="submit">Search</button>
+			</form>
+		</div>
+		<div class="container-wrapper">
+			<div id="container">
+				<div class="section">
+					<form id="professors" onsubmit="updateDisplay('professors'); return false;">
+						<label for="professors">Professors</label></br>
+						<input type="text" id="professorsInput">
+						<p id="professorsDisplay"></p>
+						<button type="submit">Submit</button>
+					</form>
+				</div>
+				<div class="section">
+					<form id="classes" onsubmit="updateDisplay('classes'); return false;">
+						<label for="classes">Classes</label></br>
+						<input type="text" id="classesInput">
+						<p id="classesDisplay"></p>
+						<button type="submit">Submit</button>
+					</form>
+				</div>
+				<div class="section">
+					<form id="classrooms" onsubmit="updateDisplay('classrooms'); return false;">
+						<label for="classrooms">Classrooms</label></br>
+						<input type="text" id="classroomsInput">
+						<p id="classroomsDisplay"></p>
+						<button type="submit">Submit</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</main>
@@ -77,6 +120,24 @@
 			display.appendChild(span);
 			input.value = '';
 		}
-    </script>
+
+		// Function to search and hide/show spans
+		document.getElementById('searchForm').addEventListener('submit', function(event) {
+			event.preventDefault(); // Prevent form submission
+			const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+			const spans = document.querySelectorAll('#container span'); // Assuming your elements are <span> elements
+
+			// Loop through each span and hide/show based on search term
+			spans.forEach(function(span) {
+				const text = span.textContent.toLowerCase();
+				if (text.includes(searchTerm)) {
+					span.style.display = 'inline'; // Show the span if it matches the search term
+				} else {
+					span.style.display = 'none'; // Hide the span if it doesn't match the search term
+				}
+			});
+		});
+
+	</script>
 </body>
 </html>

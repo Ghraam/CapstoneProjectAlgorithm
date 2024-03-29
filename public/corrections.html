@@ -97,8 +97,8 @@
         <tr>
             <td>8:30<br>(W9:00)</td>
             <td id="Monday1">
-                <div class="schedule-item">Class 1</div>
-                <div class="schedule-item">Class 2</div>
+                <div class="schedule-item" draggable="true">Class 1</div>
+                <div class="schedule-item" draggable="true">Class 2</div>
             </td>
             <td id="Tuesday1"></td>
             <td id="WednesdayA1" rowspan="2"></td>
@@ -108,7 +108,7 @@
         <tr>
             <td>10:00</td>
             <td id="Monday2">
-                <div class="schedule-item">Class 3</div>
+                <div class="schedule-item" draggable="true">Class 3</div>
             </td>
             <td id="Tuesday2"></td>
             <td id="Thursday2"></td>
@@ -164,13 +164,13 @@
     </table>
 
 </main>
-<script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script>
     // Initialize SortableJS for the schedule table
     const sortableSchedule = new Sortable(document.querySelector('.schedule'), {
         animation: 150, // animation duration in milliseconds
         handle: '.schedule-item', // specify drag handle
-        draggable: 'div',
+        draggable: '.schedule-item',
         onEnd: function (evt) {
             console.log('Item moved from', evt.oldIndex, 'to', evt.newIndex);
             // Here you can perform actions when an item is moved
