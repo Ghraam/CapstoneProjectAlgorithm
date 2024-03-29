@@ -77,7 +77,7 @@ bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | 
 3. Double block timeslots contain only double block classes
 4. No class may start in the second half of a double block
 5. Blocks for double block classes must be consecutive to one another
-6. Blocks for single block classes must be at the same time each day
+6. Blocks for single block classes must be in corresponding timeslots
 7. Professor must be willing to teach the course
 8. Professor must be willing to teach during the assigned timeslot
 
