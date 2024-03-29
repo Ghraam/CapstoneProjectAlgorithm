@@ -89,7 +89,7 @@ bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | 
 4. Implement search function for editdata.html
 5. Validation for addData.js
 6. Export needs to be linked to the database
-7. Drag and drop functionality for editdata.html
+7. Drag and drop functionality for schedule.html
 
 ## ER Diagram
 
