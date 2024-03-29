@@ -69,8 +69,10 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.integer "block_type", null: false
     t.integer "day", null: false
     t.integer "timeslot", null: false
+    t.integer "corresponding_block"
     t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
+    t.index ["corresponding_block"], name: "fk_time_blocks_time_blocks1_idx"
     t.index ["day", "timeslot"], name: "day", unique: true
   end
 
@@ -91,6 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 0) do
   add_foreign_key "sections", "professors", name: "fk_professor_has_time_block1_professor1"
   add_foreign_key "sections", "time_blocks", column: "end", name: "fk_sections_time_blocks1"
   add_foreign_key "sections", "time_blocks", column: "start", name: "fk_professor_has_time_block1_time_block1"
+  add_foreign_key "time_blocks", "time_blocks", column: "corresponding_block", name: "fk_time_blocks_time_blocks1"
   add_foreign_key "time_preferences", "professors", name: "fk_professor_has_time_block_professor"
   add_foreign_key "time_preferences", "time_blocks", name: "fk_professor_has_time_block_time_block1"
 end

@@ -15,6 +15,7 @@ class TimeBlocksTest < ApplicationSystemTestCase
     click_on "New time block"
 
     fill_in "Block type", with: @time_block.block_type
+    fill_in "Corresponding block", with: @time_block.corresponding_block
     fill_in "Day", with: @time_block.day
     fill_in "Identifier", with: @time_block.identifier
     fill_in "Timeslot", with: @time_block.timeslot
@@ -29,6 +30,7 @@ class TimeBlocksTest < ApplicationSystemTestCase
     click_on "Edit this time block", match: :first
 
     fill_in "Block type", with: @time_block.block_type
+    fill_in "Corresponding block", with: @time_block.corresponding_block
     fill_in "Day", with: @time_block.day
     fill_in "Identifier", with: @time_block.identifier
     fill_in "Timeslot", with: @time_block.timeslot

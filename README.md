@@ -83,7 +83,7 @@ bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | 
 
 ## ER Diagram
 
-![ER Diagram](https://i.imgur.com/WdEoziK.png)
+![ER Diagram](https://i.imgur.com/P3yPzr2.png)
 
 ## API Specification
 
