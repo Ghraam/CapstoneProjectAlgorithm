@@ -27,27 +27,19 @@ timeblocks = timeblock_matrix.map.with_index do |row, i|
 end
 
 timeblock_groups.each do |key, values|
-  if ("0".."9").include?(key)
-    values.each do |pair|
-      index = values.index(pair)
-      corresponding = values[(index + 2) % values.length]
-      timeblock = timeblocks[pair[0]][pair[1]]
-      timeblock["corresponding_block"] = timeblocks[corresponding[0]][corresponding[1]]["identifier"]
+  values.each do |pair|
+    index = values.index(pair)
+    corresponding = if ("0".."9").include?(key)
+      values[(index + 2) % values.length]
+    elsif ("A".."Z").include?(key)
+      [pair[0] + 1, pair[1]]
+    elsif key == "&"
+      [pair[0] - 1, pair[1]]
+    else
+      raise "Invalid key"
     end
-  elsif ("A".."Z").include?(key)
-    values.each do |pair|
-      index = values.index(pair)
-      corresponding = [pair[0] + 1, pair[1]]
-      timeblock = timeblocks[pair[0]][pair[1]]
-      timeblock["corresponding_block"] = timeblocks[corresponding[0]][corresponding[1]]["identifier"]
-    end
-  elsif key == "&"
-    values.each do |pair|
-      index = values.index(pair)
-      corresponding = [pair[0] - 1, pair[1]]
-      timeblock = timeblocks[pair[0]][pair[1]]
-      timeblock["corresponding_block"] = timeblocks[corresponding[0]][corresponding[1]]["identifier"]
-    end
+    timeblock = timeblocks[pair[0]][pair[1]]
+    timeblock["corresponding_block"] = timeblocks[corresponding[0]][corresponding[1]]["identifier"]
   end
 end
 
