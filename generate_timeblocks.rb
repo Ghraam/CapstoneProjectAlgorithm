@@ -39,7 +39,8 @@ timeblock_groups.each do |key, values|
       raise "Invalid key"
     end
     timeblock = timeblocks[pair[0]][pair[1]]
-    timeblock["corresponding_block"] = timeblocks[corresponding[0]][corresponding[1]]["identifier"]
+    i, j = *corresponding
+    timeblock["corresponding_block"] = timeblocks[i][j]["identifier"]
   end
 end
 
