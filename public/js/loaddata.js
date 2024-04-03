@@ -3,7 +3,7 @@ import { comAPI, apiSpec } from './apicall.js';
 // Function to fetch data for a subsection and insert it into an HTML element as spans
 async function fetchDataAndInsert(apiHeader, elementId) {
     const dataArray = await fetchSubsectionData(apiHeader, elementId);
-    insertDataAsSpans(dataArray, elementId, apiHeader);
+    insertDataAsDivs(dataArray, elementId, apiHeader);
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -38,7 +38,7 @@ async function fetchSubsectionData(apiSpecHeader, elementId) {
     }
 }
 
-function insertDataAsSpans(dataArray, elementId, apiHeader) {
+function insertDataAsDivs(dataArray, elementId, apiHeader) {
     const element = document.getElementById(elementId);
 
     // Clear previous content
@@ -46,7 +46,9 @@ function insertDataAsSpans(dataArray, elementId, apiHeader) {
 
     // Iterate over the data array and create <span> elements for each item
     dataArray.forEach((item, index) => {
-        const span = document.createElement('span');
+        const holdingDiv = document.createElement('div');
+        holdingDiv.classList.add("data-item");
+
         let fieldValue;
         switch (apiHeader) {
             case 'professors':
@@ -65,7 +67,7 @@ function insertDataAsSpans(dataArray, elementId, apiHeader) {
         }
 
         // Set the text content of the main span
-        span.textContent = fieldValue;
+        holdingDiv.textContent = fieldValue;
 
         // Create a hidden span element to store the ID
         const hiddenSpan = document.createElement('span');
@@ -73,28 +75,35 @@ function insertDataAsSpans(dataArray, elementId, apiHeader) {
         hiddenSpan.style.display = 'none';
 
         // Append the hidden span inside the main span
-        span.appendChild(hiddenSpan);
+        holdingDiv.appendChild(hiddenSpan);
+
 
         var display = document.getElementById(elementId);
 
-        span.addEventListener('click', function() {
-            const id = span.querySelector('span').textContent; // Get the ID from the hidden span
-            if (span.nextSibling) {
-                display.removeChild(span.nextSibling); // remove the following comma
-            } else if (span.previousSibling) {
-                display.removeChild(span.previousSibling); // remove the preceding comma if it's the last element
+        holdingDiv.addEventListener('click', function() {
+            // const id = span.querySelector('span').textContent; // Get the ID from the hidden span
+            const id = hiddenSpan.textContent;
+            if (!holdingDiv.nextSibling) {
+                // If there is no next sibling (i.e., it's the last element)
+                const previousSibling = holdingDiv.previousSibling;
+                if (previousSibling && previousSibling.nodeType === Node.TEXT_NODE) {
+                    // If the previous sibling is a text node (representing the comma)
+                    display.removeChild(previousSibling); // Remove the comma
+                }
             }
-            display.removeChild(span);
+            display.removeChild(holdingDiv);
             confirmRemoval(id, apiHeader);
         });
-
-        element.appendChild(span);
 
         // Add comma and space if not the last item
         if (index < dataArray.length - 1) {
             const separator = document.createTextNode(', ');
-            element.appendChild(separator);
+            holdingDiv.appendChild(separator);
         }
+
+        element.appendChild(holdingDiv);
+
+
     });
 }
 

@@ -56,7 +56,13 @@
 			padding: 8px 16px;
 			cursor: pointer;
 		}
-
+		.data-item {
+			display: inline-block;
+			margin-right: 5px; /* Adjust spacing between items if needed */
+		}
+		.button-spacing {
+			margin-right: 10px; /* Adjust the value as needed */
+		}
 
 	</style>
 </head>
@@ -68,6 +74,8 @@
 				<label for="searchInput">Search:</label>
 				<input type="text" id="searchInput" placeholder="Search...">
 				<button type="submit">Search</button>
+				<span class="button-spacing"></span> <!-- Spacer -->
+				<button id="clearSearchButton">Clear Search</button>
 			</form>
 		</div>
 		<div class="container-wrapper">
@@ -100,43 +108,90 @@
 		</div>
 	</main>
     <script>
-		function updateDisplay(formId) {
-			var display = document.getElementById(formId + 'Display');
-			var input = document.getElementById(formId + 'Input');
-			var span = document.createElement('span');
-			span.textContent = input.value;
-			var comma = document.createTextNode(', ');
-			span.addEventListener('click', function() {
-				if (span.nextSibling) {
-					display.removeChild(span.nextSibling); // remove the following comma
-				} else if (span.previousSibling) {
-					display.removeChild(span.previousSibling); // remove the preceding comma if it's the last element
+		function updateDisplay(formId, searchTerm) {
+			const container = document.getElementById(formId + 'Display');
+			container.innerHTML = ''; // Clear previous content
+
+			const spans = document.querySelectorAll(`#${formId}Display span`);
+			let div = document.createElement('div'); // Create a div container
+
+			spans.forEach((span, index) => {
+				const textContent = span.textContent.toLowerCase();
+				if (textContent.includes(searchTerm)) {
+					div.appendChild(span.cloneNode(true)); // Clone the span and add it to the div
+					// Add comma if not the last span
+					if (index < spans.length - 1) {
+						const comma = document.createTextNode(', ');
+						div.appendChild(comma);
+					}
 				}
-				display.removeChild(span);
 			});
-			if (display.textContent !== '') {
-				display.appendChild(comma);
-			}
-			display.appendChild(span);
-			input.value = '';
+
+			// Append the div to the container
+			container.appendChild(div);
 		}
+
+		// Hide the clear search button initially
+		const clearSearchButton = document.getElementById('clearSearchButton');
+		clearSearchButton.style.display = 'none';
 
 		// Function to search and hide/show spans
 		document.getElementById('searchForm').addEventListener('submit', function(event) {
 			event.preventDefault(); // Prevent form submission
-			const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-			const spans = document.querySelectorAll('#container span'); // Assuming your elements are <span> elements
+			console.log('Search form submitted');
 
-			// Loop through each span and hide/show based on search term
-			spans.forEach(function(span) {
-				const text = span.textContent.toLowerCase();
-				if (text.includes(searchTerm)) {
-					span.style.display = 'inline'; // Show the span if it matches the search term
-				} else {
-					span.style.display = 'none'; // Hide the span if it doesn't match the search term
-				}
+			// Get the search input value
+			const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+
+			// Iterate through each section
+			const sections = document.querySelectorAll('.section');
+			let hasResults = false; // Track if any results are found
+
+			sections.forEach(section => {
+				// Get the div elements within the section
+				const divs = section.querySelectorAll('div.data-item');
+
+				// Iterate through each div
+				divs.forEach(div => {
+					// Get the text content of the div
+					const textContent = div.textContent.trim().toLowerCase();
+
+					// Check if the text content contains the search term
+					if (textContent.includes(searchTerm)) {
+						// Show the div
+						div.style.display = 'inline-block'; // Change display property to inline-block
+						hasResults = true; // Set flag to true if any results are found
+					} else {
+						// Hide the div
+						div.style.display = 'none';
+					}
+				});
 			});
+
+			// Show or hide the clear search button based on search results
+			const clearSearchButton = document.getElementById('clearSearchButton');
+			clearSearchButton.style.display = hasResults ? 'inline-block' : 'none'; // Change display property to inline-block or none
 		});
+
+		// Add event listener to the clear search button
+		clearSearchButton.addEventListener('click', function(event) {
+			// Reset the search input value
+			document.getElementById('searchInput').value = '';
+
+			// Hide all divs
+			const divs = document.querySelectorAll('.data-item');
+			divs.forEach(div => {
+				div.style.display = 'inline-block'; // Change display property to inline-block
+			});
+
+			// Hide the clear search button again
+			const clearSearchButton = document.getElementById('clearSearchButton');
+			clearSearchButton.style.display = 'none';
+		});
+
+
+
+
 
 	</script>
 </body>
