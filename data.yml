@@ -1542,143 +1542,179 @@ time_blocks:
   block_type: 0
   day: 0
   timeslot: 0
+  corresponding_block: Thursday 1
 - identifier: Monday 2
   block_type: 0
   day: 0
   timeslot: 1
+  corresponding_block: Thursday 2
 - identifier: Monday 3
   block_type: 0
   day: 0
   timeslot: 2
+  corresponding_block: Thursday 3
 - identifier: Monday 4
   block_type: 0
   day: 0
   timeslot: 3
+  corresponding_block: Thursday 4
 - identifier: Monday 5
   block_type: 0
   day: 0
   timeslot: 4
+  corresponding_block: Thursday 5
 - identifier: Monday 6
   block_type: 0
   day: 0
   timeslot: 5
+  corresponding_block: Thursday 6
 - identifier: Monday 7
   block_type: 0
   day: 0
   timeslot: 6
+  corresponding_block: Wednesday 7
 - identifier: Monday 8
   block_type: 0
   day: 0
   timeslot: 7
+  corresponding_block: Wednesday 8
 - identifier: Tuesday 1
   block_type: 0
   day: 1
   timeslot: 0
+  corresponding_block: Friday 1
 - identifier: Tuesday 2
   block_type: 0
   day: 1
   timeslot: 1
+  corresponding_block: Friday 2
 - identifier: Tuesday 3
   block_type: 0
   day: 1
   timeslot: 2
+  corresponding_block: Friday 3
 - identifier: Tuesday 4
   block_type: 0
   day: 1
   timeslot: 3
+  corresponding_block: Friday 4
 - identifier: Tuesday 5
   block_type: 0
   day: 1
   timeslot: 4
+  corresponding_block: Friday 5
 - identifier: Tuesday 6
   block_type: 0
   day: 1
   timeslot: 5
+  corresponding_block: Friday 6
 - identifier: Tuesday 7
   block_type: 0
   day: 1
   timeslot: 6
+  corresponding_block: Thursday 7
 - identifier: Tuesday 8
   block_type: 0
   day: 1
   timeslot: 7
+  corresponding_block: Thursday 8
 - identifier: Wednesday A1
   block_type: 1
   day: 2
   timeslot: 0
+  corresponding_block: Wednesday A2
 - identifier: Wednesday A2
   block_type: 2
   day: 2
   timeslot: 1
+  corresponding_block: Wednesday A1
 - identifier: Wednesday B1
   block_type: 1
   day: 2
   timeslot: 2
+  corresponding_block: Wednesday B2
 - identifier: Wednesday B2
   block_type: 2
   day: 2
   timeslot: 3
+  corresponding_block: Wednesday B1
 - identifier: Wednesday 7
   block_type: 0
   day: 2
   timeslot: 6
+  corresponding_block: Monday 7
 - identifier: Wednesday 8
   block_type: 0
   day: 2
   timeslot: 7
+  corresponding_block: Monday 8
 - identifier: Thursday 1
   block_type: 0
   day: 3
   timeslot: 0
+  corresponding_block: Monday 1
 - identifier: Thursday 2
   block_type: 0
   day: 3
   timeslot: 1
+  corresponding_block: Monday 2
 - identifier: Thursday 3
   block_type: 0
   day: 3
   timeslot: 2
+  corresponding_block: Monday 3
 - identifier: Thursday 4
   block_type: 0
   day: 3
   timeslot: 3
+  corresponding_block: Monday 4
 - identifier: Thursday 5
   block_type: 0
   day: 3
   timeslot: 4
+  corresponding_block: Monday 5
 - identifier: Thursday 6
   block_type: 0
   day: 3
   timeslot: 5
+  corresponding_block: Monday 6
 - identifier: Thursday 7
   block_type: 0
   day: 3
   timeslot: 6
+  corresponding_block: Tuesday 7
 - identifier: Thursday 8
   block_type: 0
   day: 3
   timeslot: 7
+  corresponding_block: Tuesday 8
 - identifier: Friday 1
   block_type: 0
   day: 4
   timeslot: 0
+  corresponding_block: Tuesday 1
 - identifier: Friday 2
   block_type: 0
   day: 4
   timeslot: 1
+  corresponding_block: Tuesday 2
 - identifier: Friday 3
   block_type: 0
   day: 4
   timeslot: 2
+  corresponding_block: Tuesday 3
 - identifier: Friday 4
   block_type: 0
   day: 4
   timeslot: 3
+  corresponding_block: Tuesday 4
 - identifier: Friday 5
   block_type: 0
   day: 4
   timeslot: 4
+  corresponding_block: Tuesday 5
 - identifier: Friday 6
   block_type: 0
   day: 4
   timeslot: 5
+  corresponding_block: Tuesday 6

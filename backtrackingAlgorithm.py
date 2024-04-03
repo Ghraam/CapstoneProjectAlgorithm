@@ -72,6 +72,7 @@ class TimeBlock(NamedTuple):
     block_type: int  # 0 = single, 1 = double_start, 2 = double_end
     day: int  # x (0-4, M-F)
     timeslot: int  # y (0-7, ???)
+    corresponding_block: int  # id of corresponding block (can be null)
 
 
 class Section(NamedTuple):
