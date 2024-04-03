@@ -6,6 +6,10 @@
 # Graham Finlayson-Fife, and Liam Cannon
 # Date: 10/11/2022
 
+# Considering change to CSP:
+# Variables: List[Section]
+# Domains: Dict[Section, List[Schedule]]
+
 # from xml import dom
 from typing import Dict, List, NamedTuple  # , Optional
 from csp import CSP, Constraint
@@ -214,14 +218,17 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                         # for each column in the schedule
                         for y in range(len(i[0])):
                             # if there is a class in both schedules
-                            if i[x][y] != "-" and j[x][y] != "-":
+                            classA = i[x][y]
+                            classB = j[x][y]
+                            if classA != "-" and classB != "-":
+                                # Constraints 1 & 2:
                                 # check if classroom or professor overlaps
-                                if i[x][y].classroom == j[x][y].classroom or \
-                                        i[x][y].professor == j[x][y].professor:
+                                if classA.classroom == classB.classroom or \
+                                        classA.professor == classB.professor:
                                     return False
                             # TODO: Stop hardcoding this!
                             # check if courses are on no classes allowed days
-                            if i[x][y] != "-" or j[x][y] != "-":
+                            if classA != "-" or classB != "-":
                                 # time slots where classes are not allowed
                                 if (x == WEDNESDAY and (y == BLOCK_FIVE or
                                                         y == BLOCK_SIX)) or \
@@ -230,8 +237,8 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
                                     return False
                             # make sure non double block classes are only
                             # on evening time slots on wednesday
-                            if i[x][y] != "-" and \
-                                    not i[x][y].course.double_block:
+                            if classA != "-" and \
+                                    not classA.course.double_block:
                                 if x == WEDNESDAY and y < BLOCK_SEVEN:
                                     return False
         return True
@@ -257,11 +264,13 @@ def assign_timeblocks(
         # print(section)
         if section == "-":
             continue
+        print(section)
         if startBlocks.get(section) is None:
             startBlocks[section] = True
             section.start = timeBlock
         else:
             section.end = timeBlock
+    print(startBlocks)
     return schedule
 
 
@@ -296,7 +305,7 @@ def solution(courses: List[Course], classrooms: List[Classroom],
     """
     Generates a schedule for the given courses, classrooms, and professors.
     """
-    variableDict = {}
+    variableDict: Dict[Course, List[Schedule]] = {}
     # generate empty grid
     newSched = generate_grid(5, 8)
     # shuffle courses to add some randomness into generation
@@ -307,9 +316,12 @@ def solution(courses: List[Course], classrooms: List[Classroom],
             x, deepcopy(newSched), professors, classrooms)
 
     # run csp on generated domains
+    # Variables: courses
+    # Domains: all possible combinations of sections
     csp = CSP(courses, variableDict)
     csp.add_constraint(ScheduleConstraint(courses))
     genOutcome = csp.backtracking_search()
+    print(genOutcome)
 
     # print csp's answer
     if isinstance(genOutcome, type(None)):
