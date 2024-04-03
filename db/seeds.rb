@@ -51,3 +51,10 @@ data["time_blocks"].each do |time_block|
     timeslot: time_block["timeslot"],
   )
 end
+
+# Update the time blocks to include the corresponding block
+data["time_blocks"].each do |time_block|
+  TimeBlock.find_by(identifier: time_block["identifier"]).update(
+    corresponding_block: TimeBlock.find_by(identifier: time_block["corresponding_block"]).id,
+  )
+end
