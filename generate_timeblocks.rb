@@ -29,14 +29,11 @@ end
 timeblock_groups.each do |key, values|
   values.each do |pair|
     index = values.index(pair)
-    corresponding = if ("0".."9").include?(key)
-      values[(index + 2) % values.length]
-    elsif ("A".."Z").include?(key)
-      [pair[0] + 1, pair[1]]
-    elsif key == "&"
-      [pair[0] - 1, pair[1]]
-    else
-      raise "Invalid key"
+    corresponding = case key
+    when "0".."9" then values[(index + 2) % values.length]
+    when "A".."Z" then [pair[0] + 1, pair[1]]
+    when "&" then [pair[0] - 1, pair[1]]
+    else raise "Invalid key"
     end
     timeblock = timeblocks[pair[0]][pair[1]]
     i, j = *corresponding
