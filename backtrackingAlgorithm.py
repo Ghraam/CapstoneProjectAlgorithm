@@ -72,7 +72,7 @@ class TimeBlock(NamedTuple):
     block_type: int  # 0 = single, 1 = double_start, 2 = double_end
     day: int  # x (0-4, M-F)
     timeslot: int  # y (0-7, ???)
-    corresponding_block: int  # id of corresponding block (can be null)
+    corresponding_block: int  # id of corresponding block (-1 if null)
 
 
 class Section(NamedTuple):
@@ -246,7 +246,8 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
 
 
 placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", block_type=-1,
-                                   day=-1, timeslot=-1, id=-1)
+                                   day=-1, timeslot=-1, id=-1,
+                                   corresponding_block=-1)
 
 
 def assign_timeblocks(
@@ -355,6 +356,17 @@ if __name__ == "__main__":
     # get parameters from input file
     with open(inputFile, "r") as file:
         data = yaml.safe_load(file)
+
+    # Process data (corresponding_block has identifier, not id of
+    # corresponding block)
+    for timeBlock in data["time_blocks"]:
+        # Get index of corresponding block by identifier
+        # print(timeBlock)
+        identifier = timeBlock["corresponding_block"]
+        index = next((i for i, block in enumerate(data["time_blocks"]) if
+                      block["identifier"] == identifier), None)
+        # Set corresponding block to index
+        timeBlock["corresponding_block"] = index
 
     # create objects from data
     courses = [Course(**course) for course in data["courses"]]

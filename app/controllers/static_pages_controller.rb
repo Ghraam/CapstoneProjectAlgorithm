@@ -37,8 +37,10 @@ class StaticPagesController < ApplicationController
     # Create the sections
     sections.each do |section|
       Section.create(
+        section_num: section["section_num"],
         professor_id: section["professor_id"],
-        time_block_id: section["time_block_id"],
+        start: section["start"],
+        end: section["end"],
         course_id: section["course_id"],
         classroom_id: section["classroom_id"],
       )
