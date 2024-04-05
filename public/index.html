@@ -4,6 +4,8 @@
 	<title>Welcome Page TEST</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 	<script src="js/header.js" type="text/javascript"></script>
+    <script type="module" src="js/generateCall.js"></script>
+    <script type="module" src="js/apicall.js"></script>
 	<style>
         button {
             font-size: 20px;
@@ -15,19 +17,10 @@
     <header-component></header-component>
     <main>
         <h1>Champlain College Schedule Generator Capstone</h1>
-		
-		<button id="generateButton">Generate Schedule</button>
-		<p id="displayText"></p>
-		
+
+        <button id="generateButton">Generate Schedule</button>
+        <p id="displayText"></p>
+
     </main>
-	<script>
-        document.getElementById('generateButton').addEventListener('click', function() {
-            var displayText = document.getElementById('displayText');
-            displayText.textContent = "Generating a schedule...";
-            setTimeout(function() {
-                displayText.textContent = "Done";
-            }, 2000);
-        });
-    </script>
 </body>
 </html>
