@@ -302,6 +302,20 @@ def flatten_chain(matrix):
     return list(chain.from_iterable(matrix))
 
 
+def processSection(x):
+    if type(x) is not dict:
+        print(x)
+        return x
+    return {
+        "course_id": x["course"].id,
+        "section_num": x["section_num"],
+        "professor_id": x["professor"].id,
+        "start": x["start"].id,
+        "end": x["end"].id,
+        "classroom_id": x["classroom"].id
+    }
+
+
 def solution(courses: List[Course], classrooms: List[Classroom],
              professors: List[Professor], timeBlocks: List[TimeBlock]) -> None:
     """
@@ -334,14 +348,7 @@ def solution(courses: List[Course], classrooms: List[Classroom],
         schedOutput = dict_to_schedule(courses, genOutcome, newSched)
         flattened = list(filter(lambda x: x != "-", flatten_chain(list(map(
             lambda x: list(map(section_as_dict, x)), schedOutput)))))
-        ids = list(map(lambda x: {
-            "course_id": x["course"].id,
-            "section_num": x["section_num"],
-            "professor_id": x["professor"].id,
-            "start": x["start"].id,
-            "end": x["end"].id,
-            "classroom_id": x["classroom"].id
-            }, flattened))
+        ids = list(map(processSection, flattened))
         outputFile = sys.argv[2]
         with open(outputFile, "w") as file:
             file.write(json.dumps(ids))
