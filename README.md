@@ -295,7 +295,6 @@ bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | 
             "method": "POST",
             "description": "Start the algorithm to generate a schedule"
         },
-        // Not implemented (404)
         "status": {
             "url": "/status",
             "method": "GET",
