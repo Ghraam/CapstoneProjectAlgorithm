@@ -234,6 +234,23 @@
             return;
         }
 
+        if (sisterDiv) {
+            let sisterClass = sisterDiv.getAttribute("class");
+
+            let sisterPlace = sisterParse(placeDropped);
+            let sisterTarget = document.getElementById(sisterPlace);
+
+            try {
+                sisterTarget.appendChild(sisterDiv);
+            } catch (err) {
+                if (sisterTarget === null) {
+                    alert("Cannot drop class here.");
+                }
+                console.log("There was an error moving sister: ", err);
+                return;
+            }
+        }
+
         let tId = target.id;
         target.appendChild(document.getElementById(id));
         event.preventDefault();

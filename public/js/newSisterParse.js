@@ -8,9 +8,11 @@ function sisterParse(dropID) {
         case "Monday4":
         case "Monday5":
         case "Monday6":
+            sisterDrop = "Thursday" + dropID.slice(6);
+            break;
         case "Monday7":
         case "Monday8":
-            sisterDrop = "Thursday" + dropID.slice(6);
+            sisterDrop = "Wednesday" + dropID.slice(6);
             break;
         case "Tuesday1":
         case "Tuesday2":
@@ -18,34 +20,21 @@ function sisterParse(dropID) {
         case "Tuesday4":
         case "Tuesday5":
         case "Tuesday6":
-        case "Tuesday7":
-        case "Tuesday8":
             sisterDrop = "Friday" + dropID.slice(7);
             break;
-        case "Thursday1":
-        case "Thursday2":
-        case "Thursday3":
-        case "Thursday4":
-        case "Thursday5":
-        case "Thursday6":
-        case "Thursday7":
-        case "Thursday8":
-            sisterDrop = "Monday" + dropID.slice(8);
-            break;
-        case "Friday1":
-        case "Friday2":
-        case "Friday3":
-        case "Friday4":
-        case "Friday5":
-        case "Friday6":
-            sisterDrop = "Tuesday" + dropID.slice(6);
+        case "Tuesday7":
+        case "Tuesday8":
+            sisterDrop = "Thursday" + dropID.slice(7);
             break;
         case "WednesdayA1":
-            sisterDrop = "WednesdayB1";
-            break;
-        case "WednesdayB1":
             sisterDrop = "WednesdayA1";
             break;
+        case "WednesdayB1":
+            sisterDrop = "WednesdayB1";
+            break;
+        case "Wednesday7":
+        case "Wednesday8":
+            sisterDrop = ""
         default:
             console.error('Invalid dropID:', dropID);
             break;
