@@ -119,12 +119,12 @@ bundle exec rails s -b `ip a | grep -A2 "2:" | grep "inet" | awk '{print $2}' | 
             "description": "Create a new section"
         },
         "update": {
-            "url": "/sections/:id.json",
+            "url": "/sections/[:course_id]_[:section_num].json",
             "method": "PUT",
             "description": "Update a section"
         },
         "destroy": {
-            "url": "/sections/:id.json",
+            "url": "/sections/[:course_id]_[:section_num].json",
             "method": "DELETE",
             "description": "Delete a section"
         }
