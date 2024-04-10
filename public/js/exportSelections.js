@@ -32,11 +32,9 @@ async function sendData(sectionData) {
     const start = await getTimeBlock(startTime);
     const end = await getTimeBlock(endTime);
 
-    const data = [
-        {"course_id": sectionData.courseID, "section_num": sectionData.section,
+    const data = {"section": {"course_id": sectionData.courseID, "section_num": sectionData.section,
         "professor_id": sectionData.professorID, "start": start, "end": end,
-        "classroom_id": sectionData.classroomID}
-    ];
+        "classroom_id": sectionData.classroomID}};
 
     // Make api update call
     await comAPI('sections', 'update', 'PUT', data, id);
