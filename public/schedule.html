@@ -5,7 +5,63 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 	<script src="js/header.js" type="text/javascript"></script>
 	<style>
-		
+
+
+		/* Style the drag-and-drop area */
+		.drag-and-drop {
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		.drop-area {
+			width: 50%; /* 50% of the parent container */
+			height: 50vh; /* 50% of the viewport height */
+			background-color: #f0f0f0;
+			border: 2px dashed #ccc;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px;
+		}
+
+		/* Style the draggable items */
+		.draggable-items {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 20px;
+		}
+
+		.draggable-item {
+			background-color: #007BFF;
+			color: #fff;
+			text-align: center;
+			line-height: 40px;
+			margin: 5px;
+			cursor: pointer;
+		}
+
+		.small {
+			width: 40px;
+			height: 40px;
+		}
+
+		.medium {
+			width: 80px;
+			height: 80px;
+		}
+
+		.large {
+			width: 120px;
+			height: 120px;
+		}
+
+		.draggable-item:hover {
+			background-color: #0056b3;
+		}
 		
 
 		/* Style the h1 heading (same as before) */
