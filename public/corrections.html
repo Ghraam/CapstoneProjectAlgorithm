@@ -2,9 +2,8 @@
 <html>
 <head>
     <title>Schedule</title>
-<!--    <link rel="stylesheet" type="text/css" href="styles.css">-->
     <script src="js/header.js" type="text/javascript"></script>
-    <script src="js/corrections.js" type="text/javascript"></script>
+
     <style>
 
         /* Style the header */
@@ -54,12 +53,14 @@
             background-color: #f0f0f0;
         }
 
-        .schedule-item {
+        .schedule-item,
+        .sister-item {
             background-color: #007BFF;
             color: #fff;
-            border-radius: 50%;
-            padding: 10px;
+            border-radius: 5px; /* Changed border radius for a box-like appearance */
+            padding: 5px; /* Adjusted padding for a more compact look */
             cursor: pointer;
+            display: inline-block; /* Make the items only as wide as the text within them */
             margin: 5px;
         }
 
@@ -145,7 +146,7 @@
             <td class="drop-area" id="Tuesday2"></td>
 <!--            <td class="drop-area" id="Wednesday2"></td>-->
             <td class="drop-area" id="Thursday2">
-                <div class="schedule-item">Class 3</div>
+<!--                <div class="schedule-item">Class 3</div>-->
             </td>
             <td class="drop-area" id="Friday2"></td>
         </tr>
@@ -204,5 +205,61 @@
     </table>
 
 </main>
+<script>
+    // JavaScript functions for drag-and-drop
+    function drag(target, event) {
+        event.dataTransfer.setData("id", target.id);
+        let parentID = target.parentElement.id;
+        let tempID = target.id;
+        let justName = tempID.split('-')[0];
+        let perWeek = target.getAttribute("singleOrDouble");
+        console.log("DragID: " + target.id);
+    }
+
+    function drop(target, event) {
+        let id = event.dataTransfer.getData('id');
+        let parentID = document.getElementById(id).parentElement.id;
+        let classType = document.getElementById(id).getAttribute("classType");
+        let singleOrDouble = document.getElementById(id).getAttribute("singOrDoub");
+        let placeDropped = target.id;
+        let sisterID = id + "sister";
+        let sisterDiv = document.getElementById(sisterID);
+
+        // Check for class drop conditions, if necessary
+
+        if (target.id === "WednesdayNoClass" || target.id === "FridayNoClass") {
+            console.log("Bad Drop");
+            event.dataTransfer.dropEffect = "none";
+            alert("Sorry, you cannot move classes to here.");
+            return;
+        }
+
+        let tId = target.id;
+        target.appendChild(document.getElementById(id));
+        event.preventDefault();
+
+        let newDayTime = tId;
+        let timeChildren = document.getElementById(newDayTime).childNodes;
+        let timeChildrenArray = [];
+
+        for (let i = 0; i < timeChildren.length; i++) {
+            if (typeof timeChildren[i] !== 'undefined') {
+                timeChildrenArray.push(timeChildren[i].id);
+            }
+        }
+
+        timeChildrenArray.sort();
+        let tGt = document.getElementById(newDayTime);
+        for (let j = 0; j < timeChildrenArray.length; j++) {
+            if (typeof timeChildrenArray[j] !== 'undefined') {
+                tGt.appendChild(document.getElementById(timeChildrenArray[j]));
+            }
+        }
+    }
+</script>
+<script src="js/newSisterParse.js"></script>
+<script src="js/corrections.js" type="text/javascript"></script>
+<script type="module" src="js/apicall.js"></script>
+<script type="module" src="js/importSections.js"></script>
 </body>
 </html>
