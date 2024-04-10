@@ -109,13 +109,20 @@ async function getFullSectionsData(initialData) {
             const courseIdentifier = getFieldValue(courseData, 'courses');
             const classroomRoom = getFieldValue(classroomData, 'classrooms');
 
+            // Get section num
+            const section_num = section.section_num;
+
             // Add formatted data to fullSectionsData
             fullSectionsData.push({
                 course: courseIdentifier,
                 professor: professorName,
                 classroom: classroomRoom,
                 startTime: startTime,
-                endTime: endTime
+                endTime: endTime,
+                section: section_num,
+                courseID: section.course_id,
+                professorID: section.professor_id,
+                classroomID: section.classroom_id
                 // Add other necessary properties from section if needed
             });
         }
@@ -127,19 +134,6 @@ async function getFullSectionsData(initialData) {
     }
 }
 
-// Function to generate HTML content for each row in the table
-// function generateTableRow(sectionData) {
-//     const sisterID = sisterParse(sectionData.startTime); // Get sister ID
-//     return `
-//         <td class="drop-area" id="${sectionData.startTime}">
-//             <div draggable="true" ondragstart="drag(this,event)" sister="${sisterID}">
-//                 ${sectionData.course} - ${sectionData.professor}<br>
-//                 ${sectionData.classroom}<br>
-//                 ${sectionData.startTime} - ${sectionData.endTime}
-//             </div>
-//         </td>
-//     `;
-// }
 function generateTableRow(sectionData) {
     let startTd = document.getElementById(sectionData.startTime);
     let endTd = document.getElementById(sectionData.endTime);
@@ -147,14 +141,14 @@ function generateTableRow(sectionData) {
     let newDiv = document.createElement('div');
     newDiv.classList.add('schedule-item');
     newDiv.textContent = `${sectionData.course}\n${sectionData.classroom}\n${sectionData.professor}`;
-    newDiv.id = `${sectionData.course}-${sectionData.classroom}`;
+    newDiv.id = `${sectionData.course}-${sectionData.classroom}-${sectionData.professor}`;
     newDiv.setAttribute("draggable", "true");
     newDiv.setAttribute("ondragstart", "drag(this, event)");
 
     let sisterDiv = document.createElement('div');
     sisterDiv.classList.add('sister-item');
     sisterDiv.textContent = `${sectionData.course}\n${sectionData.classroom}\n${sectionData.professor}`;
-    sisterDiv.id = `${sectionData.course}-${sectionData.classroom}sister`;
+    sisterDiv.id = `${sectionData.course}-${sectionData.classroom}-${sectionData.professor}sister`;
     sisterDiv.setAttribute("draggable", "false");
     sisterDiv.setAttribute("ondragstart", "drag(this, event)");
 
@@ -164,18 +158,26 @@ function generateTableRow(sectionData) {
 
 // Function to populate the table with data
 async function populateTable() {
+    const fullSectionsData = await getData();
+
+    const tableBody = document.querySelector('#schedule-box tbody');
+
+    fullSectionsData.forEach(sectionData => {
+        const row = document.createElement('tr');
+        generateTableRow(sectionData);
+        tableBody.appendChild(row);
+    });
+}
+
+export async function getData() {
     try {
+        //Get initial Data
         const initialData = await getSections();
+
+        // noinspection UnnecessaryLocalVariableJS
         const fullSectionsData = await getFullSectionsData(initialData);
 
-        const tableBody = document.querySelector('#schedule-box tbody');
-        //tableBody.innerHTML = '';
-
-        fullSectionsData.forEach(sectionData => {
-            const row = document.createElement('tr');
-            generateTableRow(sectionData);
-            tableBody.appendChild(row);
-        });
+        return fullSectionsData;
     } catch (error) {
         console.error('Error populating table:', error);
     }
