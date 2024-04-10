@@ -6,10 +6,6 @@
 # Graham Finlayson-Fife, and Liam Cannon
 # Date: 10/11/2022
 
-# Considering change to CSP:
-# Variables: List[Section]
-# Domains: Dict[Section, List[Schedule]]
-
 # from xml import dom
 from typing import Dict, List, NamedTuple  # , Optional
 from csp import CSP, Constraint
@@ -140,25 +136,6 @@ def dict_to_schedule(variables, dict, schedule: Schedule
 def generate_grid(rows: int, columns: int) -> Schedule:
     # initialize grid with random letters
     return Schedule([["-" for c in range(columns)] for r in range(rows)])
-
-
-def display_grid(grid: Schedule) -> None:
-    """Displays the schedule in a human-readable format."""
-    # rotate the grid so that it displays correctly
-    for i in range(len(grid[0])):
-        for y in range(len(grid)):
-            if grid[y][i] == "-":
-                print("no class", end=" | ")
-            else:
-                for x in range(len(grid[y][i])):
-                    print(grid[y][i][x].course.identifier + " " + grid[y][i]
-                          [x].professor.name + " " +
-                          grid[y][i][x].classroom.room, end="")
-                    if not (x + 1 >= len(grid[y][i])):
-                        print(", ", end="")
-                    if x + 1 >= len(grid[y][i]):
-                        print(" | ", end="")
-        print("\n")
 
 
 def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
@@ -340,6 +317,9 @@ def solution(courses: List[Course], classrooms: List[Classroom],
     # run csp on generated domains
     # Variables: courses
     # Domains: all possible combinations of sections
+    # Considering change to CSP:
+    # Variables: List[Section]
+    # Domains: Dict[Section, List[Schedule]]
     csp = CSP(courses, variableDict)
     csp.add_constraint(ScheduleConstraint(courses))
     genOutcome = csp.backtracking_search()
