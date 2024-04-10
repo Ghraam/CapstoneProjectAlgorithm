@@ -8,19 +8,19 @@ document.getElementById('generateButton').addEventListener('click', async functi
     try {
         // Make API call to generate schedule using the 'algorithm.generate' endpoint
         const generateResponse = await comAPI('algorithm', 'generate', 'POST');
+        console.log('Generate Response:', generateResponse);
 
-        // Handle successful generate response
-        if (generateResponse.ok) {
-            displayText.textContent = "Schedule generated successfully!";
+        // Check if the generateResponse is null (indicating success)
+        if (generateResponse === null) {
             // Start checking status periodically
             checkStatus();
+            displayText.textContent = "Schedule generation initiated. Please wait for status update.";
         } else {
-            // Handle error response for generating schedule
-            const errorData = await generateResponse.json();
-            displayText.textContent = "Error: " + errorData.message;
+            // Handle case when generateResponse is not null (unexpected)
+            displayText.textContent = "Error: Unexpected response received from server.";
         }
     } catch (error) {
-        // Handle network errors or other exceptions
+        // Handle network errors or other exceptions during generate call
         console.error("Error:", error);
         displayText.textContent = "Error: Failed to generate schedule.";
     }
@@ -30,6 +30,7 @@ document.getElementById('generateButton').addEventListener('click', async functi
 async function checkStatus() {
     try {
         const statusResponse = await comAPI('algorithm', 'status', 'GET');
+        console.log('Status Response:', statusResponse);
         // Display the status response below the button
         displayStatusResponse(statusResponse);
 
@@ -39,7 +40,7 @@ async function checkStatus() {
         }
     } catch (error) {
         console.error("Error:", error);
-        // Handle network errors or other exceptions
+        // Handle network errors or other exceptions during status call
     }
 }
 

@@ -242,7 +242,7 @@ async function makeRequest(header, subsection, method, data = null, id = null) {
         return null;
     }
 
-    if (method === 'DELETE') {
+    if (method === 'DELETE' || method === 'POST') {
         return null;
     }
 
