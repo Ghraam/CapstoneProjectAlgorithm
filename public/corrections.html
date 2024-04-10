@@ -98,8 +98,8 @@
         <tr>
             <td>8:30<br>(W9:00)</td>
             <td class="drop-area" id="Monday1">
-                <div class="schedule-item" draggable="true">Class 1</div>
-                <div class="schedule-item" draggable="true">Class 2</div>
+                <div class="schedule-item">Class 1</div>
+                <div class="schedule-item">Class 2</div>
             </td>
             <td class="drop-area" id="Tuesday1"></td>
             <td class="drop-area" id="WednesdayA1" rowspan="2"></td>
@@ -109,7 +109,7 @@
         <tr>
             <td>10:00</td>
             <td class="drop-area" id="Monday2">
-                <div class="schedule-item" draggable="true">Class 3</div>
+                <div class="schedule-item">Class 3</div>
             </td>
             <td class="drop-area" id="Tuesday2"></td>
             <td class="drop-area" id="Thursday2"></td>
@@ -165,20 +165,8 @@
     </table>
 
 </main>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script>
-    // Initialize SortableJS for the schedule table
-    const sortableSchedule = new Sortable(document.querySelector('.schedule'), {
-        animation: 150, // animation duration in milliseconds
-        handle: '.schedule-item', // specify drag handle
-        draggable: '.schedule-item',
-        onEnd: function (evt) {
-            console.log('Item moved from', evt.oldIndex, 'to', evt.newIndex);
-            // Here you can perform actions when an item is moved
-        }
-    });
-    // document.querySelector('.schedule')
-    // document.getElementById('schedule-box')
+
 </script>
 </body>
 </html>
