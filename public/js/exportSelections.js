@@ -5,13 +5,12 @@ async function getTimeBlock(block) {
     const timeBlocks = await comAPI('time_blocks', 'index', 'GET');
 
     block = block.replace(/(\w+)(\d+)/, "$1 $2");
-    console.log("Block: ", block);
 
     let id = null;
 
     for (const timeBlock of timeBlocks) {
         if (timeBlock.identifier === block) {
-            console.log("Found it! ", block, " ", timeBlock.id);
+            // console.log("Found it! ", block, " ", timeBlock.id);
             id = timeBlock.id;
             return id;
         } else {
@@ -53,8 +52,9 @@ async function combineData(sectionData) {
 }
 
 async function parseTableData() {
-    console.log("Working")
+    const status = document.getElementById("update-status");
     try {
+        status.textContent = "Update Submitting..."
 
         const fullSectionsData = await getData();
 
@@ -63,12 +63,10 @@ async function parseTableData() {
             sendData(data);
         }
 
-        console.log(fullSectionsData);
-        // Call a function to process the parsed data
-        // ...
     } catch (error) {
         console.error('Error parsing table data:', error);
     }
+    status.textContent = "Update Submitted"
 }
 
 document.getElementById('update-button').addEventListener('click', parseTableData);

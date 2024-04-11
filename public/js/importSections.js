@@ -67,13 +67,7 @@ function getFieldValue(item, apiHeader) {
 // Function to fetch sections data from the API
 async function getSections() {
     try {
-        // Hardcoded sections data for testing
         // noinspection UnnecessaryLocalVariableJS
-        // const sectionsData = [
-        //     {"course_id": 7, "section_num": 1, "professor_id": 1, "start": 2, "end": 24, "classroom_id": 1},
-        //     {"course_id": 8, "section_num": 2, "professor_id": 6, "start": 3, "end": 25, "classroom_id": 1},
-        // ];
-
         const sectionsData = await comAPI('sections', 'index', 'GET');
 
         return sectionsData;

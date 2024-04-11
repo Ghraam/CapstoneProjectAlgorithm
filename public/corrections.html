@@ -108,7 +108,7 @@
 
         /* Style the update button */
         #update-button {
-            position: fixed;
+
             bottom: 20px;
             right: 20px;
             background-color: #007BFF;
@@ -117,6 +117,15 @@
             padding: 10px 20px;
             font-weight: bold;
             cursor: pointer;
+        }
+
+        #update-status {
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            width: fit-content;
         }
 
     </style>
@@ -215,7 +224,8 @@
 
         </tbody>
     </table>
-    <button id="update-button">Update</button>
+    <button id="update-button">Submit Update</button>
+    <p id="update-status"></p>
 </main>
 <script>
     // JavaScript functions for drag-and-drop
@@ -225,7 +235,7 @@
         let tempID = target.id;
         let justName = tempID.split('-')[0];
         let perWeek = target.getAttribute("singleOrDouble");
-        console.log("DragID: " + target.id);
+        // console.log("DragID: " + target.id);
     }
 
     function drop(target, event) {
@@ -236,7 +246,7 @@
         let placeDropped = target.id;
         let sisterID = id + "sister";
         let sisterDiv = document.getElementById(sisterID);
-        console.log("Sister: ", sisterID);
+        // console.log("Sister: ", sisterID);
 
         if (id.includes("sister")) {
             console.log("NO MOVING SISTER ELEMENTS!!!!");

@@ -30,12 +30,29 @@ document.getElementById('generateButton').addEventListener('click', async functi
 async function checkStatus() {
     try {
         const statusResponse = await comAPI('algorithm', 'status', 'GET');
-        console.log('Status Response:', statusResponse);
+
+        let status = statusResponse.status;
+
+        console.log('Status Response:', status);
+
+        switch (status) {
+            case "in_progress":
+                status = "In Progress";
+                break;
+            case "error":
+                status = "Error";
+                break;
+            case "done":
+                status = "Done";
+                break;
+            default:
+        }
+
         // Display the status response below the button
-        displayStatusResponse(statusResponse);
+        displayStatusResponse(status);
 
         // If status is not "done", continue checking after a delay
-        if (statusResponse.status !== "done") {
+        if (status !== "Done" && status !== "Error") {
             setTimeout(checkStatus, 5000); // Check status again after 5 seconds (adjust as needed)
         }
     } catch (error) {
@@ -47,5 +64,5 @@ async function checkStatus() {
 // Function to display the status response below the button
 function displayStatusResponse(response) {
     const statusBox = document.getElementById('statusBox');
-    statusBox.textContent = "Status Response: " + JSON.stringify(response);
+    statusBox.textContent = "Status: " + response; //JSON.stringify(response);
 }
