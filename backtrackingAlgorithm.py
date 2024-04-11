@@ -153,8 +153,8 @@ def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
         shuffle(professors)
         for professor in professors:
             section = Section(classroom=classroom, course=course,
-                              professor=professor, start=placeHolder,
-                              end=placeHolder, section_num=-1)
+                              professor=professor, start=placeHolderTimeBlock,
+                              end=placeHolderTimeBlock, section_num=-1)
             # generate domain for double block course (1x2)
             if course.double_block:
                 for row in range(SCHEDULE_WIDTH):
@@ -222,9 +222,13 @@ class ScheduleConstraint(Constraint[Course, List[Schedule]]):
         return True
 
 
-placeHolder: TimeBlock = TimeBlock(identifier="placeHolder", block_type=-1,
-                                   day=-1, timeslot=-1, id=-1,
-                                   corresponding_block=-1)
+placeHolderTimeBlock: TimeBlock = TimeBlock(identifier="placeHolder",
+                                            block_type=-1, day=-1,
+                                            timeslot=-1, id=-1,
+                                            corresponding_block=-1)
+placeHolderClassroom: Classroom = Classroom(id=-1, room="placeHolder",
+                                            is_lab=False, room_capacity=-1)
+placeHolderProfessor: Professor = Professor(id=-1, name="placeHolder")
 
 
 def assign_timeblocks(
@@ -297,6 +301,20 @@ def processSection(x):
         "end": x["end"].id,
         "classroom_id": x["classroom"].id
     }
+
+
+def randomized_section_list(courses: List[Course], classrooms: List[Classroom],
+                            professors: List[Professor],
+                            timeBlocks: List[TimeBlock]) -> List[Section]:
+    """
+    Generates a randomized list of sections.
+    """
+    occupied_prof_timeblock: set[(Professor, TimeBlock)] = {}
+    occupied_room_timeblock: set[(Classroom, TimeBlock)] = {}
+    sections: List[Section] = []
+    for course in courses:
+        for i in range(2):
+            return []
 
 
 def solution(courses: List[Course], classrooms: List[Classroom],
