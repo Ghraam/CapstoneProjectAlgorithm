@@ -128,6 +128,21 @@
             width: fit-content;
         }
 
+        .tooltip {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .tooltip-text {
+            display: none;
+            position: fixed; /* Position the tooltip relative to the viewport */
+            background-color: #7a7a7a;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 999; /* Ensure tooltip appears on top of other content */
+        }
+
     </style>
 </head>
 <body>

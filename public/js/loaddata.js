@@ -50,15 +50,19 @@ function insertDataAsDivs(dataArray, elementId, apiHeader) {
         holdingDiv.classList.add("data-item");
 
         let fieldValue;
+        let tooltipText;
         switch (apiHeader) {
             case 'professors':
                 fieldValue = item.name;
+                tooltipText = fieldValue;
                 break;
             case 'courses':
                 fieldValue = item.identifier;
+                tooltipText = `${item.name}, ${fieldValue}, Size: ${item.course_size}`;
                 break;
             case 'classrooms':
                 fieldValue = item.room;
+                tooltipText = `${fieldValue}, Capacity: ${item.room_capacity}`;
                 break;
             default:
                 fieldValue = '';
@@ -77,8 +81,10 @@ function insertDataAsDivs(dataArray, elementId, apiHeader) {
         // Append the hidden span inside the main span
         holdingDiv.appendChild(hiddenSpan);
 
+        holdingDiv.setAttribute('data-tooltip', tooltipText);
+        holdingDiv.classList.add('tooltip');
 
-        var display = document.getElementById(elementId);
+        let display = document.getElementById(elementId);
 
         holdingDiv.addEventListener('click', function() {
             // const id = span.querySelector('span').textContent; // Get the ID from the hidden span
@@ -95,6 +101,39 @@ function insertDataAsDivs(dataArray, elementId, apiHeader) {
             confirmRemoval(id, apiHeader);
         });
 
+        // Event listener to show tooltip
+        holdingDiv.addEventListener('mouseover', function(event) {
+            if (event.target.classList.contains('tooltip')) {
+                let tooltipText = event.target.getAttribute('data-tooltip');
+                let tooltip = document.createElement('div');
+                tooltip.className = 'tooltip-text';
+                tooltip.innerHTML = tooltipText;
+                tooltip.style.display = 'block';
+                document.body.appendChild(tooltip);
+
+                // Position the tooltip next to the mouse cursor
+                tooltip.style.top = (event.clientY + 10) + 'px';
+                tooltip.style.left = (event.clientX + 10) + 'px';
+            }
+        });
+
+        // Event listener to hide tooltip
+        holdingDiv.addEventListener('mouseout', function(event) {
+            let tooltip = document.querySelector('.tooltip-text');
+            if (tooltip) {
+                tooltip.style.display = 'none';
+                tooltip.parentNode.removeChild(tooltip);
+            }
+        });
+
+        // Event listener to hide tooltip
+        holdingDiv.addEventListener('mouseout', function(event) {
+            let tooltip = document.querySelector('.tooltip-text');
+            if (tooltip) {
+                tooltip.parentNode.removeChild(tooltip);
+            }
+        });
+
         // Add comma and space if not the last item
         if (index < dataArray.length - 1) {
             const separator = document.createTextNode(', ');
@@ -105,6 +144,8 @@ function insertDataAsDivs(dataArray, elementId, apiHeader) {
 
 
     });
+
+
 }
 
 function confirmRemoval(id, apiHeader) {
@@ -122,3 +163,4 @@ function confirmRemoval(id, apiHeader) {
         alert("Removed from current session, element remains in the database.");
     }
 }
+

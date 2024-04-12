@@ -108,6 +108,7 @@ async function getFullSectionsData(initialData) {
             // Add formatted data to fullSectionsData
             fullSectionsData.push({
                 course: courseIdentifier,
+                courseName: courseData.name,
                 professor: professorName,
                 classroom: classroomRoom,
                 startTime: startTime,
@@ -127,23 +128,61 @@ async function getFullSectionsData(initialData) {
     }
 }
 
+function addMouseOver(element){
+
+    // Event listener to show tooltip
+    element.addEventListener('mouseover', function(event) {
+        if (event.target.classList.contains('tooltip')) {
+            let tooltipText = event.target.getAttribute('data-tooltip');
+            let tooltip = document.createElement('div');
+            tooltip.className = 'tooltip-text';
+            tooltip.innerHTML = tooltipText;
+            tooltip.style.display = 'block';
+            document.body.appendChild(tooltip);
+
+            // Position the tooltip next to the mouse cursor
+            tooltip.style.top = (event.clientY + 10) + 'px';
+            tooltip.style.left = (event.clientX + 10) + 'px';
+        }
+    });
+
+    // Event listener to hide tooltip
+    element.addEventListener('mouseout', function(event) {
+        let tooltip = document.querySelector('.tooltip-text');
+        if (tooltip) {
+            tooltip.style.display = 'none';
+            tooltip.parentNode.removeChild(tooltip);
+        }
+    });
+
+
+}
+
 function generateTableRow(sectionData) {
     let startTd = document.getElementById(sectionData.startTime);
     let endTd = document.getElementById(sectionData.endTime);
 
+    let tooltipText = `${sectionData.courseName}`;
+
     let newDiv = document.createElement('div');
     newDiv.classList.add('schedule-item');
-    newDiv.textContent = `${sectionData.course}\n${sectionData.classroom}\n${sectionData.professor}`;
+    newDiv.textContent = `${sectionData.course}-${sectionData.section} ${sectionData.classroom} ${sectionData.professor}`;
     newDiv.id = `${sectionData.course}-${sectionData.classroom}-${sectionData.professor}`;
     newDiv.setAttribute("draggable", "true");
     newDiv.setAttribute("ondragstart", "drag(this, event)");
+    newDiv.classList.add('tooltip');
+    newDiv.setAttribute('data-tooltip', tooltipText);
+    addMouseOver(newDiv);
 
     let sisterDiv = document.createElement('div');
     sisterDiv.classList.add('sister-item');
-    sisterDiv.textContent = `${sectionData.course}\n${sectionData.classroom}\n${sectionData.professor}`;
+    sisterDiv.textContent = `${sectionData.course}-${sectionData.section} ${sectionData.classroom} ${sectionData.professor}`;
     sisterDiv.id = `${sectionData.course}-${sectionData.classroom}-${sectionData.professor}sister`;
     sisterDiv.setAttribute("draggable", "false");
     sisterDiv.setAttribute("ondragstart", "drag(this, event)");
+    sisterDiv.classList.add('tooltip');
+    sisterDiv.setAttribute('data-tooltip', tooltipText);
+    addMouseOver(sisterDiv);
 
     startTd.appendChild(newDiv);
     endTd.appendChild(sisterDiv);

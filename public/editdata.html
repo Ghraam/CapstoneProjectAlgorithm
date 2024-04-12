@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Edit Data</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 	<script src="js/header.js" type="text/javascript"></script>
 	<script type="module" src="js/apicall.js"></script>
@@ -64,6 +65,63 @@
 			margin-right: 10px; /* Adjust the value as needed */
 		}
 
+		/* Position the form-popup at the bottom left */
+		#form-popup {
+			position: fixed;
+			bottom: 20px;
+			left: 20px;
+			padding: 20px; /* Add padding for spacing */
+			background-color: #ffffff; /* Background color */
+			border: 1px solid #ccc; /* Border */
+			border-radius: 5px; /* Rounded corners */
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Drop shadow */
+			max-width: 300px; /* Limit width */
+		}
+
+		/* Center align form elements */
+		#myForm {
+			text-align: left;
+		}
+
+		/* Add margin to form elements */
+		#myForm label,
+		#myForm input {
+			margin-bottom: 10px;
+		}
+
+		/* Add styles for the submit button */
+		#myForm button {
+			background-color: #007bff; /* Button color */
+			color: #fff; /* Text color */
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#myForm button:hover {
+			background-color: #0056b3; /* Darker color on hover */
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.tooltip {
+			position: relative;
+			cursor: pointer;
+		}
+
+		.tooltip-text {
+			display: none;
+			position: fixed; /* Position the tooltip relative to the viewport */
+			background-color: #7a7a7a;
+			color: #fff;
+			padding: 5px;
+			border-radius: 5px;
+			z-index: 999; /* Ensure tooltip appears on top of other content */
+		}
+
 	</style>
 </head>
 <body>
@@ -106,29 +164,60 @@
 				</div>
 			</div>
 		</div>
+
+		<div id="form-popup" style="display: none;">
+			<form id="myForm">
+				<div id="nameContainer">
+					<label for="name">Name:</label>
+					<input type="text" id="name" name="name" required><br><br>
+				</div>
+				<div id="identifierContainer" class="hidden">
+					<label for="identifier">Identifier:</label>
+					<input type="text" id="identifier" name="identifier" required><br><br>
+				</div>
+				<div id="labContainer" class="hidden">
+					<label for="lab">Lab:</label>
+					<input type="checkbox" id="lab" name="lab"><br><br>
+				</div>
+				<div id="sizeContainer" class="hidden">
+					<label for="size">Course Size/Classroom Capacity:</label>
+					<input type="text" id="size" name="size" required><br><br>
+				</div>
+				<div id="levelContainer" class="hidden">
+					<label for="level">Level:</label>
+					<input type="text" id="level" name="level" required><br><br>
+				</div>
+				<div id="doubleContainer" class="hidden">
+					<label for="double">Double Block:</label>
+					<input type="checkbox" id="double" name="double"><br><br>
+				</div>
+				<button type="submit">Submit</button>
+			</form>
+		</div>
+
 	</main>
     <script>
 		function updateDisplay(formId, searchTerm) {
-			const container = document.getElementById(formId + 'Display');
-			container.innerHTML = ''; // Clear previous content
-
-			const spans = document.querySelectorAll(`#${formId}Display span`);
-			let div = document.createElement('div'); // Create a div container
-
-			spans.forEach((span, index) => {
-				const textContent = span.textContent.toLowerCase();
-				if (textContent.includes(searchTerm)) {
-					div.appendChild(span.cloneNode(true)); // Clone the span and add it to the div
-					// Add comma if not the last span
-					if (index < spans.length - 1) {
-						const comma = document.createTextNode(', ');
-						div.appendChild(comma);
-					}
-				}
-			});
-
-			// Append the div to the container
-			container.appendChild(div);
+			// const container = document.getElementById(formId + 'Display');
+			// container.innerHTML = ''; // Clear previous content
+			//
+			// const spans = document.querySelectorAll(`#${formId}Display span`);
+			// let div = document.createElement('div'); // Create a div container
+			//
+			// spans.forEach((span, index) => {
+			// 	const textContent = span.textContent.toLowerCase();
+			// 	if (textContent.includes(searchTerm)) {
+			// 		div.appendChild(span.cloneNode(true)); // Clone the span and add it to the div
+			// 		// Add comma if not the last span
+			// 		if (index < spans.length - 1) {
+			// 			const comma = document.createTextNode(', ');
+			// 			div.appendChild(comma);
+			// 		}
+			// 	}
+			// });
+			//
+			// // Append the div to the container
+			// container.appendChild(div);
 		}
 
 		// Hide the clear search button initially
