@@ -14,7 +14,6 @@ from random import shuffle
 import yaml
 import json
 import sys
-from itertools import chain
 
 # set constants
 WEDNESDAY = 2
@@ -104,183 +103,104 @@ class TimePreference(NamedTuple):
     priority: int
 
 
-class Schedule(NamedTuple):
-    """
-    Represents a schedule, which is a grid of sections.
-    TODO: Use TimeBlock class to represent a time block instead of a grid of
-    Sections. This actually doesn't even need to be a class, it could just
-    be a list of lists of Sections.
-    """
-    schedule: List[List[Section]]
-
-
-def dict_to_schedule(variables, dict, schedule: Schedule
-                     ) -> List[List[Section]]:
+def dict_to_schedule(variables, dict, schedule: List[Section]
+                     ) -> List[Section]:
     """
     Converts a dictionary to a schedule, with making lists of sections in
     positions that allow for multiple classes in the same timeslot.
     """
-    newSched = deepcopy(schedule.schedule)
-    list_of_domains = [dict[i].schedule for i in variables]
-    for i in list_of_domains:
-        for x in range(len(i)):
-            for y in range(len(i[0])):
-                if i[x][y] != "-":
-                    if newSched[x][y] == "-":
-                        newSched[x][y] = [i[x][y]]
-                    else:
-                        newSched[x][y].append(i[x][y])
-    return newSched
+    newSched = deepcopy(schedule)
+    domains = [dict[i] for i in variables]
+    while len(newSched) < len(domains[0]):
+        newSched.append("-")
+    for domain in domains:
+        for x in range(len(domain)):
+            if domain[x] != "-":
+                if newSched[x] == "-":
+                    newSched[x] = [domain[x]]
+                else:
+                    newSched[x].append(domain[x])
+    return newSched[0]
 
 
-def generate_grid(rows: int, columns: int) -> Schedule:
-    # initialize grid with random letters
-    return Schedule([["-" for c in range(columns)] for r in range(rows)])
+SINGLE = 0
+DOUBLE_START = 1
+DOUBLE_END = 2
 
 
-def generate_domain(course: Course, schedule: Schedule, prof: List[Professor],
-                    classrooms: List[Classroom]) -> List[Schedule]:
+def block_conditions(course: Course, classroom: Classroom,
+                     professor: Professor, start: TimeBlock, end: TimeBlock
+                     ) -> bool:
+    match course.double_block:
+        case 1:
+            return start.day == end.day and \
+                start.timeslot == end.timeslot - 1 and \
+                ((start.block_type == DOUBLE_START and
+                    end.block_type == DOUBLE_END) or
+                    (start.block_type == SINGLE and
+                     end.block_type == SINGLE))
+        case 0:
+            return start.corresponding_block == end.id and \
+                start.day < end.day and \
+                start.block_type == SINGLE and \
+                end.block_type == SINGLE
+        case _:
+            print(course.double_block)
+            raise Exception("Houston, we have a problem!")
+
+
+def generate_domain(course: Course, section_num: int, schedule: List[Section],
+                    prof: List[Professor], classrooms: List[Classroom],
+                    timeBlocks: List[TimeBlock]) -> List[List[Section]]:
     """
     Generates a domain consisting of all possible combinations of sections.
     """
-    SCHEDULE_WIDTH = len(schedule.schedule)
-    SCHEDULE_LENGTH = len(schedule.schedule[0])
     professors = deepcopy(prof)
 
-    domain: List[Schedule] = []
+    domain: List[List[Section]] = []
 
     for classroom in classrooms:
-        shuffle(professors)
         for professor in professors:
-            section = Section(classroom=classroom, course=course,
-                              professor=professor, start=placeHolderTimeBlock,
-                              end=placeHolderTimeBlock, section_num=-1)
-            # generate domain for double block course (1x2)
-            if course.double_block:
-                for row in range(SCHEDULE_WIDTH):
-                    for column in range(SCHEDULE_LENGTH):
-                        if (column + 1 <= SCHEDULE_LENGTH - 1) and \
-                                (schedule.schedule[row][column] == "-" and
-                                 schedule.schedule[row][column + 1] == "-"
-                                 ):
-                            tempCopy = deepcopy(schedule)
-                            tempCopy.schedule[row][column] = section
-                            tempCopy.schedule[row][column + 1] = section
-                            domain.append(tempCopy)
-            else:
-                # generate domain for single block courses (1x1)
-                for row in range(2):
-                    for column in range(len(schedule.schedule[0])):
-                        if (schedule.schedule[row][column] == "-"):
-                            tempCopy = deepcopy(schedule)
-                            tempCopy.schedule[row][column] = section
-                            tempCopy.schedule[row + 3][column] = section
-                            domain.append(tempCopy)
+            for start in timeBlocks:
+                for end in timeBlocks:
+                    if block_conditions(course, classroom, professor,
+                                        start, end):
+                        section = Section(classroom=classroom, course=course,
+                                          professor=professor, start=start,
+                                          end=end, section_num=section_num)
+                        tempCopy = deepcopy(schedule)
+                        tempCopy.append(section)
+                        domain.append(tempCopy)
     return domain
 
 
-class ScheduleConstraint(Constraint[Course, List[Schedule]]):
+class ScheduleConstraint(Constraint[tuple[Course, int], List[Section]]):
     # can't have same class twice on same day
     # can't have same class twice on same time slot
     # can't have overlapping classes in the same classroom
-    def __init__(self, variables: List[Course]) -> None:
-        self.variables: List[Course] = variables
+    def __init__(self, variables: List[tuple[Course, int]]) -> None:
+        self.variables: List[(Course, int)] = variables
 
     def satisfied(self, assignment: Dict) -> bool:
-        # check if any courses overlap
-        values = [locs for values in assignment.values() for locs in values]
-        for i in values:  # for each course
-            for j in values:  # for each other course
-                if i != j:  # if they are not the same course
-                    for x in range(len(i)):  # for each row in the schedule
-                        # for each column in the schedule
-                        for y in range(len(i[0])):
-                            # if there is a class in both schedules
-                            classA = i[x][y]
-                            classB = j[x][y]
-                            if classA != "-" and classB != "-":
-                                # Constraints 1 & 2:
-                                # check if classroom or professor overlaps
-                                if classA.classroom == classB.classroom or \
-                                        classA.professor == classB.professor:
-                                    return False
-                            # TODO: Stop hardcoding this!
-                            # check if courses are on no classes allowed days
-                            if classA != "-" or classB != "-":
-                                # time slots where classes are not allowed
-                                if (x == WEDNESDAY and (y == BLOCK_FIVE or
-                                                        y == BLOCK_SIX)) or \
-                                    (x == FRIDAY and (y == BLOCK_SEVEN or
-                                                      y == BLOCK_EIGHT)):
-                                    return False
-                            # make sure non double block classes are only
-                            # on evening time slots on wednesday
-                            if classA != "-" and \
-                                    not classA.course.double_block:
-                                if x == WEDNESDAY and y < BLOCK_SEVEN:
-                                    return False
+        classroom_professor: set[(Classroom, Professor)] = set()
+        timeblock_professor: set[(TimeBlock, Professor)] = set()
+        for (course, section_num) in self.variables:
+            if assignment.get((course, section_num)) is None:
+                continue
+            sections: List[Section] = assignment[(course, section_num)]
+            for section in sections:
+                # print(section)
+                if (section.classroom, section.professor) in \
+                   classroom_professor:
+                    return False
+                classroom_professor.add((section.classroom, section.professor))
+                if (section.start, section.professor) in timeblock_professor:
+                    return False
+                timeblock_professor.add((section.start, section.professor))
+                if (section.end, section.professor) in timeblock_professor:
+                    return False
+                timeblock_professor.add((section.end, section.professor))
         return True
-
-
-placeHolderTimeBlock: TimeBlock = TimeBlock(identifier="placeHolder",
-                                            block_type=-1, day=-1,
-                                            timeslot=-1, id=-1,
-                                            corresponding_block=-1)
-placeHolderClassroom: Classroom = Classroom(id=-1, room="placeHolder",
-                                            is_lab=False, room_capacity=-1)
-placeHolderProfessor: Professor = Professor(id=-1, name="placeHolder")
-
-
-def assign_timeblocks(
-    schedule: Schedule,
-    timeBlocks: List[TimeBlock]
-) -> Schedule:
-    """
-    Assigns timeblocks to sections based on the schedule.
-    """
-    # keep track of which sections already have a start block
-    startBlocks: Dict[Section, bool] = {}
-    for timeBlock in timeBlocks:
-        row: int = timeBlock.day
-        column: int = timeBlock.timeslot
-        section: Section = schedule.schedule[row][column]
-        # print(section)
-        if section == "-":
-            continue
-        print(section)
-        if startBlocks.get(section) is None:
-            startBlocks[section] = True
-            section.start = timeBlock
-        else:
-            section.end = timeBlock
-    print(startBlocks)
-    return schedule
-
-
-def assign_sections_nums(schedule: Schedule) -> Schedule:
-    """
-    Assigns section numbers to sections based on the schedule.
-    """
-    # WIP
-    sectionNum = 1
-    for row in schedule.schedule:
-        for section in row:
-            if section != "-":
-                section.section_num = sectionNum
-                sectionNum += 1
-    return schedule
-
-
-def section_as_dict(y):
-    if y == "-":
-        return y
-    if len(y) > 1:
-        return list(map(lambda x: x._asdict(), y))
-    return y[0]._asdict()
-
-
-def flatten_chain(matrix):
-    return list(chain.from_iterable(matrix))
 
 
 def processSection(x):
@@ -303,59 +223,47 @@ def processSection(x):
     }
 
 
-def randomized_section_list(courses: List[Course], classrooms: List[Classroom],
-                            professors: List[Professor],
-                            timeBlocks: List[TimeBlock]) -> List[Section]:
-    """
-    Generates a randomized list of sections.
-    """
-    occupied_prof_timeblock: set[(Professor, TimeBlock)] = {}
-    occupied_room_timeblock: set[(Classroom, TimeBlock)] = {}
-    sections: List[Section] = []
-    for course in courses:
-        for i in range(2):
-            return []
-
-
 def solution(courses: List[Course], classrooms: List[Classroom],
              professors: List[Professor], timeBlocks: List[TimeBlock]) -> None:
     """
     Generates a schedule for the given courses, classrooms, and professors.
     """
-    variableDict: Dict[Course, List[Schedule]] = {}
+    variableDict: Dict[(Course, int), List[List[Section]]] = {}
     # generate empty grid
-    newSched = generate_grid(5, 8)
+    newSched: List[Section] = []
     # shuffle courses to add some randomness into generation
     shuffle(courses)
     # generate domains for all courses
     for x in courses:
-        variableDict[x] = generate_domain(
-            x, deepcopy(newSched), professors, classrooms)
+        for i in range(2):
+            variableDict[(x, i+1)] = generate_domain(
+                x, i+1, deepcopy(newSched), professors, classrooms, timeBlocks)
 
     # run csp on generated domains
     # Variables: courses
     # Domains: all possible combinations of sections
     # Considering change to CSP:
-    # Variables: List[Section]
+    # Variables: List[(Section, int)]
     # Domains: Dict[Section, List[Schedule]]
-    csp = CSP(courses, variableDict)
-    csp.add_constraint(ScheduleConstraint(courses))
+    variables = [(course, i+1) for course in courses for i in range(2)]
+    # print(variableDict)
+    csp = CSP(variables, variableDict)
+    csp.add_constraint(ScheduleConstraint(variables))
     genOutcome = csp.backtracking_search()
-    print(genOutcome)
+    # print(genOutcome)
 
     # print csp's answer
     if isinstance(genOutcome, type(None)):
         print("returned none")
     else:
         # displays solution neatly
-        newSched = assign_timeblocks(newSched, timeBlocks)
-        schedOutput = dict_to_schedule(courses, genOutcome, newSched)
-        flattened = list(filter(lambda x: x != "-", flatten_chain(list(map(
-            lambda x: list(map(section_as_dict, x)), schedOutput)))))
-        ids = flatten_chain(list(map(processSection, flattened)))
+        schedOutput = dict_to_schedule(variables, genOutcome, newSched)
+        formatted = list(map(processSection, list(map(lambda x: x._asdict(),
+                                                      schedOutput))))
+        print(formatted)
         outputFile = sys.argv[2]
         with open(outputFile, "w") as file:
-            file.write(json.dumps(ids, indent=4))
+            file.write(json.dumps(formatted, indent=4))
 
 
 if __name__ == "__main__":
@@ -367,17 +275,6 @@ if __name__ == "__main__":
     # get parameters from input file
     with open(inputFile, "r") as file:
         data = yaml.safe_load(file)
-
-    # Process data (corresponding_block has identifier, not id of
-    # corresponding block)
-    for timeBlock in data["time_blocks"]:
-        # Get index of corresponding block by identifier
-        # print(timeBlock)
-        identifier = timeBlock["corresponding_block"]
-        index = next((i for i, block in enumerate(data["time_blocks"]) if
-                      block["identifier"] == identifier), None)
-        # Set corresponding block to index
-        timeBlock["corresponding_block"] = index
 
     # create objects from data
     courses = [Course(**course) for course in data["courses"]]

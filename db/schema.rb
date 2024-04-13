@@ -58,9 +58,9 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["classroom_id"], name: "fk_professor_has_time_block1_classroom1_idx"
     t.index ["course_id"], name: "fk_professor_has_time_block1_class1_idx"
     t.index ["end"], name: "fk_sections_time_blocks1_idx"
-    t.index ["professor_id", "start"], name: "professor_id", unique: true
+    t.index ["professor_id", "start"], name: "professor_id"#, unique: true
     t.index ["professor_id"], name: "fk_professor_has_time_block1_professor1_idx"
-    t.index ["start", "classroom_id"], name: "start", unique: true
+    t.index ["start", "classroom_id"], name: "start"#, unique: true
     t.index ["start"], name: "fk_professor_has_time_block1_time_block1_idx"
   end
 
@@ -73,7 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }
     t.index ["corresponding_block"], name: "fk_time_blocks_time_blocks1_idx"
-    t.index ["day", "timeslot"], name: "day", unique: true
+    t.index ["day", "timeslot"], name: "day"#, unique: true
   end
 
   create_table "time_preferences", primary_key: ["professor_id", "time_block_id"], charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

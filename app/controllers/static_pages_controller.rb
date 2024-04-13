@@ -16,7 +16,7 @@ class StaticPagesController < ApplicationController
         data = {
           professors: professors,
           time_blocks: time_blocks,
-          courses: courses,
+          courses: courses[0...8], # truncate the courses to 8 for testing purposes
           classrooms: classrooms,
         }
         
@@ -38,6 +38,7 @@ class StaticPagesController < ApplicationController
         sections = JSON.parse(output)
 
         # Create the sections
+        puts sections.to_yaml
         sections.each do |section|
           Section.create(
             section_num: section["section_num"],
