@@ -1,5 +1,9 @@
 import {comAPI} from "./apicall.js";
 
+const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+let count = 0;
+
+
 // Function to parse time blocks response
 function parseTimeBlockResponse(response) {
     // Extract relevant data from the response
@@ -116,7 +120,11 @@ async function getFullSectionsData(initialData) {
                 section: section_num,
                 courseID: section.course_id,
                 professorID: section.professor_id,
-                classroomID: section.classroom_id
+                classroomID: section.classroom_id,
+                startTimeID: section.start,
+                endTimeID: section.end,
+                double: courseData.double_block,
+                letter: count
                 // Add other necessary properties from section if needed
             });
         }
@@ -128,18 +136,20 @@ async function getFullSectionsData(initialData) {
     }
 }
 
-function addMouseOver(element){
+// Create a single tooltip element
+const tooltip = document.createElement('div');
+tooltip.className = 'tooltip-text';
+document.body.appendChild(tooltip);
 
+function addMouseOver(element) {
     // Event listener to show tooltip
     element.addEventListener('mouseover', function(event) {
         if (event.target.classList.contains('tooltip')) {
             let tooltipText = event.target.getAttribute('data-tooltip');
-            let tooltip = document.createElement('div');
-            tooltip.className = 'tooltip-text';
+            // Update tooltip content
             tooltip.innerHTML = tooltipText;
+            // Show tooltip
             tooltip.style.display = 'block';
-            document.body.appendChild(tooltip);
-
             // Position the tooltip next to the mouse cursor
             tooltip.style.top = (event.clientY + 10) + 'px';
             tooltip.style.left = (event.clientX + 10) + 'px';
@@ -148,14 +158,13 @@ function addMouseOver(element){
 
     // Event listener to hide tooltip
     element.addEventListener('mouseout', function(event) {
-        let tooltip = document.querySelector('.tooltip-text');
-        if (tooltip) {
-            tooltip.style.display = 'none';
-            tooltip.parentNode.removeChild(tooltip);
-        }
+        // Hide tooltip
+        tooltip.style.display = 'none';
     });
+}
 
-
+function closeTime(start, end) {
+    return Math.abs(end - start) === 1;
 }
 
 function generateTableRow(sectionData) {
@@ -184,12 +193,23 @@ function generateTableRow(sectionData) {
     sisterDiv.setAttribute('data-tooltip', tooltipText);
     addMouseOver(sisterDiv);
 
+    if (closeTime(sectionData.startTimeID, sectionData.endTimeID)) {
+        sectionData.letter = count;
+        newDiv.textContent = `${sectionData.course}-${sectionData.section} ${sectionData.classroom} ${sectionData.professor} Double ${letters[sectionData.letter]}`;
+        sisterDiv.textContent = `${sectionData.course}-${sectionData.section} ${sectionData.classroom} ${sectionData.professor} Double ${letters[sectionData.letter]}`;
+        count++;
+    }
+
     startTd.appendChild(newDiv);
     endTd.appendChild(sisterDiv);
 }
 
 // Function to populate the table with data
 async function populateTable() {
+
+    const title = document.getElementById('title');
+    title.textContent = 'Schedule - Loading...';
+
     const fullSectionsData = await getData();
 
     const tableBody = document.querySelector('#schedule-box tbody');
@@ -199,10 +219,13 @@ async function populateTable() {
         generateTableRow(sectionData);
         tableBody.appendChild(row);
     });
+
+    title.textContent = 'Schedule';
 }
 
 export async function getData() {
     try {
+
         //Get initial Data
         const initialData = await getSections();
 

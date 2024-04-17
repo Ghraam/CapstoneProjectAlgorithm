@@ -66,6 +66,42 @@
 
          /*Rest of the CSS (same as before)*/
 
+        /* Add this CSS to your existing stylesheet */
+        .schedule td {
+            max-width: 200px; /* Set a maximum width for each td element */
+            overflow: hidden; /* Hide overflow content */
+            text-overflow: ellipsis; /* Display ellipsis (...) for truncated text */
+        }
+
+        /* Adjust the width of td elements based on the number of child elements */
+        .schedule td {
+            --max-width: 200px; /* Default maximum width */
+            --min-width: 100px; /* Minimum width */
+        }
+
+        .schedule td:only-child {
+            width: var(--max-width); /* If there's only one child, set width to maximum */
+        }
+
+        .schedule td > * {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Adjust the width dynamically based on the number of child elements */
+        .schedule td > *:nth-child(2) {
+            --max-width: calc(var(--min-width) + 30px); /* Adjust maximum width for two child elements */
+        }
+
+        .schedule td > *:nth-child(3) {
+            --max-width: calc(var(--min-width) + 60px); /* Adjust maximum width for three child elements */
+        }
+
+        /* Add more styles for td elements with more child elements if needed */
+
+
         #schedule-box {
             margin-left: 2%;
             margin-right: 2%;
@@ -85,7 +121,7 @@
 
         #schedule-box td {
             position: relative;
-            min-height: 20px;
+            min-height: 10px;
             border-style: solid;
             border-color: slategray;
             border-width: 2px;
@@ -148,7 +184,7 @@
 <body>
 <header-component></header-component>
 <main>
-    <h1>Schedule</h1>
+    <h1 id="title">Schedule</h1>
     <table id="schedule-box" class="schedule">
         <thead>
         <tr>
